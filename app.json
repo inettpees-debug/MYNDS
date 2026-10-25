@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Mynds",
+    "slug": "mynds",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B0F16",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "backgroundColor": "#0B0F16"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mynds.app"
+    },
+    "android": {
+      "package": "com.mynds.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0B0F16",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
