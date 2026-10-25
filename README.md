@@ -1,8 +1,11 @@
-# Mynds — App (Prototyp R1)
+# MYNDS
+This is the code behind MYNDS. Our own Start-Up in context of S2B at WHU.
 
-Mobile App (iOS/Android) für die Wartezeit-Begleitung von Menschen vor Psychotherapie.
-Elternordner: `~/Desktop/MYNDS` — dort liegen Planung (`planung-app-v1.md`), Fragenkatalog
-(`fragenkatalog-r1.md`) und Compliance-Rahmen (`Richtlinien.md`).
+> Prototyp-Status (R1) — die App begleitet Menschen in der Therapie-Wartezeit.
+> Sie ist keine Therapie, stellt keine Diagnosen und ersetzt keine Fachpersonen.
+
+Mobile App (iOS/Android), Expo + React Native + TypeScript. Projektübergreifende
+Dokumentation (Planung, Fragenkatalog, Compliance) liegt außerhalb dieses Repositories.
 
 ## Setup
 

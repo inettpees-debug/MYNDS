@@ -1,6 +1,21 @@
-The MIT License (MIT)
+MYNDS App — Code and Documentation
+Copyright (c) 2026 MYNDS — Inett Pees & Sanije Demiri. All rights reserved.
 
-Copyright (c) 2015-present 650 Industries, Inc. (aka Expo)
+This repository contains the source code of the MYNDS mobile app prototype.
+No license is granted for copying, distribution, modification or commercial
+use of this code at this time. Permission requests: contact the authors.
+
+--------------------------------------------------------------------------------
+THIRD-PARTY NOTICE
+--------------------------------------------------------------------------------
+
+Parts of this repository (project scaffolding, .gitignore, entry point and
+build configuration) are based on the Expo "blank-typescript" template:
+
+  Copyright (c) 2015-present 650 Industries, Inc. (aka Expo)
+  Licensed under the MIT License
+
+The MIT License is reproduced below as required by its terms.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +34,8 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+Runtime dependencies of this project (expo, react, react-native,
+@react-navigation/*, react-native-screens, react-native-safe-area-context,
+@react-native-async-storage/async-storage, @react-native-community/slider)
+are subject to their own licenses (all MIT); see each package for details.
