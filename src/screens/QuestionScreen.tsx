@@ -6,7 +6,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ActivityIndicator, Alert, Pressable, Text, View } from 'react-native';
 import {
-  AiBadge,
   Body,
   Button,
   Caption,
@@ -492,7 +491,9 @@ export function QuestionScreen({ navigation, route }: Props) {
 
       {question.metricKey ? (
         <View style={{ marginTop: spacing.l }}>
-          <AiBadge label="Diese Angabe startet dein Tracking zu diesem Thema" />
+          <Caption color={colors.accent}>
+            Diese Angabe startet dein Tracking zu diesem Thema.
+          </Caption>
         </View>
       ) : null}
     </Screen>

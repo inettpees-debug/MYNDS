@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MYNDS begleitet junge Erwachsene durch die Therapie-Wartezeit — Gedanken sammeln, Muster erkennen, vorbereitet ankommen. Prototyp.">
+<title>MYNDS — Die Wartezeit muss kein Stillstand sein</title>
+<style>
+  :root{
+    --bg:#0B0F16; --surface:#131A24; --surface-alt:#1B2433; --border:#26334B;
+    --text:#F2F5F9; --muted:#A9B4C6; --faint:#6D7889; --mint:#7BE0C8; --mint-deep:#2FA98F;
+    --radius:20px; --maxw:1060px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  section{padding:72px 0}
+  /* Nav */
+  nav{position:sticky;top:0;background:rgba(11,15,22,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);z-index:10}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  .brand{color:var(--mint);letter-spacing:.25em;font-weight:700;font-size:14px}
+  nav a.cta-mini{color:var(--bg);background:var(--mint);padding:8px 18px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px}
+  /* Hero */
+  .hero{padding:96px 0 72px}
+  .kicker{color:var(--mint);letter-spacing:.2em;text-transform:uppercase;font-size:13px;font-weight:600}
+  h1{font-size:clamp(34px,5.4vw,56px);line-height:1.12;font-weight:700;margin:18px 0 20px;max-width:16em}
+  .sub{color:var(--muted);font-size:clamp(17px,2vw,20px);max-width:34em}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+  .btn{display:inline-block;padding:15px 28px;border-radius:14px;text-decoration:none;font-weight:600;font-size:16px}
+  .btn-primary{background:var(--mint);color:#06251D}
+  .btn-ghost{border:1px solid var(--border);color:var(--text)}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  /* Phone mockup (pure CSS) */
+  .phone{background:var(--surface);border:1px solid var(--border);border-radius:38px;padding:18px 14px;max-width:300px;margin:0 auto;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .phone .notch{width:90px;height:5px;border-radius:3px;background:var(--border);margin:0 auto 16px}
+  .p-wordmark{color:var(--mint);letter-spacing:.25em;font-size:11px;text-align:center}
+  .p-title{font-size:19px;font-weight:700;text-align:center;margin:10px 0 4px}
+  .p-sub{color:var(--faint);font-size:12px;text-align:center}
+  .p-card{background:var(--surface-alt);border:1px solid var(--border);border-radius:14px;padding:12px;margin-top:12px}
+  .p-label{color:var(--faint);font-size:11px}
+  .p-bar{height:6px;background:#223049;border-radius:3px;margin-top:8px;overflow:hidden}
+  .p-bar i{display:block;height:6px;border-radius:3px;background:var(--mint-deep)}
+  .p-goals{margin-top:8px;font-size:13px}
+  .p-goals b{color:var(--mint);font-weight:600}
+  .p-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .p-chips span{border:1px solid var(--border);border-radius:999px;padding:3px 10px;font-size:11px;color:var(--muted)}
+  /* Stat */
+  .stat-band{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .stat-band .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:36px;padding-bottom:36px}
+  .stat b{display:block;font-size:clamp(26px,3.4vw,38px);color:var(--mint);font-weight:700}
+  .stat span{color:var(--muted);font-size:14px}
+  .stat small{display:block;color:var(--faint);font-size:11px;margin-top:4px}
+  h2{font-size:clamp(26px,3.6vw,36px);font-weight:700;margin-bottom:14px}
+  .lead{color:var(--muted);font-size:18px;max-width:36em}
+  /* Cards grid */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px}
+  .card h3{font-size:18px;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:15px}
+  .card .num{color:var(--mint);font-weight:700;font-size:13px;letter-spacing:.15em}
+  .tag{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px 12px;font-size:12px;color:var(--faint);margin-top:14px}
+  /* Steps */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
+  .step{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+  .step b{color:var(--mint);display:block;font-size:13px;letter-spacing:.15em;margin-bottom:10px}
+  .step h3{font-size:17px;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:14px}
+  /* Boundary */
+  .boundary{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--mint);border-radius:var(--radius);padding:30px;margin-top:36px}
+  .boundary ul{list-style:none;margin-top:12px}
+  .boundary li{color:var(--muted);padding:6px 0 6px 26px;position:relative;font-size:15px}
+  .boundary li::before{content:"—";position:absolute;left:0;color:var(--mint)}
+  .crisis{margin-top:20px;color:var(--faint);font-size:13px}
+  .crisis b{color:var(--text)}
+  /* CTA */
+  .cta-box{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:52px 36px;text-align:center}
+  .cta-box h2{margin-bottom:10px}
+  .placeholder{display:inline-block;border:2px dashed var(--border);border-radius:12px;padding:10px 20px;color:var(--faint);font-size:14px;margin-top:18px}
+  footer{border-top:1px solid var(--border);padding:32px 0;color:var(--faint);font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  @media(max-width:880px){
+    .hero-grid{grid-template-columns:1fr}
+    .stat-band .wrap{grid-template-columns:1fr;gap:18px}
+    .grid{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:560px){.steps{grid-template-columns:1fr}section{padding:52px 0}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">M Y N D S</span>
+    <a class="cta-mini" href="#demo">Demo ansehen</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kicker">Wartezeit-Begleitung</span>
+      <h1>Die Wartezeit muss kein Stillstand sein.</h1>
+      <p class="sub">MYNDS begleitet junge Erwachsene mit erstmaligem Therapiebedarf durch die Zeit zwischen „Ich brauche Hilfe“ und „Meine Therapie beginnt“ — Gedanken sammeln, Muster erkennen, vorbereitet ankommen.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#demo">Den Prototyp ansehen</a>
+        <a class="btn btn-ghost" href="#ansatz">So funktioniert MYNDS</a>
+      </div>
+    </div>
+    <div class="phone" aria-hidden="true">
+      <div class="notch"></div>
+      <div class="p-wordmark">M Y N D S</div>
+      <div class="p-title">Schön, dass du da bist, Mia.</div>
+      <div class="p-sub">Du wartest auf einen Therapieplatz · Erstgespräch in ca. 5 Wochen</div>
+      <div class="p-card">
+        <span class="p-label">Deine Ziele</span>
+        <div class="p-goals"><b>★</b> ruhiger schlafen · klarer Grenzen setzen</div>
+      </div>
+      <div class="p-card">
+        <span class="p-label">Dein Startbild — heute</span>
+        <div class="p-bar"><i style="width:40%"></i></div>
+        <div class="p-bar"><i style="width:40%"></i></div>
+        <div class="p-bar"><i style="width:70%"></i></div>
+        <div class="p-chips"><span>Stimmung 4/10</span><span>Energie 4/10</span><span>Anspannung 7/10</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="stat-band">
+  <div class="wrap">
+    <div class="stat"><b>~20 Wochen</b><span>liegen im Schnitt zwischen Erstkontakt und Therapiebeginn.</span><small>BPtK-Wartezeiterhebung (Angabe aus eigener Recherche)</small></div>
+    <div class="stat"><b>0</b><span>strukturierte Begleitung gibt es heute in dieser Wartezeit — die Zeit bleibt ungenutzt.</span><small>Marktanalyse, September 2026</small></div>
+    <div class="stat"><b>1 Ansatz</b><span>die Wartezeit nutzbar machen: für dich — und für dein erstes Gespräch.</span></div>
+  </div>
+</div>
+
+<section id="ansatz">
+  <div class="wrap">
+    <span class="kicker">Der Ansatz</span>
+    <h2>Vor der Therapie beginnt die Vorbereitung.</h2>
+    <p class="lead">Klassische Anamnese-Bögen sind ein Momentaufnahme-PDF. MYNDS übersetzt die Anamnese in einen ruhigen, digitalen Prozess — geführt, freiwillig und in deiner Hand.</p>
+    <div class="grid">
+      <div class="card">
+        <span class="num">01</span>
+        <h3>Strukturierte Anamnese</h3>
+        <p>Eine geführte Selbstauskunft auf Basis etablierter Anamnese-Bögen — in Ruhe ausfüllbar, jederzeit unterbrechbar, jede sensible Frage freiwillig.</p>
+        <span class="tag">im Prototyp</span>
+      </div>
+      <div class="card">
+        <span class="num">02</span>
+        <h3>Deine Muster, ehrlich eingeordnet</h3>
+        <p>Schlaf, Energie, Anspannung: Du wählst, was MYNDS begleiten soll. Zusammenhänge werden ohne Diagnose-Claims gezeigt — als Beobachtung, nicht als Urteil.</p>
+        <span class="tag">Tracking in Entwicklung</span>
+      </div>
+      <div class="card">
+        <span class="num">03</span>
+        <h3>Vorbereitet ins Erstgespräch</h3>
+        <p>Ziele, Wünsche und deine eigene Story — aufbereitet für den Moment, in dem die Therapie beginnt. Freigegeben nur von dir, nur an die Praxis deiner Wahl.</p>
+        <span class="tag">Bericht in Entwicklung</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo" style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="wrap">
+    <span class="kicker">Der Prototyp</span>
+    <h2>So läuft MYNDS heute schon.</h2>
+    <p class="lead">Der aktuelle Prototyp bildet den kompletten Einstieg ab — vom Willkommen bis zum persönlichen Profil.</p>
+    <div class="steps">
+      <div class="step"><b>SCHRITT 1</b><h3>Willkommen & Einwilligung</h3><p>Getrennte, verständliche Einwilligungen statt Kleingedrucktem. Der Sicherheitsrahmen steht von Anfang an parat.</p></div>
+      <div class="step"><b>SCHRITT 2</b><h3>Dein Anliegen</h3><p>In eigenen Worten festhalten, was dich beschäftigt — alles Weitere ist freiwillig.</p></div>
+      <div class="step"><b>SCHRITT 3</b><h3>Ziele & Startbild</h3><p>Bis zu drei Ziele setzen und auswählen, was MYNDS begleiten soll. Symptom-Fragen nur als pure Selbstauskunft.</p></div>
+      <div class="step"><b>SCHRITT 4</b><h3>Dein Profil</h3><p>Ein ruhiges Dashboard mit deinen Angaben — korrigierbar, löschbar, exportierbar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="abgrenzung">
+  <div class="wrap">
+    <span class="kicker">Ehrliche Abgrenzung</span>
+    <h2>MYNDS ist ein Prototyp. Und keine Therapie.</h2>
+    <div class="boundary">
+      <ul>
+        <li>MYNDS behandelt nicht, diagnostiziert nicht, überwacht nicht und ersetzt keine Psychotherapie oder ärztliche Versorgung.</li>
+        <li>Der Symptom-Check ist eine reine Selbstauskunft — ohne Scores, Ampeln oder automatische Auswertung.</li>
+        <li>Alle Angaben bleiben auf deinem Gerät. Freigaben erfolgen nur aktiv durch dich.</li>
+        <li>Der aktuelle Stand ist ein Prototyp: Sprachnotizen, Praxis-Bericht und Verlaufs-Analysen sind in Entwicklung.</li>
+      </ul>
+      <p class="crisis"><b>Wenn es dir gerade sehr schlecht geht:</b> Telefonseelsorge (kostenlos, 24/7) <b>0800 111 0 111</b> · Ärztlicher Bereitschaftsdienst <b>116 117</b> · Notruf <b>112</b></p>
+    </div>
+  </div>
+</section>
+
+<section id="kontakt">
+  <div class="wrap">
+    <div class="cta-box">
+      <span class="kicker">Kontakt</span>
+      <h2>Wir zeigen den Prototyp live.</h2>
+      <p class="lead" style="margin:0 auto">MYNDS entsteht im S2B-Programm an der WHU. Wir zeigen die App gern im persönlichen Gespräch.</p>
+      <div class="placeholder">[ Kontakt-Daten werden ergänzt — bitte noch nicht verlinken ]</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 MYNDS · Prototyp</span>
+    <span>Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</span>
+  </div>
+</footer>
+
+</body>
+</html>

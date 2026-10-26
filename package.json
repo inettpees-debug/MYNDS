@@ -32,5 +32,10 @@
   "private": true,
   "jest": {
     "preset": "jest-expo"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/inettpees-debug/MYNDS.git"
   }
 }
