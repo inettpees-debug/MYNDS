@@ -12,10 +12,5 @@
     "production": {
       "autoIncrement": true
     }
-  },
-  "submit": {
-    "production": {
-      "release": "production"
-    }
   }
 }
