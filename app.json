@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "mynds",
     "name": "Mynds",
     "slug": "mynds",
     "version": "0.1.0",
