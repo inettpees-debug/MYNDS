@@ -20,7 +20,7 @@ npx tsc --noEmit        # Typecheck
 
 | Baustein | Status |
 |---|---|
-| Designsystem (Dark-Mode-Tokens, Buttons, Chips, Slider mit Wortankern, Cards, Progress) | ✅ produktionsnah |
+| Designsystem (Marken-Dark-Mode: Schwarz/Creme/Orange/Blau + Grain, Outfit/Albert Sans — Regelwerk `docs/brand/`) | ✅ produktionsnah |
 | Onboarding-Flow S01–S18 (datengetrieben aus `src/onboarding/catalog.ts`) | ✅ lauffähiger Prototyp |
 | Granulare Einwilligungen (Basis + 3 optionale) | ✅ lauffähig · **Texte ehrlich korrigiert** (kein Verschlüsselungs-/Widerruf-Versprechen über den Ist-Zustand hinaus) · anwaltliche Textprüfung offen |
 | Sicherheitsrahmen + Krisenkarte (116117, Telefonseelsorge, 112) | ✅ lauffähig · F10-Trigger durch Tests abgesichert |
@@ -28,7 +28,8 @@ npx tsc --noEmit        # Typecheck
 | Autosave/Resume (AsyncStorage-Prototyp) | ✅ getestet (Restore, Reset-Determinismus, Speicherfehler-Banner mit Retry) — Produktionspfad: verschlüsseltes SQLite, **Konzept folgt separat** |
 | Antworten-Bearbeitung (Slider-Restore, eigene Ziele, D2-Priorisierung) | ✅ getestet — Audit-Bugs P0-2/3/4, P1-5 behoben |
 | Zusammenfassung & Korrektur | ✅ lauffähig (dynamische Labels inkl. eigener Ziele) |
-| Dashboard | Platzhalter; Datenschutz-Karte ehrlich gelabelt („Technische Datenansicht (gekürzt)") |
+| Dashboard (ehrliches Profil: Anliegen, Ziele/Top-Ziel, Startbild-Werte, Symptom-Check nur als Zählung, Krisen-Nummern, Datenkontrolle) | ✅ lauffähig · zeigt nur vorhandene Daten, keine Scores/Ampeln |
+| Demo-Modus („Demo-Profil laden": synthetisches Beispielprofil für Pitch/Demos — F10 bewusst „Nein") | ✅ lauffähig · nur synthetische Daten, nie echte |
 | Account (Apple/Google) | 🎭 **Mock** — echte Auth folgt mit Backend-Integration |
 | Spracheingabe C1 | 🎭 Platzhalter — Aufnahme/Transkription ist Release 2 · **Mikrofon-Berechtigungen bis dahin entfernt** |
 | Check-in/Tracking, Praxis-Report, Mindmaps | Release 2/3 (Roadmap planung-app-v1.md §9) |
@@ -43,8 +44,8 @@ npx tsc --noEmit    # Typecheck
 Abgedeckt: Verzweigungslogik (B2/D2/G2_*, Modul-Skip) · Slider-Restore · YesNoSkip-Skip-Flag
 inkl. Wiederöffnen · D2-Optionen aus D1 (inkl. eigener Ziele) · eigene Ziele sichtbar/abwählbar ·
 F10-Krisenkarte (Ja→Hilfe, ohne Blockieren) · Autosave/Restore · Speicher-/Ladefehler-Banner ·
-Retry · deterministischer Reset. — **Nicht** abgedeckt: echtes Gerät/Expo Go, Screenreader,
-App-Kill-Resume (manuell prüfen).
+Retry · deterministischer Reset · Demo-Daten (synthetisch, F10 „Nein"). — **Nicht** abgedeckt:
+echtes Gerät/Expo Go, Screenreader, App-Kill-Resume (manuell prüfen).
 
 > Hinweis Test-Stack: RNTL v14 benötigt `await render(...)` + `screen`-Queries und
 > `userEvent.press` statt `fireEvent.press` (letzteres greift bei Pressables nicht zuverlässig).
@@ -53,16 +54,29 @@ App-Kill-Resume (manuell prüfen).
 
 ```
 src/
-  theme/tokens.ts          Designsystem (Farben, Typo, Spacing, Radius)
-  components/ui.tsx        Wiederverwendbare Bausteine inkl. CrisisCard, AiBadge
+  theme/tokens.ts          Designsystem (Marken-Farben, Outfit/Albert Sans, Spacing, Radius)
+  components/ui.tsx        Wiederverwendbare Bausteine inkl. CrisisCard, AiBadge, Grain-Screen
+  components/StorageBanner.tsx  Sichtbarer Hinweis bei Speicher-/Ladefehlern (mit Retry)
   navigation/              Stack-Navigation
   onboarding/
     types.ts               Frage-/Antwort-/Consent-Typen
     catalog.ts             Fragenkatalog R1 (Spiegel von fragekatalog-r1.md)
     state.tsx              Context+Reducer, Autosave, Resume
+    demoData.ts            Synthetisches Demo-Profil (Pitch — nie echte Daten)
   screens/                 Welcome, Account(Mock), Consent, Safety, Question(Engine), Summary, Dashboard
   lib/storage.ts           Persistenz-Abstraktion (AsyncStorage → später SQLite/Supabase)
+assets/                    Marken-Assets (Icon, Splash, Android-Adaptive, Favicon, grain.png)
+docs/brand/                Brand Rule Book (verbindliche Marken-Referenz)
+landing/                   Statische Landing-Page (Light Mode der Marke, self-hosted Fonts)
 ```
+
+## Deployment
+
+- **Landing-Page**: Netlify (GitHub-verbunden) — jeder Push auf `main` deploys `landing/`
+  automatisch (`netlify.toml`: kein Build-Step, Publish-Dir `landing/`).
+- **App-Builds**: EAS-Projekt `@mynds/mynds` — Profil `preview` = interne APK-Verteilung
+  (`eas.json`); Store-Beta (TestFlight/Play Console) erst nach Apple-Developer-Konto bzw.
+  Play-Console und den P1-Fixes (Verschlüsselung, Consent-Widerruf, Export).
 
 ## Verzweigungs-Logik (Flow)
 
