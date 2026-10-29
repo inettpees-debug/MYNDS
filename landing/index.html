@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="mynds begleitet junge Erwachsene durch die Therapie-Wartezeit: Gedanken sammeln, Muster erkennen, vorbereitet ankommen. Prototyp.">
+<meta name="description" content="mynds begleitet junge Erwachsene durch die Therapie-Wartezeit: strukturieren, sammeln, einordnen. Prototyp, Daten bleiben auf dem Gerät.">
 <title>mynds — Begleitung durch die Therapie-Wartezeit</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
-  /* mynds Marken-Identität (Rule Book: docs/brand/brand-identity-guide.md)
-     Creme #FCF5AF · Orange #F0A533 · Tieforange #E44F0A · Rot #BA011A · Blau #0B4B8B · Schwarz
-     Fonts self-hosted (SIL OFL), Bilder lokal, keine Requests nach außen (DSGVO).
-     Richtung: Split Stage. Eine Hälfte bleibt liegen, die Zeit scrollt vorbei. */
+  /* mynds · dritte Fassung · Richtung: Name als Monument (taste-skill, Seed 1042183894)
+     Marken-Farben in neuen Rollen: Weiß als Papier, Schwarz als Farbe, Orange nur auf der Aktion.
+     Die App erscheint in ihrem echten Dark Mode (#000/#0A1F3D/#0B4B8B/#FCF5AF), Krisenkarte bleibt blau (Rule Book).
+     Fonts self-hosted (SIL OFL), keine externen Requests (DSGVO). */
   @font-face{
     font-family:'Outfit';
     src:url('fonts/outfit-var.woff2') format('woff2');
@@ -22,359 +22,401 @@
     font-weight:400 600;font-style:normal;font-display:swap;
   }
   :root{
-    --paper:#FCF5AF; --orange:#F0A533; --deep:#E44F0A; --red:#BA011A; --blue:#0B4B8B; --ink:#000000;
-    --ground:#0A1F3D;        /* Dunkelmodus der App */
-    --panel:#0D2547;         /* eine Tonstufe über dem Grund */
-    --field:#0A3A70;         /* Tonstufe auf dem blauen Feld */
-    --ink-dark:#FCF5AF;      /* Schrift auf dunkel */
-    --ink-soft:#D9D4B4;      /* Sekundärtext auf dunkel */
-    --slip:#FFFCEF;          /* der Zettel */
+    --paper:#FFFFFF; --ink:#000000; --soft:#55534B;
+    --orange:#F0A533; --red:#BA011A;
+    /* App-Dark-Mode (echte Tokens aus src/theme/tokens.ts) */
+    --app-bg:#000000; --app-card:#0A1F3D; --app-blue:#0B4B8B;
+    --app-line:#17395F; --app-line2:#204F80; --app-ink:#FCF5AF; --app-dim:#CDC9A8;
+    --app-track:#1B3E66; --app-fill:#E44F0A;
     --font-head:'Outfit',-apple-system,'Segoe UI',sans-serif;
     --font-body:'Albert Sans',-apple-system,'Segoe UI',sans-serif;
-    --s-display:clamp(40px,6.6vw,95px);
-    --s-h1:clamp(40px,5.6vw,80px);
-    --s-heading:clamp(24px,2.5vw,36px);
-    --s-body:17px;
+    /* fünf Stufen: Monument · Poster · Frage · Fließtext · Kleintext */
+    --s-monument:clamp(110px,32vw,500px);
+    --s-poster:clamp(40px,10vw,144px);
+    --s-question:clamp(26px,2.6vw,40px);
+    --s-body:18px;
     --s-small:13px;
-    --pad:7vw;
+    --margin:clamp(18px,2.2vw,32px);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{background:var(--ground);color:var(--ink-dark);font-family:var(--font-body);font-size:var(--s-body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:var(--s-body);line-height:1.55;-webkit-font-smoothing:antialiased}
   h1,h2,h3{font-family:var(--font-head)}
-  img{display:block;max-width:100%}
-  a{color:var(--orange)}
+  a{color:inherit}
   :focus-visible{outline:3px solid var(--orange);outline-offset:3px}
   ::selection{background:var(--orange);color:var(--ink)}
   section{scroll-margin-top:24px}
-  .btn{display:inline-block;background:var(--orange);color:var(--ink);font-family:var(--font-head);font-weight:600;font-size:var(--s-body);text-decoration:none;padding:16px 30px;transition:background .25s ease,color .25s ease,transform .15s ease}
-  .btn:hover{background:var(--deep);color:var(--paper)}
+  .btn{display:inline-block;background:var(--orange);color:var(--ink);font-family:var(--font-head);font-weight:600;font-size:var(--s-body);text-decoration:none;padding:16px 30px;transition:background .25s ease,transform .15s ease}
+  .btn:hover{background:var(--ink);color:var(--paper)}
   .btn:active{transform:translateY(1px)}
-  /* ————— Die Bühne: links liest die Seite, rechts bleibt das Bild ————— */
-  .stage{display:grid;grid-template-columns:1fr 1fr}
-  .stage-copy{padding:0 64px;align-self:start}
-  .stage-photo{position:sticky;top:0;height:100svh;overflow:hidden;align-self:start}
-  .stage-photo img{width:100%;height:100%;object-fit:cover}
-  .photo-stack img{position:absolute;inset:0;transition:opacity 1.6s ease}
-  .photo-stack img+img{opacity:0}
-  .photo-stack.swap img{opacity:0}
-  .photo-stack.swap img+img{opacity:1}
-  .drift{animation:drift 26s ease-in-out infinite alternate;will-change:transform}
-  @keyframes drift{from{transform:scale(1.02)}to{transform:scale(1.12) translate(-1.6%,-1.2%)}}
-  .photo-bar{position:absolute;left:0;right:0;bottom:0;background:var(--paper);color:var(--ink);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 20px;font-size:var(--s-body)}
-  .photo-bar b{font-weight:600}
-  /* Kopfspalte des ersten Aktes */
-  .sheet-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:26px 0 8px}
-  .sheet-head .mark{font-family:var(--font-head);font-weight:700;font-size:var(--s-heading);color:var(--ink-dark);text-decoration:none;letter-spacing:-.01em}
-  .sheet-head a{color:var(--ink-soft);text-decoration:none}
-  .sheet-head a:hover{color:var(--orange);text-decoration:underline}
-  .hero{text-align:center;padding:15vh 0 120px;max-width:none;margin:0 auto}
-  .hero h1{font-size:var(--s-h1);line-height:1.04;letter-spacing:-.03em;font-weight:700;color:var(--orange);margin-bottom:26px}
-  .hero p{color:var(--ink-soft);max-width:34ch;margin:0 auto 34px}
-  /* Zahlen-Mosaik */
-  .warten{padding:40px 0 96px;max-width:none;margin:0 auto}
-  .warten h2{font-size:var(--s-heading);line-height:1.15;letter-spacing:-.01em;margin-bottom:22px}
-  .mosaic{display:grid;grid-template-columns:2fr 1fr}
-  .mosaic img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
-  .tiles{display:grid}
-  .tile{padding:28px 24px;display:flex;flex-direction:column;justify-content:flex-start}
-  .tile b{font-family:var(--font-head);font-weight:700;font-size:var(--s-display);line-height:.95;letter-spacing:-.03em}
-  .tile span{font-size:var(--s-body);margin-top:10px;line-height:1.4}
-  .tile-blue{background:var(--blue);color:var(--paper)}
-  .tile-orange{background:var(--orange);color:var(--ink)}
-  .source{font-size:var(--s-small);color:var(--ink-soft);margin-top:14px}
-  /* ————— Der Ansatz: blaues Feld, stehende Überschrift, vorbeiziehende Blöcke ————— */
-  .ansatz{background:var(--blue);color:var(--paper);padding:72px var(--pad) 88px}
-  .ansatz-grid{display:grid;grid-template-columns:5fr 7fr;gap:6vw}
-  .ansatz h2{font-size:var(--s-display);line-height:.98;letter-spacing:-.03em;font-weight:700;position:sticky;top:32px;align-self:start}
-  .block{margin-bottom:80px}
-  .block:last-child{margin-bottom:0}
-  .block h3{font-size:var(--s-heading);font-weight:600;letter-spacing:-.01em;margin-bottom:18px}
-  .block-row{display:flex;gap:28px;align-items:flex-start}
-  .block-row.flip{flex-direction:row-reverse}
-  .block-row img{width:200px;height:auto;aspect-ratio:3/4;object-fit:cover;flex:none}
-  .block-row ul{list-style:none}
-  .block-row li{padding:7px 0;color:var(--ink-soft)}
-  .block-row li strong{color:var(--paper);font-weight:600}
-  /* Das eine interaktive Ding: dein Startbild */
-  .startbild-panel{background:var(--field);padding:24px 22px 18px;width:260px;flex:none}
-  .startbild-panel label{display:flex;justify-content:space-between;gap:12px;font-size:var(--s-body);margin-bottom:2px}
-  .startbild-panel output{font-variant-numeric:tabular-nums;font-weight:600}
-  .startbild-note{margin-top:14px;font-size:var(--s-body);color:var(--paper)}
-  .startbild-note small{display:block;font-size:var(--s-small);color:var(--ink-soft);margin-top:4px}
-  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent;cursor:pointer}
-  input[type=range]::-webkit-slider-runnable-track{height:6px;background:rgba(252,245,175,.35)}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:28px;margin-top:-11px;background:var(--orange);border:none;border-radius:50%;transition:transform .15s ease}
-  input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
-  input[type=range]::-moz-range-track{height:6px;background:rgba(252,245,175,.35)}
-  input[type=range]::-moz-range-thumb{width:28px;height:28px;background:var(--orange);border:none;border-radius:50%}
-  input[type=range]:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
-  /* ————— Der Prototyp: der Zettel ————— */
-  .prototyp{background:var(--ground);padding:100px var(--pad) 120px}
-  .prototyp-grid{display:grid;grid-template-columns:5fr 6fr;gap:6vw;align-items:start}
-  .prototyp h2{font-size:var(--s-display);line-height:.98;letter-spacing:-.03em;font-weight:700;margin-bottom:26px}
-  .prototyp .lead{max-width:30ch;font-size:var(--s-body);color:var(--ink-soft)}
-  .slip{background:#FFFFFF;color:var(--ink);width:min(460px,100%);padding:34px 30px 52px;font-size:var(--s-body);font-variant-numeric:tabular-nums;
-    clip-path:polygon(0 0,100% 0,100% calc(100% - 16px),97.5% 100%,95% calc(100% - 16px),92.5% 100%,90% calc(100% - 16px),87.5% 100%,85% calc(100% - 16px),82.5% 100%,80% calc(100% - 16px),77.5% 100%,75% calc(100% - 16px),72.5% 100%,70% calc(100% - 16px),67.5% 100%,65% calc(100% - 16px),62.5% 100%,60% calc(100% - 16px),57.5% 100%,55% calc(100% - 16px),52.5% 100%,50% calc(100% - 16px),47.5% 100%,45% calc(100% - 16px),42.5% 100%,40% calc(100% - 16px),37.5% 100%,35% calc(100% - 16px),32.5% 100%,30% calc(100% - 16px),27.5% 100%,25% calc(100% - 16px),22.5% 100%,20% calc(100% - 16px),17.5% 100%,15% calc(100% - 16px),12.5% 100%,10% calc(100% - 16px),7.5% 100%,5% calc(100% - 16px),2.5% 100%,0 calc(100% - 16px))}
-  .slip .slip-mark{font-family:var(--font-head);font-weight:700;font-size:var(--s-heading);letter-spacing:-.01em}
-  .slip .slip-sub{font-size:var(--s-small);margin:2px 0 20px}
-  .slip h4{font-family:var(--font-body);font-weight:600;font-size:var(--s-body);margin:24px 0 6px}
-  .slip-row{display:flex;align-items:baseline;gap:8px;padding:5px 0}
-  .slip-row .lead-dots{flex:1;overflow:hidden;white-space:nowrap;letter-spacing:4px;color:var(--ink);opacity:.55;font-size:var(--s-small)}
-  .slip-row .val{white-space:nowrap;font-weight:600}
-  .slip-final{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--ink);color:var(--paper);margin:26px -30px 0;padding:12px 30px;min-height:44px}
-  .slip-final .val{color:var(--orange)}
-  /* ————— Ehrliche Antworten: Lesetext, zweite Bühne ————— */
-  .fragen{padding:24px 0 120px;max-width:46ch;margin:0 auto}
-  .fragen h2{font-size:var(--s-heading);letter-spacing:-.01em;margin-bottom:22px}
-  .fragen p{margin-bottom:20px;break-inside:avoid;color:var(--ink-soft)}
-  .fragen p b{color:var(--ink-dark);font-weight:600}
-  .krise{background:var(--red);color:var(--paper);padding:24px 26px;margin-top:34px}
-  .krise b{font-weight:600}
-  .krise p{margin:0;color:var(--paper)}
-  /* ————— Kontakt: Zeilen in Schauhöhe ————— */
-  .kontakt{padding:120px var(--pad) 130px}
-  .kontakt h2{font-size:var(--s-heading);letter-spacing:-.01em;margin-bottom:36px}
-  .crow{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;min-height:130px;padding:0 20px 22px;font-family:var(--font-head);font-weight:600;font-size:var(--s-display);line-height:1;letter-spacing:-.03em;transition:background .25s ease}
-  .crow:nth-child(odd){background:var(--panel)}
-  .crow:hover{background:var(--field)}
-  .crow img{width:96px;height:96px;border-radius:50%;object-fit:cover;align-self:center;flex:none}
-  .crow a.krise-link{color:var(--ink-soft);font-size:var(--s-body);font-family:var(--font-body);font-weight:400;align-self:center}
-  .arrow-btn{flex:none;width:.85em;height:.85em;display:grid;place-items:center;background:var(--orange);color:var(--ink);text-decoration:none;font-size:var(--s-display);border-radius:50%;align-self:center;transition:background .25s ease,color .25s ease,transform .15s ease}
-  .arrow-btn span{font-size:.42em;line-height:1;transform:translateX(1%)}
-  .arrow-btn:hover{background:var(--deep);color:var(--paper)}
+  .plink{color:var(--soft);text-decoration:none}
+  .plink:hover{color:var(--ink);text-decoration:underline}
+
+  /* ————— Das Monument ————— */
+  .hero{padding:0}
+  .stage-top{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--margin);overflow:hidden}
+  .hero .hero-video{margin:6vh var(--margin) 0;position:relative}
+  .hero h1{width:100%;font-size:var(--s-monument);font-weight:700;line-height:.85;letter-spacing:-.03em;white-space:nowrap;text-align:center;transform:scale(.97);transition:transform .1s linear}
+  .stage-top .corner{position:absolute;max-width:38ch}
+  .corner .what{font-size:var(--s-body);line-height:1.45}
+  .corner .what b{font-weight:600}
+  .under{margin-top:5vh;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+  .under .what{font-size:var(--s-body);line-height:1.45;max-width:36ch}
+  .under .what b{font-weight:600}
+  .corner-tr{top:var(--margin);right:var(--margin);display:flex;gap:22px;font-size:var(--s-body)}
+  .corner-tr a{text-decoration:none;color:var(--soft)}
+  .corner-tr a:hover{color:var(--ink);text-decoration:underline}
+  .corner-bl{bottom:var(--margin);left:var(--margin);font-size:var(--s-body);color:var(--soft)}
+  .corner-br{bottom:var(--margin);right:var(--margin);font-size:var(--s-body);color:var(--soft);text-align:right}
+  .corner-br b{color:var(--ink);font-weight:600}
+
+  /* ————— Der Video-Rahmen (Hero-Video-Slot) —————
+     Datei landing/assets/hero.mp4 einfügen = fertig. Bis dahin zeigt der Rahmen
+     die gebaute erste Einstellung: einen Breitbild-Ausschnitt der App. */
+  .hero-video{margin:0 var(--margin);position:relative}
+  .video-slot{position:relative;aspect-ratio:16/9;background:var(--app-bg);overflow:hidden}
+  .video-slot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+  .video-slot video.on{opacity:1}
+
+  /* ————— App-Fragmente (Replika, data-ui) ————— */
+  .ui{background:var(--app-bg);color:var(--app-ink);font-family:var(--font-body);border-radius:0;overflow:hidden}
+  .ui .bar{background:var(--app-card);border:1px solid var(--app-line) /*taste-skill-ignore: echte App-Kartenlinie im data-ui-Fragment*/;border-radius:20px;padding:14px 16px}
+  .ui .lbl{font-size:13px;color:var(--app-dim)}
+  .ui .val{font-size:15px;color:var(--app-ink)}
+  .ui .lbl,.ui .val{display:block}
+  .ui .track{position:relative;height:8px;background:var(--app-track);border-radius:4px;margin-top:10px;overflow:hidden}
+  .ui .fill{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--app-fill);border-radius:4px;transition:width 1.2s cubic-bezier(.2,.7,.2,1)}
+  .in .ui .fill,.ui.static .fill{width:var(--w,50%)}
+  .ui .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .ui .meta{font-size:13px;color:var(--app-dim);margin-top:8px}
+  .ui .wordmark{font-family:var(--font-head);font-weight:700;color:var(--app-ink)}
+  .ui input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:40px;background:transparent;cursor:pointer;margin-top:4px}
+  .ui input[type=range]::-webkit-slider-runnable-track{height:8px;background:var(--app-track);border-radius:4px}
+  .ui input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;margin-top:-9px;background:var(--orange);border:none;border-radius:50%;transition:transform .15s ease}
+  .ui input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
+  .ui input[type=range]::-moz-range-track{height:8px;background:var(--app-track);border-radius:4px}
+  .ui input[type=range]::-moz-range-thumb{width:26px;height:26px;background:var(--orange);border:none;border-radius:50%}
+  .ui .toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
+  .ui .knob{flex:none;width:44px;height:26px;border-radius:13px;background:var(--app-track);position:relative}
+  .ui .knob::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--app-dim)}
+  .ui .toggle.on .knob{background:var(--app-blue)}
+  .ui .toggle.on .knob::after{left:21px;background:var(--app-ink)}
+  .ui .toggle .req{font-size:13px;color:var(--app-dim)}
+
+  /* ————— Zahlen, leise ————— */
+  .zahlen{padding:9vh var(--margin)}
+  .zahlen h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;margin:0 0 56px 156px;max-width:44ch}
+  .zrow{display:grid;grid-template-columns:132px 1fr;gap:24px;max-width:46em;margin-left:156px;margin-bottom:28px;align-items:baseline}
+  .zrow:last-child{margin-bottom:0}
+  .zrow dt{font-family:var(--font-head);font-weight:600;font-size:var(--s-question);font-variant-numeric:tabular-nums;text-align:right;letter-spacing:-.02em}
+  .zrow dd{font-size:var(--s-body);color:var(--soft);max-width:40ch}
+  .zrow dd b{color:var(--ink);font-weight:600}
+
+  /* ————— Der Einstieg: Lesespalte mit Belegen ————— */
+  .einstieg{padding:11vh var(--margin)}
+  .flowcol{max-width:640px;margin-left:26vw}
+  .einstieg h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;margin-bottom:48px;max-width:20ch}
+  .stage{margin-bottom:72px}
+  .stage p{font-size:var(--s-body);line-height:1.6}
+  .stage p b{font-weight:600;color:var(--ink)}
+  .stage p{color:var(--soft)}
+  .stage .ui{width:100%;aspect-ratio:16/9;margin-top:20px;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:0 clamp(18px,4vw,64px)}
+
+  /* ————— Fragen groß, Antworten daneben ————— */
+  .fragen{padding:11vh var(--margin)}
+  .qa{display:grid;grid-template-columns:6fr 5fr;gap:5vw;margin-bottom:64px;align-items:baseline}
+  .qa:last-of-type{margin-bottom:0}
+  .qa h3,.qa .qhead{font-size:var(--s-question);font-weight:600;line-height:1.15;letter-spacing:-.01em}
+  .qa .qhead{color:var(--soft);font-family:var(--font-head)}
+  .qa .a{font-size:var(--s-body);color:var(--soft);max-width:40ch}
+  .qa .a b{color:var(--ink);font-weight:600}
+  .qa .a .ui{margin-top:14px}
+
+  /* ————— Fahrplan als Posterzeilen ————— */
+  .fahrplan{padding:9vh var(--margin) 11vh}
+  .fahrplan h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;color:var(--soft);margin-bottom:64px}
+  .item{display:flex;justify-content:space-between;align-items:baseline;gap:24px;font-family:var(--font-head);font-weight:700;font-size:var(--s-poster);line-height:.95;letter-spacing:-.03em;transition:color .25s ease}
+  .item+.item{margin-top:14px}
+  .item:hover{color:var(--orange)}
+  .item .when{font-family:var(--font-body);font-weight:400;font-size:var(--s-body);color:var(--soft);white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
+  .item .when b{font-weight:600;color:var(--ink)}
+
+  /* ————— Kontakt in Schauhöhe ————— */
+  .kontakt{padding:10vh var(--margin) 9vh}
+  .kontakt h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;margin-bottom:48px}
+  .crow{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;min-height:calc(var(--s-poster)*1.25);font-family:var(--font-head);font-weight:600;font-size:var(--s-poster);line-height:1;letter-spacing:-.03em;padding:0 6px 10px;transition:background .25s ease}
+  .crow:nth-of-type(odd){background:#F4F3EE}
+  .crow:hover{background:#ECEAE2}
+  .crow .note-r{font-family:var(--font-body);font-weight:400;font-size:var(--s-body);color:var(--soft);align-self:center;white-space:nowrap}
+  .arrow-btn{flex:none;width:.8em;height:.8em;display:grid;place-items:center;background:var(--orange);color:var(--ink);text-decoration:none;font-size:var(--s-poster);border-radius:50%;align-self:center;transition:background .25s ease,transform .15s ease}
+  .arrow-btn span{font-size:.4em;line-height:1}
+  .arrow-btn:hover{background:var(--ink);color:var(--paper)}
   .arrow-btn:active{transform:translateY(2px)}
-  .kontakt .note{font-size:var(--s-small);color:var(--ink-soft);margin-top:26px}
-  /* ————— Fuß: der Name über dem letzten Bild ————— */
-  .footer{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
-  .footer>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.62)}
-  .footer-inner{position:relative;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;padding:40px var(--pad) 0}
-  .footer-inner nav{display:flex;gap:22px}
-  .footer-inner a{color:var(--paper);font-size:var(--s-body);text-decoration:none}
-  .footer-inner a:hover{color:var(--orange);text-decoration:underline}
-  .footer-bottom{position:relative;padding:0 var(--pad) 56px}
-  .wordmark{width:100%;height:auto;display:block}
-  .legal{font-size:var(--s-small);color:var(--paper);margin-top:18px;max-width:90ch}
-  .credits{font-size:var(--s-small);color:rgba(252,245,175,.75);max-width:64ch;margin-top:10px}
-  .credits a{color:rgba(252,245,175,.9)}
+  .kontakt .note{font-size:var(--s-small);color:var(--soft);margin-top:24px}
+
+  /* ————— Fuß: invertiert, der Name kehrt wieder ————— */
+  footer{background:var(--ink);color:var(--paper);min-height:96svh;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(28px,4vh,44px) var(--margin) 22px;gap:24px}
+  .fcols{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1100px}
+  .fcols h4{font-family:var(--font-body);font-size:var(--s-body);font-weight:600;color:var(--paper);margin-bottom:10px}
+  .fcols p,.fcols a{font-size:var(--s-body);color:#B9B7AD;text-decoration:none;display:block;line-height:1.5}
+  .fcols a:hover{color:var(--paper);text-decoration:underline}
+  .fcols b{color:var(--paper);font-weight:600}
+  .fmark{width:100%}
+  .fmark svg{display:block;width:100%;height:auto}
+  .legal{font-size:var(--s-small);color:#8F8D83;margin-top:16px;max-width:100ch}
+
   /* ————— Bewegung ————— */
-  .js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;transition-delay:calc(var(--i,0)*80ms)}
+  .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;transition-delay:calc(var(--i,0)*80ms)}
   .js .reveal.in{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     .js .reveal{opacity:1;transform:none;transition:none}
-    .drift{animation:none}
-    .photo-stack img{transition:none}
+    .hero h1{transform:none}
+    .ui .fill{transition:none}
   }
-  /* ————— Telefon: eigene Komposition ————— */
+
+  /* ————— Telefon ————— */
+  @media (max-width:560px){
+    .qa{grid-template-columns:1fr;gap:12px;margin-bottom:56px}
+    .qa .a{max-width:none}
+  }
   @media (max-width:880px){
-    .stage{display:block}
-    .stage-photo{position:relative;height:46svh}
-    .stage-1 .stage-photo{margin-bottom:-1px}
-    .stage-copy{padding:28px 20px 0}
-    .photo-bar{font-size:var(--s-small)}
-    .sheet-head .lnk{display:none}
-    .hero{padding:6vh 0 80px}
-    .mosaic{display:block}
-    .mosaic img{aspect-ratio:4/3}
-    .tiles{display:flex}
-    .tile{flex:1;padding:20px 18px}
-    .ansatz{padding:80px 20px 90px}
-    .ansatz-grid{display:block}
-    .ansatz h2{position:sticky;top:0;background:var(--blue);padding:14px 0 10px;margin:-80px 0 40px;z-index:2}
-    .block{margin-bottom:72px}
-    .block-row,.block-row.flip{flex-direction:column;gap:18px}
-    .block-row img,.startbild-panel{width:100%}
-    .prototyp{padding:80px 20px 100px}
-    .prototyp-grid{display:block}
-    .prototyp .lead{margin-bottom:44px}
-    .kontakt{padding:80px 20px 90px}
-    .crow{min-height:84px;font-size:clamp(30px,9vw,44px);padding:0 14px 16px}
-    .arrow-btn{width:44px;height:44px;font-size:inherit}
-    .footer{min-height:88svh}
-    .footer-inner{padding-top:28px}
+    .hero{padding:0}
+    .hero h1{font-size:29vw}
+    .hero h1{padding:9vh var(--margin) 0;transform:none}
+    .corner{position:static;max-width:none}
+    .under{margin-top:4vh;padding:0 var(--margin);align-items:flex-start;text-align:left}
+    .under .btn{align-self:stretch;text-align:center}
+    .corner-tr{position:absolute;top:var(--margin);right:var(--margin);flex-direction:column;gap:10px;text-align:right;font-size:var(--s-small)}
+    .corner-bl{padding:0 var(--margin);margin-top:5vh;font-size:var(--s-small)}
+    .corner-br{display:none}
+    .hero .crisis-mobile{display:block;padding:0 var(--margin);margin-top:8px;font-size:var(--s-small);color:var(--soft)}
+    .hero .crisis-mobile b{color:var(--ink)}
+    .hero-video{margin-top:6vh}
+    .zahlen{padding:13vh var(--margin)}
+    .zahlen h2,.zrow{margin-left:0}
+    .zrow{grid-template-columns:88px 1fr;gap:16px}
+    .zrow dt{font-size:24px}
+    .einstieg{padding:13vh var(--margin)}
+    .flowcol{margin-left:0;max-width:none}
+    .stage .ui{aspect-ratio:auto;height:auto;padding:20px}
+    .stage{margin-bottom:48px}
+    .einstieg{padding:8vh var(--margin)}
+    .fragen{padding:8vh var(--margin)}
+    .stage{margin-bottom:56px}
+    .fragen{padding:13vh var(--margin)}
+    .qa .a{max-width:none}
+    .fahrplan{padding:11vh var(--margin)}
+    .fahrplan h2{margin-bottom:48px}
+    .item{flex-direction:column;gap:4px;align-items:flex-start}
+    .item .when{text-align:left}
+    .kontakt{padding:12vh var(--margin)}
+    .fcols{grid-template-columns:1fr 1fr;gap:28px 20px}
   }
 </style>
 </head>
 <body>
 
-<!-- Erster Akt: das Bild bleibt liegen, die Seite liest sich vorbei -->
-<div class="stage stage-1">
-  <div class="stage-photo">
-    <div class="photo-stack" id="stack1">
-      <img class="drift" src="assets/sihlwald-fog-sun-20200122.jpg" alt="Sonnenstrahlen im Morgennebel auf einem Waldweg" width="1600" height="1321">
-      <img src="assets/dulmen-wildpark-2017-0010.jpg" alt="Leerer Weg durch einen Wildpark im Morgennebel" width="1600" height="1200" loading="lazy">
+<!-- Das Monument: der Name ist die Schlagzeile -->
+<header class="hero" id="top">
+  <div class="stage-top">
+    <nav class="corner corner-tr" aria-label="Seitennavigation">
+      <a href="#zahlen">Zahlen</a>
+      <a href="#einstieg">Einstieg</a>
+      <a href="#fragen">Fragen</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <h1>mynds</h1>
+    <div class="under">
+      <p class="what"><b>mynds</b> begleitet junge Erwachsene durch die Therapie-Wartezeit: strukturieren, sammeln, einordnen.</p>
+      <a class="btn" href="#einstieg">Den Prototyp ansehen</a>
     </div>
-    <div class="photo-bar">
-      <span>Ø <b>20 Wochen</b> zwischen Erstkontakt und Therapiebeginn</span>
-      <span>Krise? <b>0800 111 0 111</b>, 24/7</span>
-    </div>
+    <p class="corner corner-bl">Prototyp · S2B an der WHU</p>
+    <p class="corner corner-br">Wenn es dir gerade schlecht geht:<br><b>Telefonseelsorge 0800 111 0 111</b>, 24/7</p>
+    <p class="crisis-mobile" style="display:none">Krise? <b>0800 111 0 111</b>, 24/7</p>
   </div>
-  <div class="stage-copy">
-    <div class="sheet-head">
-      <a class="lnk" href="#ansatz">Ansatz</a>
-      <a class="mark" href="#top" aria-label="mynds, zum Seitenanfang">mynds</a>
-      <a class="lnk" href="#prototyp">Prototyp</a>
-    </div>
-    <header class="hero" id="top">
-      <h1>Die Wartezeit<br>gehört dir.</h1>
-      <p>mynds begleitet junge Erwachsene durch die Wochen bis zum ersten Therapiegespräch.</p>
-      <a class="btn" href="#prototyp">Prototyp ansehen</a>
-    </header>
-    <section class="warten" id="warten" aria-label="Zahlen zur Wartezeit">
-      <h2 class="reveal">Die Wartezeit heute</h2>
-      <div class="mosaic reveal" style="--i:1">
-        <img src="assets/empty-keflavik-airport.jpg" alt="Leere Sitzreihen in einem Wartebereich im Morgenlicht" width="1600" height="1200" loading="lazy">
-        <div class="tiles">
-          <div class="tile tile-blue"><b>20</b><span>Wochen Wartezeit im Schnitt, von der ersten Nachfrage bis zur Therapie.</span></div>
-          <div class="tile tile-orange"><b>0</b><span>strukturierte Begleitung gibt es heute in dieser Zeit.</span></div>
+  <!-- Hero-Video-Slot: assets/hero.mp4 einfügen = fertig. Poster ist die gebaute erste Einstellung. -->
+  <div class="hero-video" aria-label="mynds, der Einstieg in der App">
+    <div class="video-slot">
+      <div class="ui static" data-ui style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:0 8%">
+        <p style="font-size:14px;color:var(--app-dim)">Montag, 7:42</p>
+        <p class="wordmark" style="font-size:20px">Schön, dass du da bist, Mia.</p>
+        <div class="bar">
+          <div class="row"><span class="lbl">Dein Startbild — heute</span><span class="val" style="font-variant-numeric:tabular-nums">Stimmung 4/10</span></div>
+          <div class="track"><div class="fill" style="--w:40%"></div></div>
+          <div class="track"><div class="fill" style="--w:40%;transition-delay:.15s"></div></div>
+          <div class="track"><div class="fill" style="--w:70%;transition-delay:.3s"></div></div>
+          <p class="meta">Energie 4/10 · Anspannung 7/10 — keine Auswertung, keine Diagnose</p>
         </div>
+        <div class="row" style="background:var(--app-card);border:1px solid var(--app-line) /*taste-skill-ignore: echte App-Kartenlinie im data-ui-Fragment*/;border-radius:20px;padding:12px 16px"><span class="lbl">Deine Ziele, aufbewahrt für das erste Gespräch</span><span class="val" style="font-variant-numeric:tabular-nums">2</span></div>
       </div>
-      <p class="source reveal" style="--i:2">Wartezeit: BPtK-Wartezeiterhebung, Angabe aus eigener Recherche.</p>
-    </section>
+      <video muted loop playsinline preload="none" poster="assets/hero-poster.jpg" src="assets/hero.mp4" aria-label="Video: der Einstieg in mynds, wie der Prototyp ihn heute zeigt"></video>
+    </div>
   </div>
-</div>
+</header>
 
-<!-- Zweiter Akt: das blaue Feld -->
-<section class="ansatz" id="ansatz">
-  <div class="ansatz-grid">
-    <h2>Der<br>Ansatz</h2>
-    <div class="blocks">
-      <div class="block reveal">
-        <h3>Deine Anamnese, in Ruhe</h3>
-        <div class="block-row">
-          <img src="assets/light-and-shadow-1025740.jpg" alt="Abendsonne wirft Fensterschatten in einen ruhigen Raum" width="1600" height="1200" loading="lazy">
-          <ul>
-            <li><strong>Geführte Selbstauskunft</strong> auf Basis etablierter Anamnese-Bögen</li>
-            <li>In Ruhe ausfüllen, <strong>jederzeit unterbrechen</strong></li>
-            <li>Jede sensible Frage <strong>freiwillig</strong></li>
-            <li>Dauert etwa <strong>8 bis 12 Minuten</strong></li>
-          </ul>
+<!-- Zahlen, leise -->
+<section class="zahlen" id="zahlen">
+  <h2 class="reveal">Die Wartezeit, in Zahlen</h2>
+  <dl>
+    <div class="zrow reveal"><dt>20</dt><dd><b>Wochen</b> liegen im Schnitt zwischen Erstkontakt und Therapiebeginn. BPtK-Wartezeiterhebung, Angabe aus eigener Recherche.</dd></div>
+    <div class="zrow reveal"><dt>4</dt><dd><b>Einwilligungen</b>, getrennt erteilbar und einzeln widerrufbar. Ohne die optionalen drei läuft alles.</dd></div>
+    <div class="zrow reveal"><dt>16</dt><dd><b>Fragen</b> im Symptom-Check, als reine Selbstauskunft. Kein Score, keine Ampel, keine Diagnose.</dd></div>
+    <div class="zrow reveal"><dt>0</dt><dd><b>Server</b> halten deine Angaben. Im Prototyp bleibt alles auf deinem Gerät, löschbar mit einem Tipp.</dd></div>
+  </dl>
+</section>
+
+<!-- Der Einstieg: Lesespalte, Beleg nach jedem Absatz -->
+<section class="einstieg" id="einstieg">
+  <div class="flowcol">
+    <h2 class="reveal">So läuft der Einstieg</h2>
+    <div class="stage reveal">
+      <p><b>Zu Beginn</b> erklärst du in vier getrennten Einwilligungen, was mynds mit deinen Angaben tun darf. Jede einzeln, jede widerrufbar, ohne Kleingedrucktes.</p>
+      <div class="ui" data-ui aria-label="Einwilligungen in der App: eine erforderlich, drei optional">
+        <div class="toggle on"><span class="val">Notizen auf diesem Gerät speichern <span class="req">erforderlich</span></span><span class="knob" aria-hidden="true"></span></div>
+        <div class="toggle"><span class="val">Symptom-Check führen</span><span class="knob" aria-hidden="true"></span></div>
+        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release 2</span></span><span class="knob" aria-hidden="true"></span></div>
+      </div>
+    </div>
+    <div class="stage reveal">
+      <p><b>Danach</b> hältst du dein Anliegen in eigenen Worten fest und gibst an, wie sehr es dich gerade belastet. Alles Weitere ist freiwillig.</p>
+      <div class="ui" data-ui aria-label="Anliegen in eigenen Worten mit Belastungsanzeige">
+        <div class="bar">
+          <span class="lbl">Dein Anliegen — in deinen Worten</span>
+          <p class="val" style="margin-top:6px">„Ich möchte verstehen, warum ich nachts nicht zur Ruhe komme."</p>
+          <div class="row" style="margin-top:12px"><span class="lbl">Aktuelle Belastung</span><span class="val" style="font-variant-numeric:tabular-nums">7/10</span></div>
+          <div class="track"><div class="fill" style="--w:70%"></div></div>
         </div>
       </div>
-      <div class="block reveal">
-        <h3>Deine Muster, ehrlich eingeordnet</h3>
-        <div class="block-row flip">
-          <img src="assets/leafs-in-the-winter-fog-flickr-gael.jpg" alt="Verschleierte Blätter im Winternebel" width="1600" height="900" loading="lazy">
-          <ul>
-            <li><strong>Schlaf, Energie, Anspannung</strong> begleiten, was du wählst</li>
-            <li>Zusammenhänge als <strong>Beobachtung, nicht als Urteil</strong></li>
-            <li><strong>Kein Score, keine Ampel</strong>, keine Diagnose</li>
-            <li>Du entscheidest, <strong>was mynds begleiten soll</strong></li>
-          </ul>
+    </div>
+    <div class="stage reveal">
+      <p><b>Dann</b> setzt du bis zu drei Ziele und nimmst dein Startbild auf: neun Werte, von Stimmung bis Schlaf. Probiere es aus, so wie es die App macht:</p>
+      <div class="ui" data-ui aria-label="Dein Startbild, interaktiv">
+        <div class="bar">
+          <div class="row"><label class="lbl" for="sl-stimmung">Stimmung</label><span class="val" style="font-variant-numeric:tabular-nums"><output for="sl-stimmung" id="ov-stimmung">4</output>/10</span></div>
+          <input type="range" id="sl-stimmung" min="0" max="10" value="4" aria-label="Stimmung heute, 0 bis 10">
         </div>
-      </div>
-      <div class="block reveal">
-        <h3>Vorbereitet ins Erstgespräch</h3>
-        <div class="block-row">
-          <img src="assets/sea-dawn.jpg" alt="Lang belichtetes Meer in blauer Morgendämmerung" width="1200" height="1600" loading="lazy">
-          <ul>
-            <li><strong>Ziele und Wünsche</strong>, in eigenen Worten</li>
-            <li>Deine Story, <strong>aufbereitet für den Anfang</strong></li>
-            <li>Freigegeben <strong>nur durch dich</strong></li>
-            <li>Nur an <strong>die Praxis deiner Wahl</strong></li>
-          </ul>
+        <div class="bar">
+          <div class="row"><label class="lbl" for="sl-schlaf">Schlaf</label><span class="val" style="font-variant-numeric:tabular-nums"><output for="sl-schlaf" id="ov-schlaf">3</output>/10</span></div>
+          <input type="range" id="sl-schlaf" min="0" max="10" value="3" aria-label="Schlaf heute, 0 bis 10">
         </div>
+        <div class="bar">
+          <div class="row"><label class="lbl" for="sl-anspannung">Anspannung</label><span class="val" style="font-variant-numeric:tabular-nums"><output for="sl-anspannung" id="ov-anspannung">7</output>/10</span></div>
+          <input type="range" id="sl-anspannung" min="0" max="10" value="7" aria-label="Anspannung heute, 0 bis 10">
+        </div>
+        <p class="meta" id="startbild-line">Deine Beobachtung. mynds rechnet daraus nichts aus.</p>
       </div>
-      <div class="block reveal" id="startbild">
-        <h3>Dein Startbild</h3>
-        <div class="block-row">
-          <div class="startbild-panel">
-            <label for="stimmung">Stimmung <output for="stimmung" id="v-stimmung">4</output></label>
-            <input type="range" id="stimmung" min="0" max="10" value="4" aria-label="Stimmung heute, 0 bis 10">
-            <label for="energie">Energie <output for="energie" id="v-energie">4</output></label>
-            <input type="range" id="energie" min="0" max="10" value="4" aria-label="Energie heute, 0 bis 10">
-            <label for="anspannung">Anspannung <output for="anspannung" id="v-anspannung">7</output></label>
-            <input type="range" id="anspannung" min="0" max="10" value="7" aria-label="Anspannung heute, 0 bis 10">
-            <p class="startbild-note">Heute notiert: <span id="startbild-line">Stimmung 4, Energie 4, Anspannung 7</span>
-              <small>Deine Beobachtung. mynds rechnet daraus nichts aus.</small>
-            </p>
-          </div>
-          <ul>
-            <li><strong>Drei Regler</strong>, mehr braucht der Anfang nicht</li>
-            <li>Du setzt <strong>deine eigene Baseline</strong></li>
-            <li><strong>Keine Auswertung</strong>, keine Bewertung</li>
-            <li>Alles <strong>jederzeit korrigierbar</strong></li>
-          </ul>
+    </div>
+    <div class="stage reveal">
+      <p><b>Am Ende</b> liegt alles an einem Ort: dein Profil. Korrigierbar, exportierbar, löschbar. Für den Moment, in dem deine Therapie beginnt.</p>
+      <div class="ui" data-ui aria-label="Profil in der App">
+        <div class="bar">
+          <div class="row"><span class="lbl">Deine Ziele</span></div>
+          <p class="val" style="margin-top:6px"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z" fill="#F0A533"/></svg> Ruhiger schlafen · Klarer Grenzen setzen</p>
+          <p class="meta">für dein erstes Gespräch aufbewahrt</p>
+        </div>
+        <div class="bar">
+          <div class="row"><span class="lbl">Symptom-Check</span><span class="val" style="font-variant-numeric:tabular-nums">9 von 16</span></div>
+          <p class="meta">deine Selbstauskunft, nur gezählt</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Dritter Akt: der Zettel -->
-<section class="prototyp" id="prototyp">
-  <div class="prototyp-grid">
-    <div class="reveal">
-      <h2>Der<br>Prototyp</h2>
-      <p class="lead">Vier Schritte, die heute schon funktionieren: vom Willkommen bis zum persönlichen Profil. Alles auf deinem Gerät.</p>
-    </div>
-    <div class="slip reveal" style="--i:1">
-      <p class="slip-mark">mynds</p>
-      <p class="slip-sub">Einstieg in vier Schritten</p>
-      <h4>Am Anfang</h4>
-      <div class="slip-row"><span>Willkommen und vier getrennte Einwilligungen</span><span class="lead-dots">············································</span><span class="val">2 Min</span></div>
-      <div class="slip-row"><span>Dein Anliegen, in eigenen Worten</span><span class="lead-dots">············································</span><span class="val">freiwillig</span></div>
-      <h4>Danach</h4>
-      <div class="slip-row"><span>Bis zu drei Ziele setzen</span><span class="lead-dots">············································</span><span class="val">3 Ziele</span></div>
-      <div class="slip-row"><span>Startbild: Stimmung, Energie, Anspannung</span><span class="lead-dots">············································</span><span class="val">3 Regler</span></div>
-      <h4>Dein Profil</h4>
-      <div class="slip-row"><span>Alles an einem Ort, korrigierbar und löschbar</span><span class="lead-dots">············································</span><span class="val">1 Profil</span></div>
-      <div class="slip-row"><span>Sprachnotizen und Bericht für Praxen</span><span class="lead-dots">············································</span><span class="val">Release 2</span></div>
-      <div class="slip-row"><span>Muster über Zeit erkennen</span><span class="lead-dots">············································</span><span class="val">Release 3</span></div>
-      <div class="slip-final"><span>Vorbereitet im Erstgespräch</span><span class="val">ca. 10 Min</span></div>
+<!-- Fragen groß, Antworten daneben -->
+<section class="fragen" id="fragen">
+  <div class="qa reveal">
+    <p class="qhead">Ehrliche Antworten</p>
+    <p class="a"></p>
+  </div>
+  <div class="qa reveal">
+    <h3>Ist mynds eine Therapie?</h3>
+    <p class="a"><b>Nein.</b> mynds behandelt nicht, diagnostiziert nicht und ersetzt weder Psychotherapie noch ärztliche Versorgung. mynds begleitet, strukturiert und sammelt, für die Zeit davor.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Was passiert mit meinen Angaben?</h3>
+    <p class="a">Sie bleiben <b>auf deinem Gerät</b>. Kein Server, keine Cloud, kein Tracking. Freigaben erfolgen nur aktiv durch dich.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Bekomme ich einen Score oder eine Diagnose?</h3>
+    <p class="a"><b>Nein.</b> Der Symptom-Check zählt nur deine Ja-Antworten. Keine Punkte, keine Ampeln, keine automatische Auswertung.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Was kann der Prototyp schon?</h3>
+    <p class="a">Den kompletten Einstieg: Einwilligungen, Anliegen, Ziele, Startbild und dein Profil. Sprachnotizen, der Bericht für Praxen und Muster über Zeit entstehen in <b>Release 2 und 3</b>.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Was kostet mynds?</h3>
+    <p class="a">Den Prototyp kannst du <b>kostenlos</b> ansehen. Über Preise für spätere Versionen ist noch nicht entschieden.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Wer macht mynds?</h3>
+    <p class="a">Ein Gründerteam im <b>S2B-Programm der WHU</b>, Otto Beisheim School of Management.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Und wenn es mir gerade sehr schlecht geht?</h3>
+    <p class="a">Dann sprich sofort mit jemandem. Diese Nummern stehen auch <b>in der App</b>, eine Karte weiter:</p>
+    <div class="ui" data-ui aria-label="Sicherheitsbereich der App mit Hilfe-Nummern">
+      <div class="bar" style="background:var(--app-blue);border-color:var(--app-line2)">
+        <p class="val" style="font-family:var(--font-head);font-weight:600">Hilfe ist jederzeit erreichbar</p>
+        <p class="meta" style="color:var(--app-ink);margin-top:8px">Telefonseelsorge <b style="font-weight:600">0800 111 0 111</b>, kostenlos, 24/7<br>Ärztlicher Bereitschaftsdienst <b style="font-weight:600">116 117</b> · Notruf <b style="font-weight:600">112</b></p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Vierter Akt: Lesetext auf der zweiten Bühne -->
-<div class="stage stage-2">
-  <div class="stage-copy">
-    <section class="fragen" aria-label="Ehrliche Antworten">
-      <h2 class="reveal">Ehrliche Antworten</h2>
-      <p class="reveal"><b>Ist mynds eine Therapie?</b> Nein. mynds behandelt nicht, diagnostiziert nicht und ersetzt weder Psychotherapie noch ärztliche Versorgung. Es ist eine Begleitung für die Zeit davor.</p>
-      <p class="reveal"><b>Was passiert mit meinen Angaben?</b> Sie bleiben auf deinem Gerät. Kein Server, keine Cloud, kein Tracking. Freigaben erfolgen nur aktiv durch dich.</p>
-      <p class="reveal"><b>Bekomme ich einen Score oder eine Diagnose?</b> Nein. Der Symptom-Check ist reine Selbstauskunft: keine Punkte, keine Ampeln, keine automatische Auswertung.</p>
-      <p class="reveal"><b>Was kann der Prototyp schon?</b> Den kompletten Einstieg, vom Willkommen bis zum Profil. Sprachnotizen, der Bericht für Praxen und Verläufe über Zeit entstehen in Release 2 und 3.</p>
-      <p class="reveal"><b>Was kostet mynds?</b> Den Prototyp kannst du kostenlos ansehen. Über Preise für spätere Versionen ist noch nicht entschieden.</p>
-      <p class="reveal"><b>Wer macht mynds?</b> Ein Gründerteam im S2B-Programm der WHU, Otto Beisheim School of Management.</p>
-      <div class="krise reveal">
-        <p><b>Wenn es dir gerade sehr schlecht geht:</b> Telefonseelsorge <b>0800 111 0 111</b>, kostenlos, 24/7 · Ärztlicher Bereitschaftsdienst <b>116 117</b> · Notruf <b>112</b></p>
-      </div>
-    </section>
-  </div>
-  <div class="stage-photo">
-    <img src="assets/dulmen-wildpark-2017-0003.jpg" alt="Wildpark im dichten Morgennebel" width="1600" height="1200" loading="lazy">
-  </div>
-</div>
+<!-- Fahrplan als Posterzeilen -->
+<section class="fahrplan" id="fahrplan">
+  <h2 class="reveal">Der Fahrplan</h2>
+  <div class="item reveal"><span>selbstauskunft</span><span class="when"><b>heute</b> · im Prototyp</span></div>
+  <div class="item reveal"><span>ziele</span><span class="when"><b>heute</b> · im Prototyp</span></div>
+  <div class="item reveal"><span>startbild</span><span class="when"><b>heute</b> · im Prototyp</span></div>
+  <div class="item reveal"><span>sprachnotizen</span><span class="when">Release 2 · <b>in Entwicklung</b></span></div>
+  <div class="item reveal"><span>praxis-bericht</span><span class="when">Release 2 · <b>in Entwicklung</b></span></div>
+  <div class="item reveal"><span>muster</span><span class="when">Release 3 · <b>in Entwicklung</b></span></div>
+</section>
 
-<!-- Fünfter Akt: Kontakt in Schauhöhe -->
+<!-- Kontakt in Schauhöhe -->
 <section class="kontakt" id="kontakt">
   <h2 class="reveal">Kontakt</h2>
-  <div class="crow reveal"><span>mynds</span><img src="assets/light-and-shadow-1025740.jpg" alt="Abendlicht in einem ruhigen Raum" width="1600" height="1200" loading="lazy"></div>
-  <div class="crow reveal" style="--i:1"><span>S2B an der WHU</span></div>
-  <div class="crow reveal" style="--i:2"><span>Prototyp 2026</span></div>
-  <div class="crow reveal" style="--i:3"><span>Demo ansehen</span><a class="arrow-btn" href="#prototyp" aria-label="Zum Prototyp: Demo ansehen"><span>↓</span></a></div>
+  <div class="crow reveal"><span>mynds</span></div>
+  <div class="crow reveal"><span>S2B an der WHU</span></div>
+  <div class="crow reveal"><span>Prototyp 2026</span></div>
+  <div class="crow reveal"><span>Demo ansehen</span><a class="arrow-btn" href="#einstieg" aria-label="Zum Einstieg: Demo ansehen"><span>↓</span></a></div>
   <p class="note reveal">[ Kontaktdaten werden ergänzt ]</p>
 </section>
 
-<!-- Der Name über dem letzten Bild -->
-<footer class="footer">
-  <img src="assets/fog-road.jpg" alt="Baumallee verschwindet im dichten Nebel" width="2400" height="1350" loading="lazy">
-  <div class="footer-inner">
-    <nav aria-label="Seitennavigation">
-      <a href="#ansatz">Ansatz</a>
-      <a href="#prototyp">Prototyp</a>
+<!-- Der Fuß: invertiert, der Name kehrt wieder -->
+<footer>
+  <div class="fcols">
+    <div>
+      <h4>mynds</h4>
+      <p>Prototyp · S2B an der WHU<br>Otto Beisheim School of Management</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <a href="#zahlen">Zahlen</a>
+      <a href="#einstieg">Einstieg</a>
+      <a href="#fahrplan">Fahrplan</a>
       <a href="#kontakt">Kontakt</a>
-    </nav>
-    <span style="font-size:var(--s-small);color:var(--paper)">© 2026 MYNDS · Prototyp</span>
+    </div>
+    <div>
+      <h4>Sofort Hilfe</h4>
+      <p>Telefonseelsorge <b>0800 111 0 111</b><br> Bereitschaftsdienst <b>116 117</b> · Notruf <b>112</b></p>
+    </div>
+    <div>
+      <h4>Stand</h4>
+      <p>Keine Therapie, keine Diagnose.<br>Daten bleiben auf deinem Gerät.</p>
+    </div>
   </div>
-  <div class="footer-bottom">
-    <svg class="wordmark" viewBox="0 0 1000 200" role="img" aria-label="mynds">
-      <text x="0" y="150" textLength="1000" lengthAdjust="spacingAndGlyphs" font-family="Outfit, sans-serif" font-weight="700" font-size="185" fill="#FCF5AF">mynds</text>
+  <div class="fmark" aria-hidden="true">
+    <svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet">
+      <text x="0" y="262" textLength="1000" lengthAdjust="spacing" font-family="Outfit, sans-serif" font-weight="700" font-size="330" letter-spacing="-8" fill="#FCF5AF">mynds</text>
     </svg>
-    <p class="legal">Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</p>
-    <p class="credits">Fotos: „Sihlwald fog sun“ <a href="https://commons.wikimedia.org/wiki/File:Sihlwald_fog_sun_20200122.jpg">D. Kraft</a>, „Dülmen, Wildpark“ <a href="https://commons.wikimedia.org/wiki/File:D%C3%BClmen,_Wildpark_--_2017_--_0010.jpg">D. Rabich</a>, „Empty Keflavik Airport“ <a href="https://commons.wikimedia.org/wiki/File:Empty_Keflavik_Airport_(221071677).jpeg">D. Bruijn</a>, „Light and Shadow“ <a href="https://commons.wikimedia.org/wiki/File:Light_and_Shadow-1025740.jpg">Maoileann</a>, „Leafs in the winter fog“ <a href="https://commons.wikimedia.org/wiki/File:Leafs_in_the_winter_fog_-_Flickr_-_Gael_Varoquaux.jpg">G. Varoquaux</a>, alle via Wikimedia Commons (CC BY-SA bzw. CC BY) · „Sea dawn“ J. Bean, „Fog road“ D. Lin, beide Unsplash-Lizenz via picsum.photos</p>
+  </div>
+  <div>
+    <p class="legal">© 2026 MYNDS · Prototyp · Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</p>
   </div>
 </footer>
 
@@ -385,27 +427,29 @@ var io=new IntersectionObserver(function(es){
   es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
 },{rootMargin:'0px 0px 320px 0px',threshold:0});
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
-// Der Signaturzug: das liegende Bild wechselt leise, wenn die Zahlen kommen
-var stack=document.getElementById('stack1'),warten=document.getElementById('warten');
-if(stack&&warten&&'IntersectionObserver' in window){
-  var io2=new IntersectionObserver(function(es){
-    es.forEach(function(e){stack.classList.toggle('swap',e.isIntersecting);});
-  },{rootMargin:'-45% 0px -45% 0px'});
-  io2.observe(warten);
+// Der Signaturzug: das Monument wird beim Scrollen leicht schwerer
+var mon=document.querySelector('.hero h1');
+if(mon&&'IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  var io3=new IntersectionObserver(function(es){
+    es.forEach(function(e){mon.style.transform=e.intersectionRatio>.5?'scale(.97)':'scale(1)';});
+  },{threshold:[.5]});
+  io3.observe(document.querySelector('.stage-top'));
 }
-// Das eine interaktive Ding: dein Startbild
-function bind(id,out){
+// Das eine lebendige Ding: dein Startbild
+function bind2(id,out){
   var el=document.getElementById(id),o=document.getElementById(out);
   if(!el)return;
-  el.addEventListener('input',function(){
-    o.textContent=el.value;
-    var s=document.getElementById('stimmung').value,
-        e=document.getElementById('energie').value,
-        a=document.getElementById('anspannung').value;
-    document.getElementById('startbild-line').textContent='Stimmung '+s+', Energie '+e+', Anspannung '+a;
-  });
+  el.addEventListener('input',function(){o.textContent=el.value;});
 }
-bind('stimmung','v-stimmung');bind('energie','v-energie');bind('anspannung','v-anspannung');
+bind2('sl-stimmung','ov-stimmung');bind2('sl-schlaf','ov-schlaf');bind2('sl-anspannung','ov-anspannung');
+// Hero-Video: sobald assets/hero.mp4 existiert, blendet es sich über die gebaute erste Einstellung
+var v=document.querySelector('.video-slot video');
+if(v){
+  var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  v.addEventListener('loadeddata',function(){v.classList.add('on');if(!rm)v.play().catch(function(){});});
+  v.addEventListener('error',function(){v.classList.remove('on');});
+  if('requestIdleCallback' in window){requestIdleCallback(function(){v.load();});}else{setTimeout(function(){v.load();},1500);}
+}
 </script>
 </body>
 </html>
