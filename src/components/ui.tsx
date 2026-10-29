@@ -1,10 +1,12 @@
 // MYNDS UI-Bausteine — Designsystem in Code (src/theme/tokens.ts).
-// Grundsätze: Dark Mode primär, ruhige visuelle Sprache, keine Alarmfarben
-// für Nutzerzustände, KI-Inhalte ausschließlich Lavendel (ai) gekennzeichnet.
+// Grundsätze: Dark Mode der Marke (Schwarz + Grain, Creme-Text, Orange-Aktionen),
+// ruhige visuelle Sprache, keine Alarmfarben für Nutzerzustände, KI-Inhalte
+// ausschließlich Tieforange (ai) gekennzeichnet. Regelwerk: docs/brand/.
 
 import React, { useState } from 'react';
 import {
   AccessibilityInfo,
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -13,7 +15,7 @@ import {
   View,
 } from 'react-native';
 import Slider from '@react-native-community/slider';
-import { colors, radius, spacing, type } from '../theme/tokens';
+import { colors, fonts, radius, spacing, type } from '../theme/tokens';
 import { Option } from '../onboarding/types';
 
 // ─── Typografie ─────────────────────────────────────────────────────────────
@@ -67,18 +69,35 @@ export function Screen({
   children: React.ReactNode;
   scroll?: boolean;
 }) {
+  // Marken-Grain: sehr dezentes Korn über dem schwarzen Hintergrund (Rule Book §2.4).
+  const grain = (
+    <Image
+      source={require('../../assets/grain.png')}
+      style={styles.grain}
+      resizeMode="repeat"
+      pointerEvents="none"
+    />
+  );
   if (scroll) {
     return (
-      <ScrollView
-        style={{ flex: 1, backgroundColor: colors.bg }}
-        contentContainerStyle={styles.screenContent}
-        keyboardShouldPersistTaps="handled"
-      >
-        {children}
-      </ScrollView>
+      <View style={{ flex: 1, backgroundColor: colors.bg }}>
+        {grain}
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.screenContent}
+          keyboardShouldPersistTaps="handled"
+        >
+          {children}
+        </ScrollView>
+      </View>
     );
   }
-  return <View style={[styles.screenContent, { flex: 1, backgroundColor: colors.bg }]}>{children}</View>;
+  return (
+    <View style={{ flex: 1, backgroundColor: colors.bg }}>
+      {grain}
+      <View style={[styles.screenContent, { flex: 1 }]}>{children}</View>
+    </View>
+  );
 }
 
 // ─── Buttons ────────────────────────────────────────────────────────────────
@@ -110,7 +129,12 @@ export function Button({
       onPress={onPress}
       style={({ pressed }) => [styles.buttonBase, btnStyle, pressed && { opacity: 0.85 }, disabled && { opacity: 0.4 }]}
     >
-      <Text style={[type.bodySmall, { fontWeight: '600', color: disabled ? colors.textMuted : labelColor }]}>
+      <Text
+        style={[
+          type.bodySmall,
+          { fontWeight: '600', fontFamily: fonts.body.semibold, color: disabled ? colors.textMuted : labelColor },
+        ]}
+      >
         {label}
       </Text>
     </Pressable>
@@ -308,7 +332,7 @@ export function AiBadge({ label = 'automatisch erstellt' }: { label?: string }) 
   );
 }
 
-// ─── Krisen-Hilfekarte (ruhig, kein Alarm-Rot; E2.3 der Planung) ────────────
+// ─── Krisen-Hilfekarte (ruhig — blaue „Nähe“-Kante, kein Alarm-Rot; E2.3 der Planung) ───
 
 export const CRISIS_NUMBERS = [
   { label: 'Telefonseelsorge (kostenlos, rund um die Uhr)', number: '0800 111 0 111' },
@@ -319,8 +343,8 @@ export const CRISIS_NUMBERS = [
 
 export function CrisisCard({ heading }: { heading?: string }) {
   return (
-    <Card style={{ borderLeftWidth: 3, borderLeftColor: colors.accent }}>
-      <Body style={{ fontWeight: '600', marginBottom: spacing.s }}>
+    <Card style={{ borderLeftWidth: 3, borderLeftColor: colors.surfaceAlt }}>
+      <Body style={{ fontWeight: '600', fontFamily: fonts.heading.semibold, marginBottom: spacing.s }}>
         {heading ?? 'Diese Gedanken sind schwer — und du musst sie nicht allein tragen.'}
       </Body>
       <Body muted style={type.bodySmall}>
@@ -329,7 +353,7 @@ export function CrisisCard({ heading }: { heading?: string }) {
       <View style={{ marginTop: spacing.l, gap: spacing.m }}>
         {CRISIS_NUMBERS.map((n) => (
           <View key={n.number}>
-            <Body style={{ fontWeight: '600' }}>{n.number}</Body>
+            <Body style={{ fontWeight: '600', fontFamily: fonts.heading.semibold }}>{n.number}</Body>
             <Caption>{n.label}</Caption>
           </View>
         ))}
@@ -339,6 +363,14 @@ export function CrisisCard({ heading }: { heading?: string }) {
 }
 
 const styles = StyleSheet.create({
+  grain: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.06,
+  },
   screenContent: {
     padding: spacing.xl,
     paddingTop: spacing.xxl,

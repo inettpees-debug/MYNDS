@@ -7,10 +7,11 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
-    "backgroundColor": "#0B0F16",
+    "backgroundColor": "#000000",
     "splash": {
       "image": "./assets/splash-icon.png",
-      "backgroundColor": "#0B0F16"
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true,
@@ -19,7 +20,7 @@
     "android": {
       "package": "com.mynds.app",
       "adaptiveIcon": {
-        "backgroundColor": "#0B0F16",
+        "backgroundColor": "#0B4B8B",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -33,6 +34,10 @@
       "eas": {
         "projectId": "38a4167a-21d2-4685-ad42-8895b842b799"
       }
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-splash-screen"
+    ]
   }
 }

@@ -7,19 +7,24 @@ import { Button, Body, Caption, Card, Display, Screen, Title } from '../componen
 import { activeSteps } from '../onboarding/catalog';
 import { buildDemoState } from '../onboarding/demoData';
 import { useOnboarding } from '../onboarding/state';
-import { colors } from '../theme/tokens';
+import { colors, fonts } from '../theme/tokens';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
 
+// Wortmarke der Marke: kleingeschriebenes „mynds“ in Outfit Bold (Rule Book §2.1).
 export function Wordmark({ small }: { small?: boolean }) {
   return (
     <Caption
-      color={colors.accent}
-      style={small ? { letterSpacing: 2, textTransform: 'uppercase' } : { letterSpacing: 3, fontSize: 14, textTransform: 'uppercase' }}
+      color={colors.textPrimary}
+      style={
+        small
+          ? { fontFamily: fonts.heading.bold, fontSize: 15, letterSpacing: 0.5 }
+          : { fontFamily: fonts.heading.bold, fontSize: 18, letterSpacing: 0.5 }
+      }
     >
-      M Y N D S
+      mynds
     </Caption>
   );
 }

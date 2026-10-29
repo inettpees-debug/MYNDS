@@ -6,6 +6,7 @@ This is the code behind MYNDS. Our own Start-Up in context of S2B at WHU.
 
 Mobile App (iOS/Android), Expo + React Native + TypeScript. Projektübergreifende
 Dokumentation (Planung, Fragenkatalog, Compliance) liegt außerhalb dieses Repositories.
+Marken-Identität (Farben, Typografie, Logo-Regeln): [`docs/brand/brand-identity-guide.md`](docs/brand/brand-identity-guide.md).
 
 ## Setup
 
@@ -35,7 +36,7 @@ npx tsc --noEmit        # Typecheck
 ## Tests
 
 ```bash
-npm test            # 26 Tests (jest-expo + @testing-library/react-native v14)
+npm test            # 31 Tests (jest-expo + @testing-library/react-native v14)
 npx tsc --noEmit    # Typecheck
 ```
 
@@ -76,5 +77,5 @@ Screening-Items am Bogenende). `showIf`-Bedingungen steuern dynamische Folgefrag
 2. AsyncStorage speichert unverschlüsselt und liegt standardmäßig in Geräte-Backups — Übergangszustand bis zur Produktions-Speicherarchitektur (Konzept: `../konzept-speicher-einwilligung-v1.md`, Umsetzung erst nach Freigabe).
 3. B2 (Termin) als Freitext — nativer Date-Picker folgt.
 4. Accessibility: Grundlagen (Roles/Labels/Hints) gesetzt; vollständiger Screenreader-Test ausstehend (nicht automatisiert prüfbar).
-5. App-Icons/Splash sind noch Expo-Defaults (Branding folgt).
+5. App-Icons/Splash folgen der Marken-Identität (generiert; feiner Schliff ggf. nach Design-Review).
 6. Gerätetests (Expo Go, App-Kill-Resume, echte Tastatur) in dieser Umgebung nicht möglich — manuell nachholen.

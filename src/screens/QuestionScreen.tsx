@@ -24,7 +24,7 @@ import { StorageBanner } from '../components/StorageBanner';
 import { activeSteps, answerOptionsFor, catalog, moduleMeta } from '../onboarding/catalog';
 import { nowISO, useOnboarding } from '../onboarding/state';
 import { AnswerRecord, AnswerValue, Option, QuestionDef } from '../onboarding/types';
-import { colors, spacing } from '../theme/tokens';
+import { colors, fonts, spacing } from '../theme/tokens';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
 
@@ -290,7 +290,7 @@ export function QuestionScreen({ navigation, route }: Props) {
             />
             {isMinor ? (
               <Card style={{ marginTop: spacing.l }}>
-                <Body style={{ fontWeight: '600', marginBottom: spacing.s }}>
+                <Body style={{ fontWeight: '600', fontFamily: fonts.body.semibold, marginBottom: spacing.s }}>
                   Mynds ist aktuell für Erwachsene (18+)
                 </Body>
                 <Body muted style={{ fontSize: 14, lineHeight: 20 }}>

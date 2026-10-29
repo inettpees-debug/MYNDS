@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Pressable, Switch, View } from 'react-native';
 import { Body, Button, Caption, Card, Screen, Title } from '../components/ui';
-import { colors, spacing } from '../theme/tokens';
+import { colors, fonts, spacing } from '../theme/tokens';
 import { useOnboarding, nowISO } from '../onboarding/state';
 import type { ConsentRecord } from '../onboarding/types';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -31,7 +31,7 @@ function ConsentToggle({ title, description, required, value, onValueChange, det
     <Card>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.m }}>
         <View style={{ flex: 1 }}>
-          <Body style={{ fontWeight: '600' }}>{title}</Body>
+          <Body style={{ fontWeight: '600', fontFamily: fonts.body.semibold }}>{title}</Body>
           {required ? (
             <Caption>erforderlich für die Nutzung</Caption>
           ) : (

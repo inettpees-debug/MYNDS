@@ -6,7 +6,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Body, Button, Caption, Card } from './ui';
 import { useOnboarding } from '../onboarding/state';
-import { colors, spacing } from '../theme/tokens';
+import { colors, fonts, spacing } from '../theme/tokens';
 
 export function StorageBanner() {
   const { saveError, loadError, retrySave } = useOnboarding();
@@ -15,7 +15,7 @@ export function StorageBanner() {
   return (
     <Card style={{ borderLeftWidth: 3, borderLeftColor: colors.warning, marginBottom: spacing.l }}>
       {loadError ? (
-        <Body style={{ fontWeight: '600', marginBottom: spacing.s }}>
+        <Body style={{ fontWeight: '600', fontFamily: fonts.body.semibold, marginBottom: spacing.s }}>
           Gespeicherte Angaben konnten nicht geladen werden.
         </Body>
       ) : null}

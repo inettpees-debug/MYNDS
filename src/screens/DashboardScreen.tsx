@@ -9,7 +9,7 @@ import { StorageBanner } from '../components/StorageBanner';
 import { Wordmark } from './WelcomeScreen';
 import { catalog, labelForKey } from '../onboarding/catalog';
 import { useOnboarding } from '../onboarding/state';
-import { colors, spacing } from '../theme/tokens';
+import { colors, fonts, spacing } from '../theme/tokens';
 import { QuestionDef } from '../onboarding/types';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
@@ -29,7 +29,9 @@ function ValueBar({ label, value, minLabel, maxLabel }: { label: string; value: 
     <View style={{ marginTop: spacing.m }}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Body style={{ fontSize: 15 }}>{label}</Body>
-        <Body style={{ fontSize: 15, color: colors.accent, fontWeight: '600' }}>{value}/10</Body>
+        <Body style={{ fontSize: 15, color: colors.accent, fontWeight: '600', fontFamily: fonts.body.semibold }}>
+          {value}/10
+        </Body>
       </View>
       <View style={{ height: 6, borderRadius: 3, backgroundColor: colors.track, marginTop: 6, overflow: 'hidden' }}>
         <View style={{ height: 6, width: `${value * 10}%`, borderRadius: 3, backgroundColor: colors.accentDeep }} />

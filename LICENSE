@@ -39,3 +39,16 @@ Runtime dependencies of this project (expo, react, react-native,
 @react-navigation/*, react-native-screens, react-native-safe-area-context,
 @react-native-async-storage/async-storage, @react-native-community/slider)
 are subject to their own licenses (all MIT); see each package for details.
+
+Fonts (bundled via @expo-google-fonts/outfit, @expo-google-fonts/albert-sans
+and as self-hosted WOFF2 in landing/fonts/):
+
+  Outfit — Copyright (c) 2021 The Outfit Project (Smartsheet Inc.,
+  Connary Fagen). Licensed under the SIL Open Font License, Version 1.1.
+  Albert Sans — Copyright (c) 2021 The Albert Sans Project (Aaron Bell,
+  Sovereign-Type). Licensed under the SIL Open Font License, Version 1.1.
+
+The SIL Open Font License, Version 1.1 permits bundling, redistribution and
+use, including commercially, provided the fonts are not sold by themselves
+and reserved names are not used for modified versions. The full license text
+is available at https://openfontlicense.org and in the font packages.
