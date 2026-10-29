@@ -1,8 +1,7 @@
 # Netlify-Konfiguration für die MYNDS-Landing-Page.
-# Repo-Wurzel = App-Projekt; veröffentlicht wird NUR der statische Ordner landing/.
-# Wichtig: command = "" überschreibt den beim Repo-Import automatisch
-# eingetragenen Expo-Web-Build ("expo export -p web") — die Landing-Page
-# ist statisch und braucht keinen Build-Step.
+# Dieses Repository enthält nur die Landing-Page; veröffentlicht wird der
+# statische Ordner landing/ (kein Build-Step).
+# Hinweis: command = "" verhindert, dass Netlify einen Build versucht.
 [build]
   command = ""
   publish = "landing"
