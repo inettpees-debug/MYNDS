@@ -60,10 +60,10 @@
   .stage-top{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--margin);overflow:hidden}
   .hero .hero-video{margin:6vh var(--margin) 0;position:relative}
   .hero h1{width:100%;font-size:var(--s-monument);font-weight:700;line-height:.85;letter-spacing:-.03em;white-space:nowrap;text-align:center;transform:scale(.97);transition:transform .1s linear}
-  .stage-top .corner{position:absolute;max-width:38ch}
+  .stage-top .corner{position:absolute;max-width:38ch;z-index:3}
   .corner .what{font-size:var(--s-body);line-height:1.45}
   .corner .what b{font-weight:600}
-  .under{margin-top:5vh;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+  .under{position:relative;z-index:2;margin-top:5vh;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
   .under .what{font-size:var(--s-body);line-height:1.45;max-width:36ch}
   .under .what b{font-weight:600}
   .corner-tr{top:var(--margin);right:var(--margin);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 22px;font-size:var(--s-body);width:max-content}
