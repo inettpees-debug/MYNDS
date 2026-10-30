@@ -9,7 +9,9 @@ Reines HTML/CSS — kein Build-Step, keine Abhängigkeiten.
 ## Struktur
 
 ```
-landing/          index.html, favicon.png, fonts/ (Outfit, Albert Sans), assets/ (Platz für hero.mp4)
+landing/          index.html (Landing-Page), blog.html (Blog), brand.html (Marken-Seite)
+                  favicon.png (m-Monogramm), fonts/ (Outfit, Albert Sans)
+                  assets/ (Platz für hero.mp4), assets/brand/ (Logo-Varianten, SVG + PNG)
 netlify.toml      Deploy-Konfiguration (Publish-Dir landing/, kein Build-Step)
 ```
 
@@ -19,7 +21,15 @@ Der Video-Rahmen oben auf der Seite ist fertig verdrahtet. Um das Video zu aktiv
 
 1. Video als `landing/assets/hero.mp4` ablegen (H.264, ~8–12 Sekunden, Loop-fähig, ohne Ton)
 2. Committen und pushen — fertig. Das Video blendet sich automatisch über die
-   gebaute Start-Einstellung (App-Replika); fehlt die Datei, bleibt die Einstellung stehen.
+   animierte Sequenz; fehlt die Datei, läuft die Sequenz (die vier echten
+   Onboarding-Screens, stumm, Loop; pausiert bei reduzierter Bewegung).
+
+## Brand-Assets
+
+`landing/brand.html` zeigt alle Logo-Varianten; die Dateien liegen in
+`landing/assets/brand/` (SVG mit eingebetteter Schrift + PNG-Export). Für
+Figma/Illustrator: Outfit installieren oder die PNGs verwenden — echte
+Outline-Pfade folgen, sobald das Design sie liefert.
 
 ## Deployment
 

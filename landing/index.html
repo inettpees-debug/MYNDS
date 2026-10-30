@@ -14,12 +14,12 @@
   @font-face{
     font-family:'Outfit';
     src:url('fonts/outfit-var.woff2') format('woff2');
-    font-weight:400 700;font-style:normal;font-display:swap;
+    font-weight:100 900;font-style:normal;font-display:swap;
   }
   @font-face{
     font-family:'Albert Sans';
     src:url('fonts/albertsans-var.woff2') format('woff2');
-    font-weight:400 600;font-style:normal;font-display:swap;
+    font-weight:100 900;font-style:normal;font-display:swap;
   }
   :root{
     --paper:#FFFFFF; --ink:#000000; --soft:#55534B;
@@ -41,6 +41,9 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:var(--s-body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  p,dd,li,.a,.what,.zrow dd{hyphens:auto;-webkit-hyphens:auto;text-wrap:pretty}
+  h2,h3{ text-wrap:balance}
+  h1,.item span,.fmark,.crow span{hyphens:none;text-wrap:none}
   h1,h2,h3{font-family:var(--font-head)}
   a{color:inherit}
   :focus-visible{outline:3px solid var(--orange);outline-offset:3px}
@@ -63,7 +66,7 @@
   .under{margin-top:5vh;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
   .under .what{font-size:var(--s-body);line-height:1.45;max-width:36ch}
   .under .what b{font-weight:600}
-  .corner-tr{top:var(--margin);right:var(--margin);display:flex;gap:22px;font-size:var(--s-body)}
+  .corner-tr{top:var(--margin);right:var(--margin);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 22px;font-size:var(--s-body);width:max-content}
   .corner-tr a{text-decoration:none;color:var(--soft)}
   .corner-tr a:hover{color:var(--ink);text-decoration:underline}
   .corner-bl{bottom:var(--margin);left:var(--margin);font-size:var(--s-body);color:var(--soft)}
@@ -74,7 +77,28 @@
      Datei landing/assets/hero.mp4 einfügen = fertig. Bis dahin zeigt der Rahmen
      die gebaute erste Einstellung: einen Breitbild-Ausschnitt der App. */
   .hero-video{margin:0 var(--margin);position:relative}
-  .video-slot{position:relative;aspect-ratio:16/9;background:var(--app-bg);overflow:hidden}
+  .video-slot{position:relative;aspect-ratio:16/9;background:var(--app-bg);overflow:hidden;border-radius:20px;container-type:inline-size}
+  .seq{position:absolute;inset:0}
+  .seq-screen{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:1.5cqw;padding:0 10cqw;opacity:0;visibility:hidden;transform:translateY(1.4cqw);transition:opacity .9s ease,transform .9s ease,visibility 0s linear .9s}
+  .seq-screen .wordmark{font-size:1.5cqw}
+  .seq-title{font-family:var(--font-head);font-weight:700;font-size:2.5cqw;color:var(--app-ink);margin-bottom:.4cqw}
+  .seq .bar{padding:1.3cqw 1.7cqw;border-radius:1.2cqw}
+  .seq .lbl{font-size:1.1cqw}.seq .val{font-size:1.3cqw}.seq .meta{font-size:1.05cqw;margin-top:.8cqw}
+  .seq .toggle{padding:.55cqw 0}
+  .seq .knob{width:2.4cqw;height:1.4cqw;border-radius:.7cqw}
+  .seq .knob::after{width:1cqw;height:1cqw;top:.2cqw;left:.2cqw}
+  .seq .toggle.on .knob::after{left:1.2cqw}
+  .seq .track{height:.5cqw;margin-top:.7cqw;border-radius:.25cqw}
+  .seq .fill{transition:width 1.1s cubic-bezier(.2,.7,.2,1) .35s}
+  .fallback-seq{display:none}
+  .seq[data-s="0"] .seq-screen:nth-child(1),
+  .seq[data-s="1"] .seq-screen:nth-child(2),
+  .seq[data-s="2"] .seq-screen:nth-child(3),
+  .seq[data-s="3"] .seq-screen:nth-child(4){opacity:1;visibility:visible;transform:none;transition-delay:0s}
+  .seq[data-s="1"] .seq-screen:nth-child(2) .fill,
+  .seq[data-s="2"] .seq-screen:nth-child(3) .fill{width:var(--w)}
+  .fallback-seq{display:none}
+  .seq[data-s="0"] .seq-screen:nth-child(1),.seq[data-s="1"] .seq-screen:nth-child(2),.seq[data-s="2"] .seq-screen:nth-child(3){visibility:visible;transition-delay:0s}
   .video-slot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
   .video-slot video.on{opacity:1}
 
@@ -92,10 +116,10 @@
   .ui .wordmark{font-family:var(--font-head);font-weight:700;color:var(--app-ink)}
   .ui input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:40px;background:transparent;cursor:pointer;margin-top:4px}
   .ui input[type=range]::-webkit-slider-runnable-track{height:8px;background:var(--app-track);border-radius:4px}
-  .ui input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;margin-top:-9px;background:var(--orange);border:none;border-radius:50%;transition:transform .15s ease}
+  .ui input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;margin-top:-6px;background:var(--orange);border:none;border-radius:50%;transition:transform .15s ease}
   .ui input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
   .ui input[type=range]::-moz-range-track{height:8px;background:var(--app-track);border-radius:4px}
-  .ui input[type=range]::-moz-range-thumb{width:26px;height:26px;background:var(--orange);border:none;border-radius:50%}
+  .ui input[type=range]::-moz-range-thumb{width:20px;height:20px;background:var(--orange);border:none;border-radius:50%}
   .ui .toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
   .ui .knob{flex:none;width:44px;height:26px;border-radius:13px;background:var(--app-track);position:relative}
   .ui .knob::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--app-dim)}
@@ -114,17 +138,17 @@
 
   /* ————— Der Einstieg: Lesespalte mit Belegen ————— */
   .einstieg{padding:11vh var(--margin)}
-  .flowcol{max-width:640px;margin-left:26vw}
+  .flowcol{max-width:720px;margin-left:22vw}
   .einstieg h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;margin-bottom:48px;max-width:20ch}
   .stage{margin-bottom:72px}
   .stage p{font-size:var(--s-body);line-height:1.6}
   .stage p b{font-weight:600;color:var(--ink)}
   .stage p{color:var(--soft)}
-  .stage .ui{width:100%;aspect-ratio:16/9;margin-top:20px;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:0 clamp(18px,4vw,64px)}
+  .stage .ui{width:100%;aspect-ratio:16/9;border-radius:20px;margin-top:20px;display:flex;flex-direction:column;justify-content:center;gap:10px;padding:0 clamp(18px,4vw,64px)}
 
   /* ————— Fragen groß, Antworten daneben ————— */
-  .fragen{padding:11vh var(--margin)}
-  .qa{display:grid;grid-template-columns:6fr 5fr;gap:5vw;margin-bottom:64px;align-items:baseline}
+  .fragen{padding:11vh var(--margin) 8vh}
+  .qa{display:grid;grid-template-columns:6fr 5fr;gap:5vw;margin-bottom:52px;align-items:baseline}
   .qa:last-of-type{margin-bottom:0}
   .qa h3,.qa .qhead{font-size:var(--s-question);font-weight:600;line-height:1.15;letter-spacing:-.01em}
   .qa .qhead{color:var(--soft);font-family:var(--font-head)}
@@ -133,12 +157,27 @@
   .qa .a .ui{margin-top:14px}
 
   /* ————— Fahrplan als Posterzeilen ————— */
-  .fahrplan{padding:9vh var(--margin) 11vh}
+  .roadmap{background:var(--app-blue);color:var(--paper);padding:11vh var(--margin) 13vh}
   .fahrplan h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;color:var(--soft);margin-bottom:64px}
-  .item{display:flex;justify-content:space-between;align-items:baseline;gap:24px;font-family:var(--font-head);font-weight:700;font-size:var(--s-poster);line-height:.95;letter-spacing:-.03em;transition:color .25s ease}
-  .item+.item{margin-top:14px}
-  .item:hover{color:var(--orange)}
-  .item .when{font-family:var(--font-body);font-weight:400;font-size:var(--s-body);color:var(--soft);white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
+  .faden{list-style:none}
+  .faden li{margin-bottom:14px}
+  .faden button{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:24px;row-gap:6px;width:100%;background:none;border:0;color:inherit;font:inherit;text-align:inherit;cursor:pointer;padding:0}
+  .faden .fw{font-family:var(--font-head);font-weight:700;font-size:var(--s-poster);line-height:.95;letter-spacing:-.03em;transition:color .25s ease}
+  .faden .fs{font-family:var(--font-body);font-weight:400;font-size:var(--s-body);color:rgba(252,245,175,.78);font-variant-numeric:tabular-nums;text-align:right}
+  .faden .fs b{font-weight:600;color:var(--paper)}
+  .faden button:hover .fw,.faden li.on .fw{color:var(--orange)}
+  .faden-status{max-width:64ch;color:rgba(252,245,175,.85);margin-top:44px;min-height:3em}
+  .faden-status b{color:var(--paper);font-weight:600}
+  /* Live-Modus: die Stationen liegen auf dem Faden */
+  .faden.live{position:relative;height:400px;margin:0}
+  .faden.live li{position:absolute;margin:0;transform:translate(-50%,-50%);transition:left .2s ease,top .2s ease;z-index:2}
+  .faden.live button{flex-direction:column;align-items:center;gap:2px;white-space:nowrap}
+  .faden.live .fw{font-size:clamp(22px,2.6vw,40px)}
+  .faden.live .fs{display:none}
+  .faden-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+  .faden-svg path{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:round}
+  .faden-svg circle{fill:var(--app-blue);stroke:var(--orange);stroke-width:3;transition:r .2s ease,fill .2s ease}
+  .faden-svg circle.on{fill:var(--orange)}
   .item .when b{font-weight:600;color:var(--ink)}
 
   /* ————— Kontakt in Schauhöhe ————— */
@@ -148,7 +187,7 @@
   .crow:nth-of-type(odd){background:#F4F3EE}
   .crow:hover{background:#ECEAE2}
   .crow .note-r{font-family:var(--font-body);font-weight:400;font-size:var(--s-body);color:var(--soft);align-self:center;white-space:nowrap}
-  .arrow-btn{flex:none;width:.8em;height:.8em;display:grid;place-items:center;background:var(--orange);color:var(--ink);text-decoration:none;font-size:var(--s-poster);border-radius:50%;align-self:center;transition:background .25s ease,transform .15s ease}
+  .arrow-btn{flex:none;width:.7em;height:.7em;display:grid;place-items:center;background:var(--orange);color:var(--ink);text-decoration:none;font-size:var(--s-poster);border-radius:50%;align-self:center;transition:background .25s ease,transform .15s ease}
   .arrow-btn span{font-size:.4em;line-height:1}
   .arrow-btn:hover{background:var(--ink);color:var(--paper)}
   .arrow-btn:active{transform:translateY(2px)}
@@ -158,6 +197,7 @@
   footer{background:var(--ink);color:var(--paper);min-height:96svh;display:grid;grid-template-rows:auto 1fr auto;padding:clamp(28px,4vh,44px) var(--margin) 22px;gap:24px}
   .fcols{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1100px}
   .fcols h4{font-family:var(--font-body);font-size:var(--s-body);font-weight:600;color:var(--paper);margin-bottom:10px}
+  .fcols .nums b{white-space:nowrap}
   .fcols p,.fcols a{font-size:var(--s-body);color:#B9B7AD;text-decoration:none;display:block;line-height:1.5}
   .fcols a:hover{color:var(--paper);text-decoration:underline}
   .fcols b{color:var(--paper);font-weight:600}
@@ -166,13 +206,22 @@
   .legal{font-size:var(--s-small);color:#8F8D83;margin-top:16px;max-width:100ch}
 
   /* ————— Bewegung ————— */
+  .js .hero h1{animation:monumentIn 1.1s cubic-bezier(.2,.7,.2,1) .05s both}
+  .js .hero .under{animation:riseIn .9s ease .35s both}
+  .js .stage-top .corner{animation:fadeIn .8s ease .55s both}
+  @keyframes monumentIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(.97)}}
+  @keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
   .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;transition-delay:calc(var(--i,0)*80ms)}
   .js .reveal.in{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
     .js .reveal{opacity:1;transform:none;transition:none}
+    .js .hero h1,.js .hero .under,.js .stage-top .corner{animation:none;opacity:1;transform:none}
     .hero h1{transform:none}
     .ui .fill{transition:none}
+    .seq{display:none}
+    .video-slot .fallback-seq{display:flex}
   }
 
   /* ————— Telefon ————— */
@@ -206,10 +255,8 @@
     .stage{margin-bottom:56px}
     .fragen{padding:13vh var(--margin)}
     .qa .a{max-width:none}
-    .fahrplan{padding:11vh var(--margin)}
-    .fahrplan h2{margin-bottom:48px}
-    .item{flex-direction:column;gap:4px;align-items:flex-start}
-    .item .when{text-align:left}
+    .roadmap{padding:9vh var(--margin)}
+    .roadmap h2{margin-bottom:48px}
     .kontakt{padding:12vh var(--margin)}
     .fcols{grid-template-columns:1fr 1fr;gap:28px 20px}
   }
@@ -224,6 +271,7 @@
       <a href="#zahlen">Zahlen</a>
       <a href="#einstieg">Einstieg</a>
       <a href="#fragen">Fragen</a>
+      <a href="blog.html">Blog</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
     <h1>mynds</h1>
@@ -231,27 +279,50 @@
       <p class="what"><b>mynds</b> begleitet junge Erwachsene durch die Therapie-Wartezeit: strukturieren, sammeln, einordnen.</p>
       <a class="btn" href="#einstieg">Den Prototyp ansehen</a>
     </div>
-    <p class="corner corner-bl">Prototyp · Studienprojekt Sprint2Berlin, MiE @ WHU 2026</p>
-    <p class="corner corner-br">Falls Du wirklich Hilfe brauchst:<br><b>Telefonseelsorge 0800 111 0 111</b>, 24/7</p>
-    <p class="crisis-mobile" style="display:none">Dringend? <b>0800 111 0 111</b>, 24/7</p>
+    <p class="corner corner-bl">Prototyp · S2B an der WHU</p>
+    <p class="corner corner-br">Wenn es dir gerade schlecht geht:<br><b>Telefonseelsorge 0800 111 0 111</b>, 24/7</p>
+    <p class="crisis-mobile" style="display:none">Krise? <b>0800 111 0 111</b>, 24/7</p>
   </div>
   <!-- Hero-Video-Slot: assets/hero.mp4 einfügen = fertig. Poster ist die gebaute erste Einstellung. -->
   <div class="hero-video" aria-label="mynds, der Einstieg in der App">
     <div class="video-slot">
-      <div class="ui static" data-ui style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:0 8%">
-        <p style="font-size:14px;color:var(--app-dim)">Montag, 7:42</p>
-        <p class="wordmark" style="font-size:20px">Schön, dass du da bist, Mia.</p>
-        <div class="bar">
-          <div class="row"><span class="lbl">Dein Startbild — heute</span><span class="val" style="font-variant-numeric:tabular-nums">Stimmung 4/10</span></div>
-          <div class="track"><div class="fill" style="--w:40%"></div></div>
-          <div class="track"><div class="fill" style="--w:40%;transition-delay:.15s"></div></div>
-          <div class="track"><div class="fill" style="--w:70%;transition-delay:.3s"></div></div>
-          <p class="meta">Energie 4/10 · Anspannung 7/10</p>
-        </div>
-        <div class="row" style="background:var(--app-card);border:1px solid var(--app-line) /*taste-skill-ignore: echte App-Kartenlinie im data-ui-Fragment*/;border-radius:20px;padding:12px 16px"><span class="lbl">Deine Ziele, aufbewahrt für das erste Gespräch</span><span class="val" style="font-variant-numeric:tabular-nums">2</span></div>
-      </div>
-      <video muted loop playsinline preload="none" poster="assets/hero-poster.jpg" src="assets/hero.mp4" aria-label="Video: der Einstieg in mynds, wie der Prototyp ihn heute zeigt"></video>
+    <div class="ui fallback-seq" data-ui style="position:absolute;inset:0;flex-direction:column;justify-content:center;gap:14px;padding:0 8%">
+      <p class="wordmark" style="font-size:20px">mynds</p>
+      <p style="font-family:var(--font-head);font-weight:700;font-size:26px;color:var(--app-ink)">Vier Einwilligungen, eine für eine.</p>
+      <div class="bar"><div class="toggle on"><span class="val">Notizen auf diesem Gerät <span class="req">erforderlich</span></span><span class="knob"></span></div>
+      <div class="toggle"><span class="val">Symptom-Check führen</span><span class="knob"></span></div></div>
     </div>
+    <div class="seq" id="seq">
+      <div class="seq-screen ui" data-ui aria-label="Einwilligungen in der App">
+        <p class="wordmark">mynds</p>
+        <p class="seq-title">Vier Einwilligungen, eine für eine.</p>
+        <div class="bar"><div class="toggle on"><span class="val">Notizen auf diesem Gerät <span class="req">erforderlich</span></span><span class="knob"></span></div>
+        <div class="toggle"><span class="val">Symptom-Check führen</span><span class="knob"></span></div>
+        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release 2</span></span><span class="knob"></span></div></div>
+      </div>
+      <div class="seq-screen ui" data-ui aria-label="Anliegen in eigenen Worten">
+        <p class="wordmark">mynds</p>
+        <p class="seq-title">Dein Anliegen, in deinen Worten.</p>
+        <div class="bar"><span class="lbl">Was dich beschäftigt</span>
+        <p class="val">„Ich möchte verstehen, warum ich nachts nicht zur Ruhe komme."</p>
+        <div class="row"><span class="lbl">Aktuelle Belastung</span><span class="val">7/10</span></div>
+        <div class="track"><div class="fill" style="--w:70%"></div></div></div>
+      </div>
+      <div class="seq-screen ui" data-ui aria-label="Startbild-Werte in der App">
+        <p class="wordmark">mynds</p>
+        <p class="seq-title">Dein Startbild, von dir gesetzt.</p>
+        <div class="bar"><div class="row"><span class="lbl">Stimmung</span><span class="val">4/10</span></div><div class="track"><div class="fill" style="--w:40%"></div></div></div>
+        <div class="bar"><div class="row"><span class="lbl">Schlaf</span><span class="val">3/10</span></div><div class="track"><div class="fill" style="--w:30%"></div></div></div>
+        <p class="meta">Keine Auswertung, keine Diagnose.</p>
+      </div>
+      <div class="seq-screen ui" data-ui aria-label="Profil in der App">
+        <p class="wordmark">mynds</p>
+        <p class="seq-title">Dein Profil, an einem Ort.</p>
+        <div class="bar"><div class="row"><span class="lbl">Deine Ziele</span></div><p class="val"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" style="vertical-align:-2px"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8z" fill="#F0A533"/></svg> Ruhiger schlafen · Klarer Grenzen setzen</p></div>
+        <div class="bar"><div class="row"><span class="lbl">Symptom-Check</span><span class="val">9 von 16</span></div><p class="meta">korrigierbar · exportierbar · löschbar</p></div>
+      </div>
+    </div>
+    <video muted loop playsinline preload="none" src="assets/hero.mp4" aria-label="Video: der Einstieg in mynds, wie der Prototyp ihn heute zeigt"></video>
   </div>
 </header>
 
@@ -259,9 +330,9 @@
 <section class="zahlen" id="zahlen">
   <h2 class="reveal">Die Wartezeit, in Zahlen</h2>
   <dl>
-    <div class="zrow reveal"><dt>20</dt><dd><b>Wochen</b> liegen im Schnitt zwischen Erstkontakt und Therapiebeginn (BPtK-Wartezeiterhebung, Angabe aus eigener Recherche)</dd></div>
-    <div class="zrow reveal"><dt>4</dt><dd><b>Einwilligungen</b>, getrennt erteilbar und einzeln widerrufbar.</dd></div>
-    <div class="zrow reveal"><dt>16</dt><dd><b>Fragen</b> im Symptom-Check, als reine Selbstauskunft.</dd></div>
+    <div class="zrow reveal"><dt>20</dt><dd><b>Wochen</b> liegen im Schnitt zwischen Erstkontakt und Therapiebeginn. BPtK-Wartezeiterhebung, Angabe aus eigener Recherche.</dd></div>
+    <div class="zrow reveal"><dt>4</dt><dd><b>Einwilligungen</b>, getrennt erteilbar und einzeln widerrufbar. Ohne die optionalen drei läuft alles.</dd></div>
+    <div class="zrow reveal"><dt>16</dt><dd><b>Fragen</b> im Symptom-Check, als reine Selbstauskunft. Kein Score, keine Ampel, keine Diagnose.</dd></div>
     <div class="zrow reveal"><dt>0</dt><dd><b>Server</b> halten deine Angaben. Im Prototyp bleibt alles auf deinem Gerät, löschbar mit einem Tipp.</dd></div>
   </dl>
 </section>
@@ -270,27 +341,27 @@
 <section class="einstieg" id="einstieg">
   <div class="flowcol">
     <h2 class="reveal">So läuft der Einstieg</h2>
-    <div class="stage reveal">
-      <p><b>Zu Beginn</b> erklärst du in vier getrennten Einwilligungen, was mynds mit deinen Angaben tun darf. Jede einzeln, jede widerrufbar, ohne Kleingedrucktes.</p>
+    <div class="stage">
+      <p class="reveal"><b>Zu Beginn</b> erklärst du in vier getrennten Einwilligungen, was mynds mit deinen Angaben tun darf. Jede einzeln, jede widerrufbar, ohne Kleingedrucktes.</p>
       <div class="ui" data-ui aria-label="Einwilligungen in der App: eine erforderlich, drei optional">
         <div class="toggle on"><span class="val">Notizen auf diesem Gerät speichern <span class="req">erforderlich</span></span><span class="knob" aria-hidden="true"></span></div>
         <div class="toggle"><span class="val">Symptom-Check führen</span><span class="knob" aria-hidden="true"></span></div>
-        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release Mynds 2.0</span></span><span class="knob" aria-hidden="true"></span></div>
+        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release 2</span></span><span class="knob" aria-hidden="true"></span></div>
       </div>
     </div>
-    <div class="stage reveal">
-      <p><b>Danach</b> hältst du dein Anliegen in eigenen Worten fest und gibst an, wie sehr es dich gerade belastet. Alles Weitere ist freiwillig.</p>
+    <div class="stage">
+      <p class="reveal"><b>Danach</b> hältst du dein Anliegen in eigenen Worten fest und gibst an, wie sehr es dich gerade belastet. Alles Weitere ist freiwillig.</p>
       <div class="ui" data-ui aria-label="Anliegen in eigenen Worten mit Belastungsanzeige">
         <div class="bar">
-          <span class="lbl">Dein Anliegen in deinen Worten</span>
-          <p class="val" style="margin-top:6px">„Ich fühle mich im Moment so einsam..."</p>
+          <span class="lbl">Dein Anliegen — in deinen Worten</span>
+          <p class="val" style="margin-top:6px">„Ich möchte verstehen, warum ich nachts nicht zur Ruhe komme."</p>
           <div class="row" style="margin-top:12px"><span class="lbl">Aktuelle Belastung</span><span class="val" style="font-variant-numeric:tabular-nums">7/10</span></div>
           <div class="track"><div class="fill" style="--w:70%"></div></div>
         </div>
       </div>
     </div>
-    <div class="stage reveal">
-      <p><b>Dann</b> setzt du bis zu drei Ziele und nimmst dein Startbild auf: neun Werte, von Stimmung bis Schlaf. Probiere es aus, so wie es die App macht:</p>
+    <div class="stage">
+      <p class="reveal"><b>Dann</b> setzt du bis zu drei Ziele und nimmst dein Startbild auf: neun Werte, von Stimmung bis Schlaf. Probiere es aus, so wie es die App macht:</p>
       <div class="ui" data-ui aria-label="Dein Startbild, interaktiv">
         <div class="bar">
           <div class="row"><label class="lbl" for="sl-stimmung">Stimmung</label><span class="val" style="font-variant-numeric:tabular-nums"><output for="sl-stimmung" id="ov-stimmung">4</output>/10</span></div>
@@ -307,8 +378,8 @@
         <p class="meta" id="startbild-line">Deine Beobachtung. mynds rechnet daraus nichts aus.</p>
       </div>
     </div>
-    <div class="stage reveal">
-      <p><b>Am Ende</b> liegt alles an einem Ort: dein Profil. Korrigierbar, exportierbar, löschbar. Für den Moment, in dem deine Therapie beginnt.</p>
+    <div class="stage">
+      <p class="reveal"><b>Am Ende</b> liegt alles an einem Ort: dein Profil. Korrigierbar, exportierbar, löschbar. Für den Moment, in dem deine Therapie beginnt.</p>
       <div class="ui" data-ui aria-label="Profil in der App">
         <div class="bar">
           <div class="row"><span class="lbl">Deine Ziele</span></div>
@@ -327,7 +398,7 @@
 <!-- Fragen groß, Antworten daneben -->
 <section class="fragen" id="fragen">
   <div class="qa reveal">
-    <p class="qhead">Auszug aus unserem Blog</p>
+    <p class="qhead">Ehrliche Antworten</p>
     <p class="a"></p>
   </div>
   <div class="qa reveal">
@@ -339,7 +410,7 @@
     <p class="a">Sie bleiben <b>auf deinem Gerät</b>. Kein Server, keine Cloud, kein Tracking. Freigaben erfolgen nur aktiv durch dich.</p>
   </div>
   <div class="qa reveal">
-    <h3>Bekomme ich eine Diagnose?</h3>
+    <h3>Bekomme ich einen Score oder eine Diagnose?</h3>
     <p class="a"><b>Nein.</b> Der Symptom-Check zählt nur deine Ja-Antworten. Keine Punkte, keine Ampeln, keine automatische Auswertung.</p>
   </div>
   <div class="qa reveal">
@@ -352,11 +423,11 @@
   </div>
   <div class="qa reveal">
     <h3>Wer macht mynds?</h3>
-    <p class="a">Das sind wir: Sanije und Inett. Ein Gründerinnen-Team im Master in Entrepreneurship der WHU - Otto Beisheim School of Management.</p>
+    <p class="a">Ein Gründerteam im <b>S2B-Programm der WHU</b>, Otto Beisheim School of Management.</p>
   </div>
   <div class="qa reveal">
     <h3>Und wenn es mir gerade sehr schlecht geht?</h3>
-    <p class="a">Dann sprich sofort mit jemandem. Diese Nummern stehen auch in der App, eine Karte weiter:</p>
+    <p class="a">Dann sprich sofort mit jemandem. Diese Nummern stehen auch <b>in der App</b>, eine Karte weiter:</p>
     <div class="ui" data-ui aria-label="Sicherheitsbereich der App mit Hilfe-Nummern">
       <div class="bar" style="background:var(--app-blue);border-color:var(--app-line2)">
         <p class="val" style="font-family:var(--font-head);font-weight:600">Hilfe ist jederzeit erreichbar</p>
@@ -367,15 +438,17 @@
 </section>
 
 <!-- Fahrplan als Posterzeilen -->
-<section class="fahrplan" id="fahrplan">
-  <h2 class="reveal">Der Fahrplan</h2>
-  <div class="item reveal"><span>selbstauskunft</span><span class="when"><b>heute</b> · im Prototyp</span></div>
-  <div class="item reveal"><span>ziele</span><span class="when"><b>heute</b> · im Prototyp</span></div>
-  <div class="item reveal"><span>startbild</span><span class="when"><b>heute</b> · im Prototyp</span></div>
-  <div class="item reveal"><span>sprachnotizen</span><span class="when">Release 2 · <b>in Entwicklung</b></span></div>
-  <div class="item reveal"><span>praxis-bericht</span><span class="when">Release 2 · <b>in Entwicklung</b></span></div>
-  <div class="item reveal"><span>physische Komponente</span><span class="when">Release 2 · <b>in Entwicklung</b></span></div>
-  <div class="item reveal"><span>muster</span><span class="when">Release 3 · <b>in Entwicklung</b></span></div>
+<section class="roadmap" id="roadmap">
+  <h2 class="reveal">Roadmap</h2>
+  <ol class="faden" id="faden">
+    <li class="reveal" data-status="heute · im Prototyp" data-desc="Geführte Selbstauskunft auf Basis etablierter Anamnese-Bögen."><button type="button" aria-label="selbstauskunft, heute im Prototyp"><span class="fw">selbstauskunft</span><span class="fs"><b>heute</b> · im Prototyp</span></button></li>
+    <li class="reveal" data-status="heute · im Prototyp" data-desc="Bis zu drei Ziele, in deinen eigenen Worten."><button type="button" aria-label="ziele, heute im Prototyp"><span class="fw">ziele</span><span class="fs"><b>heute</b> · im Prototyp</span></button></li>
+    <li class="reveal" data-status="heute · im Prototyp" data-desc="Neun Werte, die du selbst setzt und jederzeit korrigierst."><button type="button" aria-label="startbild, heute im Prototyp"><span class="fw">startbild</span><span class="fs"><b>heute</b> · im Prototyp</span></button></li>
+    <li class="reveal" data-status="Release 2 · in Entwicklung" data-desc="Gedanken sprechen statt tippen."><button type="button" aria-label="sprachnotizen, Release 2, in Entwicklung"><span class="fw">sprachnotizen</span><span class="fs">Release 2 · <b>in Entwicklung</b></span></button></li>
+    <li class="reveal" data-status="Release 2 · in Entwicklung" data-desc="Dein Profil, aufbereitet für die Praxis deiner Wahl."><button type="button" aria-label="praxis-bericht, Release 2, in Entwicklung"><span class="fw">praxis-bericht</span><span class="fs">Release 2 · <b>in Entwicklung</b></span></button></li>
+    <li class="reveal" data-status="Release 3 · in Entwicklung" data-desc="Zusammenhänge über Zeit, als Beobachtung, nicht als Urteil."><button type="button" aria-label="muster, Release 3, in Entwicklung"><span class="fw">muster</span><span class="fs">Release 3 · <b>in Entwicklung</b></span></button></li>
+  </ol>
+  <p class="faden-status reveal" id="faden-status" aria-live="polite">Fahr mit der Maus über den Faden: <b>selbstauskunft</b> — Geführte Selbstauskunft auf Basis etablierter Anamnese-Bögen.</p>
 </section>
 
 <!-- Kontakt in Schauhöhe -->
@@ -384,9 +457,8 @@
   <div class="crow reveal"><span>mynds</span></div>
   <div class="crow reveal"><span>S2B an der WHU</span></div>
   <div class="crow reveal"><span>Prototyp 2026</span></div>
-  <div class="crow reveal"><span>Demo ansehen</span><a class="arrow-btn" href="#einstieg" aria-label="Zum Einstieg: Demo ansehen"><span>↓</span></a></div>
-  <p class="note reveal">Sanije Demiri & Inett Pees</p>
-  <p class="note reveal">sanije.demiri@whu.edu & inett.pees@whu.edu</p>
+  <div class="crow reveal"><span>Demo ansehen</span><a class="arrow-btn" href="#einstieg" aria-label="Zum Einstieg: Demo ansehen"><span>↑</span></a></div>
+  <p class="note reveal">[ Kontaktdaten werden ergänzt ]</p>
 </section>
 
 <!-- Der Fuß: invertiert, der Name kehrt wieder -->
@@ -394,41 +466,68 @@
   <div class="fcols">
     <div>
       <h4>mynds</h4>
-      <p>Prototyp · S2B an der WHU - Otto Beisheim School of Management</p>
+      <p>Prototyp · S2B an der WHU<br>Otto Beisheim School of Management</p>
     </div>
     <div>
       <h4>Navigation</h4>
       <a href="#zahlen">Zahlen</a>
       <a href="#einstieg">Einstieg</a>
-      <a href="#fahrplan">Roadmap</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="blog.html">Blog</a>
+      <a href="brand.html">Brand</a>
       <a href="#kontakt">Kontakt</a>
     </div>
     <div>
       <h4>Sofort Hilfe</h4>
-      <p>Telefonseelsorge <b>0800 111 0 111</b><br> Bereitschaftsdienst <b>116 117</b> · Notruf <b>112</b></p>
+      <p class="nums">Telefonseelsorge <b>0800&#8239;111&#8239;0&#8239;111</b><br>Bereitschaftsdienst <b>116&#8239;117</b><br>Notruf <b>112</b></p>
     </div>
     <div>
       <h4>Stand</h4>
-      <p>Keine Therapie, keine Diagnose.<br>Daten bleiben auf deinem Gerät.</p>
+      <p>Keine Therapie, keine Diagnose. Daten bleiben auf deinem Gerät.</p>
     </div>
   </div>
   <div class="fmark" aria-hidden="true">
-    <svg viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet">
-      <text x="0" y="262" textLength="1000" lengthAdjust="spacing" font-family="Outfit, sans-serif" font-weight="700" font-size="330" letter-spacing="-8" fill="#FCF5AF">mynds</text>
+    <svg viewBox="0 0 1000 365" preserveAspectRatio="xMidYMid meet">
+      <text x="0" y="280" textLength="1000" lengthAdjust="spacing" font-family="Outfit, sans-serif" font-weight="700" font-size="330" letter-spacing="-8" fill="#FCF5AF">mynds</text>
     </svg>
   </div>
   <div>
-    <p class="legal">© 2026 MYNDS · Dies ist ein Prototyp, kein Startup in Gründung! · Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</p>
+    <p class="legal">© 2026 MYNDS · Prototyp · Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</p>
   </div>
 </footer>
 
 <script>
 document.documentElement.classList.add('js');
 // Eintritt der Abschnittsteile, einmalig, vor dem Sichtbarwerden ausgelöst
+var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 var io=new IntersectionObserver(function(es){
-  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  es.forEach(function(e){
+    if(!e.isIntersecting)return;
+    e.target.classList.add('in');
+    var rg=e.target.querySelectorAll('input[type=range]');
+    if(rg.length)animateSliders(rg);
+    io.unobserve(e.target);
+  });
 },{rootMargin:'0px 0px 320px 0px',threshold:0});
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+// Die drei Regler laufen beim Erscheinen auf ihre Werte
+function animateSliders(rgs){
+  rgs.forEach(function(el){
+    var target=+el.value,out=el.parentElement.querySelector('output'),t0=null,cancel=false;
+    el.value=0;
+    el.addEventListener('input',function(ev2){if(ev2.isTrusted)cancel=true;},{once:true});
+    function step(ts){
+      if(cancel)return;
+      if(!t0)t0=ts;
+      var t=Math.min(1,(ts-t0)/900),k=1-Math.pow(1-t,3);
+      el.value=Math.round(target*k);
+      if(out)out.textContent=el.value;
+      if(t<1)requestAnimationFrame(step);
+    }
+    if(RM){el.value=target;if(out)out.textContent=target;return;}
+    requestAnimationFrame(step);
+  });
+}
 // Der Signaturzug: das Monument wird beim Scrollen leicht schwerer
 var mon=document.querySelector('.hero h1');
 if(mon&&'IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -437,6 +536,21 @@ if(mon&&'IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: 
   },{threshold:[.5]});
   io3.observe(document.querySelector('.stage-top'));
 }
+// Die Sequenz im Videofenster läuft, bis assets/hero.mp4 existiert
+var seq=document.getElementById('seq');
+if(seq&&!RM){
+  var si=0,stimer=null,sstop=false;
+  function seqTick(){
+    if(sstop||document.hidden){return;}
+    si=(si+1)%4;seq.dataset.s=si;
+    stimer=setTimeout(seqTick,3800);
+  }
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden&&!sstop){clearTimeout(stimer);stimer=setTimeout(seqTick,1200);}
+  });
+  stimer=setTimeout(seqTick,3800);
+  window.__seqStop=function(){sstop=true;clearTimeout(stimer);};
+}
 // Das eine lebendige Ding: dein Startbild
 function bind2(id,out){
   var el=document.getElementById(id),o=document.getElementById(out);
@@ -444,11 +558,62 @@ function bind2(id,out){
   el.addEventListener('input',function(){o.textContent=el.value;});
 }
 bind2('sl-stimmung','ov-stimmung');bind2('sl-schlaf','ov-schlaf');bind2('sl-anspannung','ov-anspannung');
+// Der Faden: Stationen auf einer geschwungenen Linie, Text folgt der Maus
+(function(){
+  var f=document.getElementById('faden'),st=document.getElementById('faden-status');
+  if(!f||!st)return;
+  var items=[].slice.call(f.children);
+  function setStatus(i){
+    var li=items[i];
+    st.innerHTML='<b>'+li.querySelector('.fw').textContent+'</b> — '+li.dataset.desc+' <span style="opacity:.75">('+li.dataset.status+')</span>';
+    items.forEach(function(el,j){el.classList.toggle('on',j===i);});
+    f.querySelectorAll('.faden-svg circle').forEach(function(c,j){c.classList.toggle('on',j===i);});
+  }
+  items.forEach(function(li,i){
+    var b=li.querySelector('button');
+    b.addEventListener('mouseenter',function(){setStatus(i);});
+    b.addEventListener('focus',function(){setStatus(i);});
+    b.addEventListener('click',function(){setStatus(i);});
+  });
+  if(!RM&&matchMedia('(min-width:880px) and (pointer:fine)').matches){
+    f.classList.add('live');
+    var W=f.clientWidth,H=400,VW=1000,VH=400;
+    var NS='http://www.w3.org/2000/svg';
+    var svg=document.createElementNS(NS,'svg');
+    svg.setAttribute('class','faden-svg');svg.setAttribute('viewBox','0 0 '+VW+' '+VH);svg.setAttribute('preserveAspectRatio','none');
+    var path=document.createElementNS(NS,'path');
+    path.setAttribute('d','M 30 300 C 160 120, 250 60, 380 130 S 560 320, 690 220 S 900 80, 970 160');
+    svg.appendChild(path);
+    f.appendChild(svg);
+    var len=path.getTotalLength(),pts=[];
+    items.forEach(function(li,i){
+      var p=path.getPointAtLength(len*(i+0.5)/items.length);
+      var x=p.x/VW*W,y=p.y/VH*H;
+      li.style.left=x+'px';li.style.top=y+'px';
+      var c=document.createElementNS(NS,'circle');
+      c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',10);
+      svg.appendChild(c);pts.push(x);
+    });
+    f.addEventListener('pointermove',function(ev){
+      var r=f.getBoundingClientRect(),x=ev.clientX-r.left,best=0,bd=1e9;
+      pts.forEach(function(px,i){var d=Math.abs(px-x);if(d<bd){bd=d;best=i;}});
+      if(!items[best].classList.contains('on'))setStatus(best);
+    });
+    window.addEventListener('resize',function(){
+      W=f.clientWidth;pts=pts.map(function(_,i){return i;});
+      items.forEach(function(li,i){
+        var p=path.getPointAtLength(len*(i+0.5)/items.length);
+        li.style.left=(p.x/VW*f.clientWidth)+'px';li.style.top=(p.y/VH*H)+'px';pts[i]=p.x/VW*f.clientWidth;
+      });
+    });
+  }
+  setStatus(0);
+})();
 // Hero-Video: sobald assets/hero.mp4 existiert, blendet es sich über die gebaute erste Einstellung
 var v=document.querySelector('.video-slot video');
 if(v){
   var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  v.addEventListener('loadeddata',function(){v.classList.add('on');if(!rm)v.play().catch(function(){});});
+  v.addEventListener('loadeddata',function(){v.classList.add('on');if(window.__seqStop)window.__seqStop();if(!rm)v.play().catch(function(){});});
   v.addEventListener('error',function(){v.classList.remove('on');});
   if('requestIdleCallback' in window){requestIdleCallback(function(){v.load();});}else{setTimeout(function(){v.load();},1500);}
 }

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Die Marke mynds: Logo-Variationen als Vektor und PNG, die sechs Farben, Schrift und die Regeln ihrer Nutzung.">
+<title>Brand — mynds</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  /* mynds · Brand-Seite · gleiches System wie die Landing-Page */
+  @font-face{
+    font-family:'Outfit';
+    src:url('fonts/outfit-var.woff2') format('woff2');
+    font-weight:100 900;font-style:normal;font-display:swap;
+  }
+  @font-face{
+    font-family:'Albert Sans';
+    src:url('fonts/albertsans-var.woff2') format('woff2');
+    font-weight:100 900;font-style:normal;font-display:swap;
+  }
+  :root{
+    --paper:#FFFFFF; --ink:#000000; --soft:#55534B;
+    --creme:#FCF5AF; --orange:#F0A533; --deep:#E44F0A; --red:#BA011A; --blue:#0B4B8B;
+    --font-head:'Outfit',-apple-system,'Segoe UI',sans-serif;
+    --font-body:'Albert Sans',-apple-system,'Segoe UI',sans-serif;
+    --s-question:clamp(26px,2.6vw,40px);
+    --s-body:18px;
+    --s-small:13px;
+    --margin:clamp(18px,2.2vw,32px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:var(--s-body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:var(--font-head)}
+  p{hyphens:auto;-webkit-hyphens:auto;text-wrap:pretty}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+  ::selection{background:var(--orange);color:var(--ink)}
+  section{scroll-margin-top:24px;padding:9vh var(--margin)}
+  h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;margin-bottom:12px;text-wrap:balance}
+  .lead{color:var(--soft);max-width:56ch;margin-bottom:44px}
+  .btn{display:inline-block;background:var(--orange);color:var(--ink);font-family:var(--font-head);font-weight:600;font-size:var(--s-body);text-decoration:none;padding:16px 30px;transition:background .25s ease,transform .15s ease}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn:active{transform:translateY(1px)}
+  header.hero{position:relative;min-height:88svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--margin);overflow:hidden}
+  header.hero h1{font-size:clamp(100px,33vw,520px);font-weight:700;line-height:.9;letter-spacing:-.03em;white-space:nowrap}
+  .under{margin-top:4vh;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+  .under p{font-size:var(--s-body);max-width:36ch;color:var(--soft)}
+  .corner{position:absolute;top:var(--margin);right:var(--margin);text-decoration:none;color:var(--soft);font-size:var(--s-body)}
+  .corner b{font-family:var(--font-head);font-weight:700;color:var(--ink)}
+  .corner:hover b{color:var(--orange)}
+  /* Logo-Kacheln */
+  .tgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .tile{display:flex;flex-direction:column}
+  .tile .field{aspect-ratio:5/2;display:grid;place-items:center;padding:8%}
+  .tile .field img{width:100%;height:100%;object-fit:contain}
+  .tile .dl{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:12px 0 0;flex-wrap:wrap}
+  .tile .dl .nm{font-size:var(--s-small);color:var(--soft)}
+  .tile .dl a{font-size:var(--s-small);color:var(--soft);text-decoration:none;border-bottom:2px solid var(--orange);padding-bottom:2px}
+  .tile .dl a:hover{color:var(--ink)}
+  .t-white{background:var(--paper)} .t-blue{background:var(--blue)}
+  .t-black{background:var(--ink)} .t-creme{background:var(--creme)}
+  .mono .tile .field{aspect-ratio:1/1}
+  .mono .tile .field img{width:62%}
+  /* Farben */
+  .swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .sw{display:flex;flex-direction:column}
+  .sw .chip{height:130px}
+  .sw .info{padding:12px 0 0}
+  .sw .info b{font-family:var(--font-head);font-weight:600;display:block}
+  .sw .info span{font-size:var(--s-small);color:var(--soft);display:block;margin-top:2px;font-variant-numeric:tabular-nums}
+  /* Regeln */
+  .rules{columns:2;column-gap:64px;max-width:none}
+  .rules p{break-inside:avoid}
+  .rules p{color:var(--soft);margin-bottom:16px}
+  .rules p b{color:var(--ink);font-weight:600}
+  footer{background:var(--ink);color:var(--paper);padding:44px var(--margin) 24px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
+  footer .fmark{font-family:var(--font-head);font-weight:700;font-size:clamp(40px,6vw,96px);line-height:.9;letter-spacing:-.03em;color:#FCF5AF}
+  footer p{font-size:var(--s-small);color:#8F8D83;max-width:60ch}
+  footer p b{color:var(--paper);font-weight:600}
+  footer a{color:#B9B7AD}
+    .js header.hero h1{animation:monumentIn 1.1s cubic-bezier(.2,.7,.2,1) .05s both}
+  .js header.hero .under{animation:riseIn .9s ease .35s both}
+  .js header.hero .corner{animation:fadeIn .8s ease .55s both}
+  @keyframes monumentIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+  @keyframes riseIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;transition-delay:calc(var(--i,0)*80ms)}
+  .js .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}.js header.hero h1,.js header.hero .under,.js header.hero .corner{animation:none;opacity:1;transform:none}}
+  @media (max-width:880px){
+    .tgrid,.swatches{grid-template-columns:1fr 1fr}
+    section{padding:7vh var(--margin)}
+  }
+  @media (max-width:560px){.tgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <a class="corner" href="index.html" aria-label="Zurück zur mynds-Landing-Page">← <b>mynds</b></a>
+  <h1>brand</h1>
+  <div class="under">
+    <p>Die Marke mynds: Logo-Variationen als Vektor und PNG, die sechs Farben, Schrift und die Regeln ihrer Nutzung.</p>
+    <a class="btn" href="#wortmarke">Zu den Logos</a>
+  </div>
+</header>
+
+<section id="wortmarke">
+  <h2 class="reveal">Wortmarke</h2>
+  <p class="lead reveal">„mynds", kleingeschrieben, in Outfit Bold. Ohne Container, ohne Punkt, ohne Versalien. Die SVG-Dateien betten die Schrift ein; die PNG-Exporte sind immer korrekt, auch ohne installierte Schrift.</p>
+  <div class="tgrid">
+    <div class="tile reveal"><div class="field t-white"><img src="assets/brand/mynds-schwarz-auf-weiss.png" alt="Wortmarke mynds, schwarz auf weiß" width="1200" height="480"></div>
+      <div class="dl"><span class="nm">Wortmarke · Schwarz auf Weiß</span><span style="display:flex;gap:10px"><a href="assets/brand/mynds-schwarz-auf-weiss.svg" download>SVG</a><a href="assets/brand/mynds-schwarz-auf-weiss.png" download>PNG</a></span></div></div>
+    <div class="tile reveal" style="--i:1"><div class="field t-blue"><img src="assets/brand/mynds-creme-auf-blau.png" alt="Wortmarke mynds, creme auf blau" width="1200" height="480"></div>
+      <div class="dl"><span class="nm">Wortmarke · Creme auf Blau</span><span style="display:flex;gap:10px"><a href="assets/brand/mynds-creme-auf-blau.svg" download>SVG</a><a href="assets/brand/mynds-creme-auf-blau.png" download>PNG</a></span></div></div>
+    <div class="tile reveal"><div class="field t-black"><img src="assets/brand/mynds-creme-auf-schwarz.png" alt="Wortmarke mynds, creme auf schwarz" width="1200" height="480"></div>
+      <div class="dl"><span class="nm">Wortmarke · Creme auf Schwarz</span><span style="display:flex;gap:10px"><a href="assets/brand/mynds-creme-auf-schwarz.svg" download>SVG</a><a href="assets/brand/mynds-creme-auf-schwarz.png" download>PNG</a></span></div></div>
+    <div class="tile reveal" style="--i:1"><div class="field t-creme"><img src="assets/brand/mynds-schwarz-auf-creme.png" alt="Wortmarke mynds, schwarz auf creme" width="1200" height="480"></div>
+      <div class="dl"><span class="nm">Wortmarke · Schwarz auf Creme</span><span style="display:flex;gap:10px"><a href="assets/brand/mynds-schwarz-auf-creme.svg" download>SVG</a><a href="assets/brand/mynds-schwarz-auf-creme.png" download>PNG</a></span></div></div>
+  </div>
+</section>
+
+<section id="monogramm" class="mono">
+  <h2 class="reveal">Monogramm</h2>
+  <p class="lead reveal">Das runde kleingeschriebene „m" für Favicon, App-Icon und enge Plätze.</p>
+  <div class="tgrid">
+    <div class="tile reveal"><div class="field t-white"><img src="assets/brand/m-schwarz-auf-weiss.png" alt="Monogramm m, schwarz auf weiß" width="512" height="512"></div>
+      <div class="dl"><span class="nm">Monogramm · Schwarz auf Weiß</span><span style="display:flex;gap:10px"><a href="assets/brand/m-schwarz-auf-weiss.svg" download>SVG</a><a href="assets/brand/m-schwarz-auf-weiss.png" download>PNG</a></span></div></div>
+    <div class="tile reveal" style="--i:1"><div class="field t-blue"><img src="assets/brand/m-creme-auf-blau.png" alt="Monogramm m, creme auf blau" width="512" height="512"></div>
+      <div class="dl"><span class="nm">Monogramm · Creme auf Blau</span><span style="display:flex;gap:10px"><a href="assets/brand/m-creme-auf-blau.svg" download>SVG</a><a href="assets/brand/m-creme-auf-blau.png" download>PNG</a></span></div></div>
+    <div class="tile reveal"><div class="field t-black"><img src="assets/brand/m-creme-auf-schwarz.png" alt="Monogramm m, creme auf schwarz" width="512" height="512"></div>
+      <div class="dl"><span class="nm">Monogramm · Creme auf Schwarz</span><span style="display:flex;gap:10px"><a href="assets/brand/m-creme-auf-schwarz.svg" download>SVG</a><a href="assets/brand/m-creme-auf-schwarz.png" download>PNG</a></span></div></div>
+    <div class="tile reveal" style="--i:1"><div class="field t-creme"><img src="assets/brand/m-schwarz-auf-creme.png" alt="Monogramm m, schwarz auf creme" width="512" height="512"></div>
+      <div class="dl"><span class="nm">Monogramm · Schwarz auf Creme</span><span style="display:flex;gap:10px"><a href="assets/brand/m-schwarz-auf-creme.svg" download>SVG</a><a href="assets/brand/m-schwarz-auf-creme.png" download>PNG</a></span></div></div>
+  </div>
+</section>
+
+<section id="farben">
+  <h2 class="reveal">Farben</h2>
+  <p class="lead reveal">Nur diese sechs. Creme trägt den hellen Grund, Schwarz den dunkeln, Orange die Aktion, Blau die Nähe, Rot den Frage-Impuls.</p>
+  <div class="swatches">
+    <div class="sw reveal"><div class="chip" style="background:#FCF5AF"></div><div class="info"><b>Creme</b><span>#FCF5AF · Light-Hintergrund</span></div></div>
+    <div class="sw reveal" style="--i:1"><div class="chip" style="background:#F0A533"></div><div class="info"><b>Orange</b><span>#F0A533 · primäre Aktionen</span></div></div>
+    <div class="sw reveal" style="--i:2"><div class="chip" style="background:#E44F0A"></div><div class="info"><b>Tieforange</b><span>#E44F0A · KI-Kennzeichnung</span></div></div>
+    <div class="sw reveal"><div class="chip" style="background:#BA011A"></div><div class="info"><b>Rot</b><span>#BA011A · Frage-Impuls, destruktive Aktionen</span></div></div>
+    <div class="sw reveal" style="--i:1"><div class="chip" style="background:#0B4B8B"></div><div class="info"><b>Blau</b><span>#0B4B8B · Antwort und Nähe, Krisenkarte</span></div></div>
+    <div class="sw reveal" style="--i:2"><div class="chip" style="background:#000000"></div><div class="info"><b>Schwarz</b><span>#000000 · Dark-Hintergrund</span></div></div>
+  </div>
+</section>
+
+<section id="regeln">
+  <h2 class="reveal">Regeln</h2>
+  <div class="rules">
+    <p class="reveal"><b>Stimme:</b> warm, ruhig, ehrlich, auf Augenhöhe. Du-Anrede, keine Dringlichkeit, keine Belohnungslogik, kein Gamification.</p>
+    <p class="reveal"><b>Schrift:</b> Outfit für Logo, Überschriften und Zahlen; Albert Sans für Fließtext und Oberfläche. Self-hosted, keine Anfragen an Google (DSGVO).</p>
+    <p class="reveal"><b>Lockup:</b> auf Creme und Weiß steht die Marke in Schwarz; auf Schwarz und Blau in Creme. Nie in Orange oder Rot.</p>
+    <p class="reveal"><b>Rot</b> niemals für Nutzerzustände oder die Krisenkarte. <b>Die Krisenkarte bleibt blau.</b></p>
+    <p class="reveal"><b>Wörter, die nie erscheinen:</b> behandeln, diagnostizieren, überwachen, heilen, therapieren. Erlaubt: begleiten, strukturieren, sammeln, einordnen, vorbereiten.</p>
+    <p class="reveal"><b>Krisen-Nummern</b> bleiben sichtbar, wo Betroffene sie suchen. Pflicht, keine Design-Option.</p>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <p class="fmark">mynds</p>
+    <p style="margin-top:14px">© 2026 MYNDS · Prototyp · <a href="index.html">Zur Landing-Page</a> · <a href="blog.html">Blog</a><br>Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: <b>0800 111 0 111</b> / 116 117 / 112</p>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+var io=new IntersectionObserver(function(es){
+  es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{rootMargin:'0px 0px 320px 0px',threshold:0});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+</script>
+</body>
+</html>
