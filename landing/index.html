@@ -172,7 +172,7 @@
   .faden.live{position:relative;height:400px;margin:0}
   .faden.live li{position:absolute;margin:0;transform:translate(-50%,-50%);transition:left .2s ease,top .2s ease;z-index:2}
   .faden.live button{flex-direction:column;align-items:center;gap:2px;white-space:nowrap}
-  .faden.live .fw{font-size:clamp(22px,2.6vw,40px)}
+  .faden.live .fw{font-size:clamp(22px,2.6vw,40px);white-space:normal;max-width:24vw;text-align:center;line-height:1.04}
   .faden.live .fs{display:none}
   .faden-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
   .faden-svg path{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:round}
@@ -279,9 +279,9 @@
       <p class="what"><b>mynds</b> begleitet junge Erwachsene durch die Therapie-Wartezeit: strukturieren, sammeln, einordnen.</p>
       <a class="btn" href="#einstieg">Den Prototyp ansehen</a>
     </div>
-    <p class="corner corner-bl">Prototyp · S2B an der WHU</p>
-    <p class="corner corner-br">Wenn es dir gerade schlecht geht:<br><b>Telefonseelsorge 0800 111 0 111</b>, 24/7</p>
-    <p class="crisis-mobile" style="display:none">Krise? <b>0800 111 0 111</b>, 24/7</p>
+    <p class="corner corner-bl">Prototyp · Studienprojekt Sprint2Berlin, MiE @ WHU 2026</p>
+    <p class="corner corner-br">Falls Du wirklich Hilfe brauchst:<br><b>Telefonseelsorge 0800 111 0 111</b>, 24/7</p>
+    <p class="crisis-mobile" style="display:none">Dringend? <b>0800 111 0 111</b>, 24/7</p>
   </div>
   <!-- Hero-Video-Slot: assets/hero.mp4 einfügen = fertig. Poster ist die gebaute erste Einstellung. -->
   <div class="hero-video" aria-label="mynds, der Einstieg in der App">
@@ -298,13 +298,13 @@
         <p class="seq-title">Vier Einwilligungen, eine für eine.</p>
         <div class="bar"><div class="toggle on"><span class="val">Notizen auf diesem Gerät <span class="req">erforderlich</span></span><span class="knob"></span></div>
         <div class="toggle"><span class="val">Symptom-Check führen</span><span class="knob"></span></div>
-        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release 2</span></span><span class="knob"></span></div></div>
+        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release Mynds 2.0</span></span><span class="knob"></span></div></div>
       </div>
       <div class="seq-screen ui" data-ui aria-label="Anliegen in eigenen Worten">
         <p class="wordmark">mynds</p>
         <p class="seq-title">Dein Anliegen, in deinen Worten.</p>
         <div class="bar"><span class="lbl">Was dich beschäftigt</span>
-        <p class="val">„Ich möchte verstehen, warum ich nachts nicht zur Ruhe komme."</p>
+        <p class="val">„Ich fühle mich im Moment so einsam..."</p>
         <div class="row"><span class="lbl">Aktuelle Belastung</span><span class="val">7/10</span></div>
         <div class="track"><div class="fill" style="--w:70%"></div></div></div>
       </div>
@@ -313,7 +313,7 @@
         <p class="seq-title">Dein Startbild, von dir gesetzt.</p>
         <div class="bar"><div class="row"><span class="lbl">Stimmung</span><span class="val">4/10</span></div><div class="track"><div class="fill" style="--w:40%"></div></div></div>
         <div class="bar"><div class="row"><span class="lbl">Schlaf</span><span class="val">3/10</span></div><div class="track"><div class="fill" style="--w:30%"></div></div></div>
-        <p class="meta">Keine Auswertung, keine Diagnose.</p>
+        <p class="meta">Energie 4/10 · Anspannung 7/10</p>
       </div>
       <div class="seq-screen ui" data-ui aria-label="Profil in der App">
         <p class="wordmark">mynds</p>
@@ -330,9 +330,9 @@
 <section class="zahlen" id="zahlen">
   <h2 class="reveal">Die Wartezeit, in Zahlen</h2>
   <dl>
-    <div class="zrow reveal"><dt>20</dt><dd><b>Wochen</b> liegen im Schnitt zwischen Erstkontakt und Therapiebeginn. BPtK-Wartezeiterhebung, Angabe aus eigener Recherche.</dd></div>
-    <div class="zrow reveal"><dt>4</dt><dd><b>Einwilligungen</b>, getrennt erteilbar und einzeln widerrufbar. Ohne die optionalen drei läuft alles.</dd></div>
-    <div class="zrow reveal"><dt>16</dt><dd><b>Fragen</b> im Symptom-Check, als reine Selbstauskunft. Kein Score, keine Ampel, keine Diagnose.</dd></div>
+    <div class="zrow reveal"><dt>20</dt><dd><b>Wochen</b> liegen im Schnitt zwischen Erstkontakt und Therapiebeginn (BPtK-Wartezeiterhebung, Angabe aus eigener Recherche)</dd></div>
+    <div class="zrow reveal"><dt>4</dt><dd><b>Einwilligungen</b>, getrennt erteilbar und einzeln widerrufbar.</dd></div>
+    <div class="zrow reveal"><dt>16</dt><dd><b>Fragen</b> im Symptom-Check, als reine Selbstauskunft.</dd></div>
     <div class="zrow reveal"><dt>0</dt><dd><b>Server</b> halten deine Angaben. Im Prototyp bleibt alles auf deinem Gerät, löschbar mit einem Tipp.</dd></div>
   </dl>
 </section>
@@ -346,15 +346,15 @@
       <div class="ui" data-ui aria-label="Einwilligungen in der App: eine erforderlich, drei optional">
         <div class="toggle on"><span class="val">Notizen auf diesem Gerät speichern <span class="req">erforderlich</span></span><span class="knob" aria-hidden="true"></span></div>
         <div class="toggle"><span class="val">Symptom-Check führen</span><span class="knob" aria-hidden="true"></span></div>
-        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release 2</span></span><span class="knob" aria-hidden="true"></span></div>
+        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release Mynds 2.0</span></span><span class="knob" aria-hidden="true"></span></div>
       </div>
     </div>
     <div class="stage">
       <p class="reveal"><b>Danach</b> hältst du dein Anliegen in eigenen Worten fest und gibst an, wie sehr es dich gerade belastet. Alles Weitere ist freiwillig.</p>
       <div class="ui" data-ui aria-label="Anliegen in eigenen Worten mit Belastungsanzeige">
         <div class="bar">
-          <span class="lbl">Dein Anliegen — in deinen Worten</span>
-          <p class="val" style="margin-top:6px">„Ich möchte verstehen, warum ich nachts nicht zur Ruhe komme."</p>
+          <span class="lbl">Dein Anliegen in deinen Worten</span>
+          <p class="val" style="margin-top:6px">„Ich fühle mich im Moment so einsam..."</p>
           <div class="row" style="margin-top:12px"><span class="lbl">Aktuelle Belastung</span><span class="val" style="font-variant-numeric:tabular-nums">7/10</span></div>
           <div class="track"><div class="fill" style="--w:70%"></div></div>
         </div>
@@ -410,7 +410,7 @@
     <p class="a">Sie bleiben <b>auf deinem Gerät</b>. Kein Server, keine Cloud, kein Tracking. Freigaben erfolgen nur aktiv durch dich.</p>
   </div>
   <div class="qa reveal">
-    <h3>Bekomme ich einen Score oder eine Diagnose?</h3>
+    <h3>Bekomme ich eine Diagnose?</h3>
     <p class="a"><b>Nein.</b> Der Symptom-Check zählt nur deine Ja-Antworten. Keine Punkte, keine Ampeln, keine automatische Auswertung.</p>
   </div>
   <div class="qa reveal">
@@ -423,11 +423,11 @@
   </div>
   <div class="qa reveal">
     <h3>Wer macht mynds?</h3>
-    <p class="a">Ein Gründerteam im <b>S2B-Programm der WHU</b>, Otto Beisheim School of Management.</p>
+    <p class="a">Das sind wir: Sanije und Inett. Ein Gründerinnen-Team im Master in Entrepreneurship der WHU - Otto Beisheim School of Management.</p>
   </div>
   <div class="qa reveal">
     <h3>Und wenn es mir gerade sehr schlecht geht?</h3>
-    <p class="a">Dann sprich sofort mit jemandem. Diese Nummern stehen auch <b>in der App</b>, eine Karte weiter:</p>
+    <p class="a">Dann sprich sofort mit jemandem. Diese Nummern stehen auch in der App, eine Karte weiter:</p>
     <div class="ui" data-ui aria-label="Sicherheitsbereich der App mit Hilfe-Nummern">
       <div class="bar" style="background:var(--app-blue);border-color:var(--app-line2)">
         <p class="val" style="font-family:var(--font-head);font-weight:600">Hilfe ist jederzeit erreichbar</p>
@@ -446,6 +446,7 @@
     <li class="reveal" data-status="heute · im Prototyp" data-desc="Neun Werte, die du selbst setzt und jederzeit korrigierst."><button type="button" aria-label="startbild, heute im Prototyp"><span class="fw">startbild</span><span class="fs"><b>heute</b> · im Prototyp</span></button></li>
     <li class="reveal" data-status="Release 2 · in Entwicklung" data-desc="Gedanken sprechen statt tippen."><button type="button" aria-label="sprachnotizen, Release 2, in Entwicklung"><span class="fw">sprachnotizen</span><span class="fs">Release 2 · <b>in Entwicklung</b></span></button></li>
     <li class="reveal" data-status="Release 2 · in Entwicklung" data-desc="Dein Profil, aufbereitet für die Praxis deiner Wahl."><button type="button" aria-label="praxis-bericht, Release 2, in Entwicklung"><span class="fw">praxis-bericht</span><span class="fs">Release 2 · <b>in Entwicklung</b></span></button></li>
+    <li class="reveal" data-status="Release 2 · in Entwicklung" data-desc="Das Analoge an mynds: was du daneben auch in der Hand haben kannst."><button type="button" aria-label="physische Komponente, Release 2, in Entwicklung"><span class="fw">physische Komponente</span><span class="fs">Release 2 · <b>in Entwicklung</b></span></button></li>
     <li class="reveal" data-status="Release 3 · in Entwicklung" data-desc="Zusammenhänge über Zeit, als Beobachtung, nicht als Urteil."><button type="button" aria-label="muster, Release 3, in Entwicklung"><span class="fw">muster</span><span class="fs">Release 3 · <b>in Entwicklung</b></span></button></li>
   </ol>
   <p class="faden-status reveal" id="faden-status" aria-live="polite">Fahr mit der Maus über den Faden: <b>selbstauskunft</b> — Geführte Selbstauskunft auf Basis etablierter Anamnese-Bögen.</p>
@@ -458,7 +459,8 @@
   <div class="crow reveal"><span>S2B an der WHU</span></div>
   <div class="crow reveal"><span>Prototyp 2026</span></div>
   <div class="crow reveal"><span>Demo ansehen</span><a class="arrow-btn" href="#einstieg" aria-label="Zum Einstieg: Demo ansehen"><span>↑</span></a></div>
-  <p class="note reveal">[ Kontaktdaten werden ergänzt ]</p>
+  <p class="note reveal">Sanije Demiri &amp; Inett Pees</p>
+  <p class="note reveal"><a class="plink" href="mailto:sanije.demiri@whu.edu">sanije.demiri@whu.edu</a> &amp; <a class="plink" href="mailto:inett.pees@whu.edu">inett.pees@whu.edu</a></p>
 </section>
 
 <!-- Der Fuß: invertiert, der Name kehrt wieder -->
@@ -466,7 +468,7 @@
   <div class="fcols">
     <div>
       <h4>mynds</h4>
-      <p>Prototyp · S2B an der WHU<br>Otto Beisheim School of Management</p>
+      <p>Prototyp · S2B an der WHU - Otto Beisheim School of Management</p>
     </div>
     <div>
       <h4>Navigation</h4>
@@ -492,7 +494,7 @@
     </svg>
   </div>
   <div>
-    <p class="legal">© 2026 MYNDS · Prototyp · Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</p>
+    <p class="legal">© 2026 MYNDS · Dies ist ein Prototyp, kein Startup in Gründung! · Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</p>
   </div>
 </footer>
 
