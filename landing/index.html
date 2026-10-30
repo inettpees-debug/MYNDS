@@ -530,13 +530,24 @@ function animateSliders(rgs){
     requestAnimationFrame(step);
   });
 }
-// Der Signaturzug: das Monument wird beim Scrollen leicht schwerer
+// Der Signaturzug: das Monument wird beim Scrollen leicht schwerer.
+// Die Eingangsanimation (fill: both) hält sonst den End-Keyframe für immer fest
+// und würde die Scroll-Skalierung überdecken, deshalb wird sie nach dem Ende abgegeben.
 var mon=document.querySelector('.hero h1');
-if(mon&&'IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-  var io3=new IntersectionObserver(function(es){
-    es.forEach(function(e){mon.style.transform=e.intersectionRatio>.5?'scale(.97)':'scale(1)';});
-  },{threshold:[.5]});
-  io3.observe(document.querySelector('.stage-top'));
+if(mon&&!RM){
+  mon.addEventListener('animationend',function(){
+    mon.style.animation='none';mon.style.transform='scale(.97)';
+  },{once:true});
+  var monTick=false;
+  function monScale(){
+    if(monTick)return;monTick=true;
+    requestAnimationFrame(function(){
+      var pr=Math.min(1,Math.max(0,scrollY/(innerHeight*.9)));
+      mon.style.transform='scale('+(0.97+0.03*pr).toFixed(4)+')';
+      monTick=false;
+    });
+  }
+  addEventListener('scroll',monScale,{passive:true});
 }
 // Die Sequenz im Videofenster läuft, bis assets/hero.mp4 existiert
 var seq=document.getElementById('seq');
