@@ -128,19 +128,17 @@
   .ui .toggle .req{font-size:13px;color:var(--app-dim)}
 
   /* ————— Zahlen als Teller ————— */
-  .teller{display:flex;flex-wrap:wrap;gap:22px;align-items:center;margin-bottom:34px}
-  .t{border:none;cursor:pointer;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;font-family:var(--font-body);transition:transform .18s ease,opacity .18s ease;opacity:.92}
-  .t b{font-family:var(--font-head);font-weight:700;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-  .t span{font-size:var(--s-small);letter-spacing:0}
-  .t:hover,.t:focus-visible,.t.on{transform:scale(1.05);opacity:1}
-  .t-bl{background:var(--app-blue);color:var(--paper)}
-  .t-or{background:var(--orange);color:var(--ink)}
-  .t-cr{background:var(--paper);color:var(--ink);border:2px solid var(--ink)}
-  .t-sw{background:var(--ink);color:var(--paper)}
-  .t-ti{background:var(--deep);color:var(--ink)}
-  .t1{width:190px;height:190px}.t1 b{font-size:64px}
-  .t2{width:150px;height:150px}.t2 b{font-size:46px}
-  .t3{width:120px;height:120px}.t3 b{font-size:36px}
+  .zahlen h2{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:42px;color:var(--soft)}
+  .teller{display:flex;flex-wrap:wrap;gap:10px 60px;align-items:baseline;margin-bottom:40px;max-width:1240px}
+  .t{border:none;cursor:pointer;background:none;display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;font-family:var(--font-body);padding:0;transition:transform .18s ease}
+  .t b{font-family:var(--font-head);font-weight:700;line-height:.92;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+  .t span{font-size:var(--s-small);color:var(--soft)}
+  .t:hover,.t:focus-visible{transform:translateY(-5px)}
+  .t:hover b,.t:focus-visible b,.t.on b{color:var(--orange) !important}
+  .c-bl b{color:var(--app-blue)}.c-ti b{color:var(--deep)}.c-sw b{color:var(--ink)}
+  .z1 b{font-size:clamp(88px,11vw,184px)}
+  .z2 b{font-size:clamp(62px,7.8vw,128px)}
+  .z2,.z3{margin-top:26px}
   .tstatus{max-width:64ch;color:var(--soft);min-height:3.4em}
   .tstatus b{color:var(--ink);font-weight:600}
   .quellen{font-size:var(--s-small);color:var(--soft);margin-top:20px;max-width:80ch}
@@ -180,26 +178,28 @@
   .bmore{margin-top:18px}
 
   /* ————— Fahrplan als Posterzeilen ————— */
-  .roadmap{background:var(--app-blue);color:var(--paper);padding:11vh var(--margin) 13vh}
-  .fahrplan h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;color:var(--soft);margin-bottom:64px}
+  .roadmap{background:var(--app-blue);color:var(--paper);padding:16vh var(--margin) 18vh}
+  .roadmap h2{font-size:clamp(34px,3.6vw,54px);font-weight:700;letter-spacing:-.015em;color:rgba(252,245,175,.85);margin-bottom:12vh;max-width:none}
   .faden{list-style:none}
-  .faden li{margin-bottom:14px}
+  .faden li{margin-bottom:30px}
   .faden a{color:inherit;text-decoration:none;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;column-gap:24px;row-gap:6px;width:100%;background:none;border:0;color:inherit;font:inherit;text-align:inherit;cursor:pointer;padding:0}
-  .faden .fw{font-family:var(--font-head);font-weight:700;font-size:var(--s-poster);line-height:.95;letter-spacing:-.03em;transition:color .25s ease}
+  .faden.live a{flex-direction:column;align-items:center;gap:4px;white-space:normal;text-align:center}
+  .faden .fw{font-family:var(--font-head);font-weight:700;font-size:clamp(44px,9vw,120px);line-height:.95;letter-spacing:-.03em;transition:color .25s ease;hyphens:none;-webkit-hyphens:none;overflow-wrap:normal}
   .faden .fs{font-family:var(--font-body);font-weight:400;font-size:var(--s-body);color:rgba(252,245,175,.78);font-variant-numeric:tabular-nums;text-align:right}
   .faden .fs b{font-weight:600;color:var(--paper)}
   .faden button:hover .fw,.faden li.on .fw{color:var(--orange)}
-  .faden-status{max-width:64ch;color:rgba(252,245,175,.85);margin-top:44px;min-height:3em}
+  .faden-status{max-width:68ch;font-size:clamp(18px,1.6vw,24px);color:rgba(252,245,175,.9);margin-top:9vh;min-height:3.2em}
   .faden-status b{color:var(--paper);font-weight:600}
   /* Live-Modus: die Stationen liegen auf dem Faden */
-  .faden.live{position:relative;height:400px;margin:0}
+  .faden.live{position:relative;height:calc(7 * 24vh);min-height:1300px;margin:0}
   .faden.live li{position:absolute;margin:0;transform:translate(-50%,-50%);transition:left .2s ease,top .2s ease;z-index:2}
   .faden.live button{flex-direction:column;align-items:center;gap:2px;white-space:nowrap}
-  .faden.live .fw{font-size:clamp(22px,2.6vw,40px);white-space:normal;max-width:24vw;text-align:center;line-height:1.04}
+  .faden.live .fw{font-size:clamp(34px,4.4vw,72px);white-space:normal;max-width:36vw;min-width:260px;text-align:center;line-height:.98}
+  .faden.live li[data-status] a{max-width:38vw}
   .faden.live .fs{display:none}
   .faden-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
-  .faden-svg path{fill:none;stroke:var(--orange);stroke-width:3;stroke-linecap:round}
-  .faden-svg circle{fill:var(--app-blue);stroke:var(--orange);stroke-width:3;transition:r .2s ease,fill .2s ease}
+  .faden-svg path{fill:none;stroke:var(--orange);stroke-width:5;stroke-linecap:round}
+  .faden-svg circle{fill:var(--app-blue);stroke:var(--orange);stroke-width:5;transition:r .2s ease,fill .2s ease}
   .faden-svg circle.on{fill:var(--orange)}
   .item .when b{font-weight:600;color:var(--ink)}
 
@@ -235,7 +235,7 @@
   .lm-y:hover,.lm-y:focus-visible{color:var(--app-blue)}
   .lm-n:hover,.lm-n:focus-visible{color:var(--red)}
   .lm-d:hover,.lm-d:focus-visible{color:var(--deep)}
-  .lm-s:hover,.lm-s:focus-visible{background:var(--paper);color:var(--ink)}
+  .lm-s:hover,.lm-s:focus-visible{background:var(--creme);color:var(--ink);border-radius:.06em}
   .js .hero h1{animation:monumentIn .6s cubic-bezier(.2,.7,.2,1) both}
   .js .hero .under{animation:riseIn .9s ease .35s both}
   .js .stage-top .corner{animation:fadeIn .8s ease .55s both}
@@ -273,10 +273,9 @@
     .hero .crisis-mobile b{color:var(--ink)}
     .hero-video{margin-top:6vh}
     .zahlen{padding:13vh var(--margin)}
-    .t1{width:150px;height:150px}.t1 b{font-size:48px}
-    .t2{width:120px;height:120px}.t2 b{font-size:36px}
-    .t3{width:98px;height:98px}.t3 b{font-size:28px}
-    .teller{gap:14px}
+    .z1 b{font-size:16vw}.z2 b{font-size:10vw}
+    .teller{gap:14px 28px}
+    .z2,.z3{margin-top:14px}
     .faden .fs{display:none}
     .einstieg{padding:13vh var(--margin)}
     .flowcol{margin-left:0;max-width:none}
@@ -287,8 +286,8 @@
     .stage{margin-bottom:56px}
     .fragen{padding:13vh var(--margin)}
     .qa .a{max-width:none}
-    .roadmap{padding:9vh var(--margin)}
-    .roadmap h2{margin-bottom:48px}
+    .roadmap{padding:11vh var(--margin)}
+    .roadmap h2{margin-bottom:8vh}
     .kontakt{padding:12vh var(--margin)}
     .fcols{grid-template-columns:1fr 1fr;gap:28px 20px}
   }
@@ -360,18 +359,18 @@
 
 <!-- Zahlen, leise -->
 <section class="zahlen" id="zahlen">
-  <h2 class="reveal">Die Wartezeit, in Zahlen</h2>
+  <h2>Die Wartezeit, in Zahlen</h2>
   <div class="teller" id="teller" aria-label="Zahlen zur Wartezeit. Überfahre oder tippe eine Zahl für ihren Kontext.">
-    <button type="button" class="t t-bl" data-k="20 Wochen Wartezeit" data-d="Zwischen Erstkontakt und Therapiebeginn liegen im Schnitt 142 Tage." data-q="BPtK-Warteraumstudie"><b>20</b><span>Wochen</span></button>
-    <button type="button" class="t t-or" data-k="97 Prozent ohne Begleitung" data-d="der Befragten fühlten sich während der Wartezeit sich selbst überlassen." data-q="eigene Umfrage, n=33, Oktober 2026"><b>97%</b><span>ohne Unterstützung</span></button>
-    <button type="button" class="t t-cr" data-k="9 Monate benannte Wartezeit" data-d="Median der Praxen, die ihre Wartezeit überhaupt nennen: 3, 9, 9 und 12 Monate." data-q="eigener Scan von 220 Praxen, September 2026"><b>9</b><span>Monate</span></button>
-    <button type="button" class="t t-sw" data-k="1,94 Millionen Anfragen" data-d="Anfragen bei der Terminservicestelle 2025, Tendenz steigend." data-q="KBV 2025"><b>1,94</b><span>Mio. Anfragen</span></button>
-    <button type="button" class="t t-ti" data-k="46 Prozent fristgerecht" data-d="der TSS-Anfragen wurden innerhalb der Frist vermittelt. Der Rest wartet weiter." data-q="KBV 2025"><b>46%</b><span>fristgerecht</span></button>
-    <button type="button" class="t t-bl" data-k="8 gegen 24 Wochen" data-d="Median von der ersten Konsultation bis zur Therapie: Stadt gegen Land." data-q="Bundestag-Review"><b>8·24</b><span>Wochen, Stadt·Land</span></button>
-    <button type="button" class="t t-or" data-k="12 Monate im ländlichen Extremfall" data-d="So lange kann die Wartezeit ländlich dauern." data-q="BPtK / vdek"><b>12</b><span>Monate max.</span></button>
-    <button type="button" class="t t-cr" data-k="3 Millionen Patient:innen" data-d="suchen pro Jahr eine ambulante Psychotherapie. 36.197 GKV-Therapeut:innen halten dagegen, meist in Einzelpraxen." data-q="GKV-Versorgungsreport"><b>3</b><span>Mio. pro Jahr</span></button>
-    <button type="button" class="t t-sw" data-k="12 Tage bis zum Erstkontakt" data-d="Die Gegenevidenz, ehrlich dazu: Rund die Hälfte bekommt den Erstkontakt schnell. Die Wartezeit auf die Therapie beginnt danach." data-q="vdek"><b>12</b><span>Tage, immerhin</span></button>
-    <button type="button" class="t t-bl" data-k="0 Server" data-d="halten deine Angaben, wenn du mynds nutzt. Alles bleibt auf deinem Gerät." data-q="mynds Prototyp"><b>0</b><span>Server</span></button>
+    <button type="button" class="t c-bl z1" data-k="20 Wochen Wartezeit" data-d="Zwischen Erstkontakt und Therapiebeginn liegen im Schnitt 142 Tage." data-q="BPtK-Warteraumstudie"><b>20</b><span>Wochen</span></button>
+    <button type="button" class="t c-ti z2" data-k="97 Prozent ohne Begleitung" data-d="der Befragten fühlten sich während der Wartezeit sich selbst überlassen." data-q="eigene Umfrage, n=33, Oktober 2026"><b>97%</b><span>ohne Unterstützung</span></button>
+    <button type="button" class="t c-sw z1" data-k="9 Monate benannte Wartezeit" data-d="Median der Praxen, die ihre Wartezeit überhaupt nennen: 3, 9, 9 und 12 Monate." data-q="eigener Scan von 220 Praxen, September 2026"><b>9</b><span>Monate</span></button>
+    <button type="button" class="t c-bl z2" data-k="1,94 Millionen Anfragen" data-d="Anfragen bei der Terminservicestelle 2025, Tendenz steigend." data-q="KBV 2025"><b>1,94</b><span>Mio. Anfragen</span></button>
+    <button type="button" class="t c-ti z1" data-k="46 Prozent fristgerecht" data-d="der TSS-Anfragen wurden innerhalb der Frist vermittelt. Der Rest wartet weiter." data-q="KBV 2025"><b>46%</b><span>fristgerecht</span></button>
+    <button type="button" class="t c-sw z2" data-k="8 gegen 24 Wochen" data-d="Median von der ersten Konsultation bis zur Therapie: Stadt gegen Land." data-q="Bundestag-Review"><b>8·24</b><span>Wochen, Stadt·Land</span></button>
+    <button type="button" class="t c-bl z1" data-k="12 Monate im ländlichen Extremfall" data-d="So lange kann die Wartezeit ländlich dauern." data-q="BPtK / vdek"><b>12</b><span>Monate max.</span></button>
+    <button type="button" class="t c-ti z2" data-k="3 Millionen Patient:innen" data-d="suchen pro Jahr eine ambulante Psychotherapie. 36.197 GKV-Therapeut:innen halten dagegen, meist in Einzelpraxen." data-q="GKV-Versorgungsreport"><b>3</b><span>Mio. pro Jahr</span></button>
+    <button type="button" class="t c-sw z1" data-k="12 Tage bis zum Erstkontakt" data-d="Die Gegenevidenz, ehrlich dazu: Rund die Hälfte bekommt den Erstkontakt schnell. Die Wartezeit auf die Therapie beginnt danach." data-q="vdek"><b>12</b><span>Tage, immerhin</span></button>
+    <button type="button" class="t c-bl z2" data-k="0 Server" data-d="halten deine Angaben, wenn du mynds nutzt. Alles bleibt auf deinem Gerät." data-q="mynds Prototyp"><b>0</b><span>Server</span></button>
   </div>
   <p class="tstatus reveal" id="teller-status" aria-live="polite">Überfahre eine Zahl mit der Maus, dem Finger oder der Tab-Taste: <b>20 Wochen Wartezeit</b> — Zwischen Erstkontakt und Therapiebeginn liegen im Schnitt 142 Tage. (BPtK-Warteraumstudie)</p>
   <p class="quellen reveal">Quellen: BPtK-Warteraumstudie · KBV 2025 · vdek · GKV-Versorgungsreport · Bundestag-Review · eigene Umfrage (n=33, Oktober 2026) · eigener Praxen-Scan (220 Praxen, September 2026) · mynds Prototyp</p>
@@ -587,6 +586,19 @@ function bind2(id,out){
   el.addEventListener('input',function(){o.textContent=el.value;});
 }
 bind2('sl-stimmung','ov-stimmung');bind2('sl-schlaf','ov-schlaf');bind2('sl-anspannung','ov-anspannung');
+// Das Monument passt sich exakt der Fensterbreite an (nie clippen, immer mittig)
+(function(){
+  var h=document.querySelector('.hero h1');
+  if(!h)return;
+  function fit(){
+    var parent=h.parentElement.clientWidth;
+    h.style.fontSize='32vw';
+    var w=h.scrollWidth;
+    if(w>parent){h.style.fontSize=(32*parent/w).toFixed(2)+'vw';}
+  }
+  fit();
+  window.addEventListener('resize',fit);
+})();
 // Die Teller: Kontext bei Hover, Fokus und Tap
 (function(){
   var ts=[].slice.call(document.querySelectorAll('#teller .t')),st=document.getElementById('teller-status');
@@ -618,21 +630,26 @@ bind2('sl-stimmung','ov-stimmung');bind2('sl-schlaf','ov-schlaf');bind2('sl-ansp
   });
   if(!RM&&matchMedia('(min-width:880px) and (pointer:fine)').matches){
     f.classList.add('live');
-    var W=f.clientWidth,H=400,VW=1000,VH=400;
+    var W=f.clientWidth,H=f.clientHeight,VW=1000,VH=1000;
     var NS='http://www.w3.org/2000/svg';
     var svg=document.createElementNS(NS,'svg');
     svg.setAttribute('class','faden-svg');svg.setAttribute('viewBox','0 0 '+VW+' '+VH);svg.setAttribute('preserveAspectRatio','none');
     var path=document.createElementNS(NS,'path');
-    path.setAttribute('d','M 30 300 C 160 120, 250 60, 380 130 S 560 320, 690 220 S 900 80, 970 160');
     svg.appendChild(path);
     f.appendChild(svg);
-    var len=path.getTotalLength(),pts=[];
+    var pts=[];
+    var spots=items.map(function(_,i){return {x:i%2?0.71:0.29,y:(i+0.5)/items.length};});
+    var d='M '+(spots[0].x*VW)+' '+(spots[0].y*VH);
+    for(var k=1;k<spots.length;k++){
+      var a=spots[k-1],b2=spots[k],my=((a.y+b2.y)/2)*VH;
+      d+=' C '+(a.x*VW)+' '+my+', '+(b2.x*VW)+' '+my+', '+(b2.x*VW)+' '+(b2.y*VH);
+    }
+    path.setAttribute('d',d);
     items.forEach(function(li,i){
-      var p=path.getPointAtLength(len*(i+0.5)/items.length);
-      var x=p.x/VW*W,y=p.y/VH*H;
+      var sp=spots[i],x=sp.x*W,y=sp.y*H;
       li.style.left=x+'px';li.style.top=y+'px';
       var c=document.createElementNS(NS,'circle');
-      c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',10);
+      c.setAttribute('cx',sp.x*VW);c.setAttribute('cy',sp.y*VH);c.setAttribute('r',15);
       svg.appendChild(c);pts.push(x);
     });
     f.addEventListener('pointermove',function(ev){
@@ -641,10 +658,9 @@ bind2('sl-stimmung','ov-stimmung');bind2('sl-schlaf','ov-schlaf');bind2('sl-ansp
       if(!items[best].classList.contains('on'))setStatus(best);
     });
     window.addEventListener('resize',function(){
-      W=f.clientWidth;pts=pts.map(function(_,i){return i;});
+      W=f.clientWidth;H=f.clientHeight;
       items.forEach(function(li,i){
-        var p=path.getPointAtLength(len*(i+0.5)/items.length);
-        li.style.left=(p.x/VW*f.clientWidth)+'px';li.style.top=(p.y/VH*H)+'px';pts[i]=p.x/VW*f.clientWidth;
+        li.style.left=(spots[i].x*W)+'px';li.style.top=(spots[i].y*H)+'px';pts[i]=spots[i].x*W;
       });
     });
   }
