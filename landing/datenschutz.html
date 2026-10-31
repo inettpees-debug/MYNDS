@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Datenschutzerklärung der mynds Landing-Page. Stand: 30. Oktober 2026.">
+<title>Datenschutzerklärung — mynds</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  @font-face{font-family:'Outfit';src:url('fonts/outfit-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+  @font-face{font-family:'Albert Sans';src:url('fonts/albertsans-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+  :root{
+    --paper:#FFFFFF; --ink:#000000; --soft:#55534B;
+    --creme:#FCF5AF; --orange:#F0A533; --deep:#E44F0A; --red:#BA011A; --blue:#0B4B8B;
+    --font-head:'Outfit',-apple-system,'Segoe UI',sans-serif;
+    --font-body:'Albert Sans',-apple-system,'Segoe UI',sans-serif;
+    --s-question:clamp(26px,2.6vw,40px); --s-body:18px; --s-small:13px;
+    --margin:clamp(18px,2.2vw,32px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:var(--s-body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:var(--font-head)}
+  p{hyphens:auto;-webkit-hyphens:auto;text-wrap:pretty}
+  a{overflow-wrap:anywhere;word-break:break-word}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+  ::selection{background:var(--orange);color:var(--ink)}
+  .btn{display:inline-block;background:var(--orange);color:var(--ink);font-family:var(--font-head);font-weight:600;font-size:var(--s-body);text-decoration:none;padding:16px 30px;transition:background .25s ease,transform .15s ease}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn:active{transform:translateY(1px)}
+  header.hero{position:relative;min-height:64svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(var(--margin) + 6vh) var(--margin) 6vh;overflow:hidden}
+  header.hero h1{font-size:clamp(64px,11vw,180px);font-weight:700;line-height:.9;letter-spacing:-.03em}
+  header.hero .status{margin-top:18px;font-size:var(--s-body);color:var(--soft);max-width:52ch}
+  header.hero .status b{font-weight:600;color:var(--ink)}
+  .corner{position:absolute;top:var(--margin);right:var(--margin);text-decoration:none;color:var(--soft);font-size:var(--s-body)}
+  .corner b{font-family:var(--font-head);font-weight:700;color:var(--ink)}
+  .corner:hover b{color:var(--orange)}
+  main{max-width:820px;margin:0 auto;padding:8vh var(--margin) 4vh}
+  main h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;margin:52px 0 16px;text-wrap:balance}
+  main h2:first-child{margin-top:0}
+  main p{color:var(--soft);margin-bottom:16px;max-width:66ch}
+  main p b{color:var(--ink);font-weight:600}
+  main ul{list-style:none;margin:0 0 16px}
+  main li{color:var(--soft);padding:6px 0 6px 24px;position:relative;max-width:62ch}
+  main li::before{content:"—";position:absolute;left:0;color:var(--orange)}
+  .backroad{display:inline-block;margin:40px 0 0;text-decoration:none;font-family:var(--font-head);font-weight:600;color:var(--ink);border-bottom:3px solid var(--orange);padding-bottom:3px}
+  .backroad:hover{color:var(--orange)}
+  footer{background:var(--ink);color:var(--paper);padding:40px var(--margin) 22px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
+  footer .fmark{font-family:var(--font-head);font-weight:700;font-size:clamp(36px,5vw,80px);line-height:.9;letter-spacing:-.03em;color:#FCF5AF}
+  footer p{font-size:var(--s-small);color:#8F8D83;max-width:70ch}
+  footer p b{color:var(--paper);font-weight:600}
+  footer a{color:#B9B7AD}
+  footer a:hover{color:var(--paper)}
+  .js .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;transition-delay:calc(var(--i,0)*80ms)}
+  .js .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}}
+  @media (min-width:760px){main ul{columns:2;column-gap:44px;max-width:820px}}
+  @media (max-width:760px){
+    header.hero{min-height:0;padding:calc(var(--margin) + 2vh) var(--margin) 5vh}
+    header.hero h1{font-size:16vw}
+    main{padding:5vh var(--margin) 2vh}
+    main h2{margin-top:36px;font-size:20px}
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <a class="corner" href="index.html" aria-label="Zurück zur mynds-Landing-Page">← <b>mynds</b></a>
+  <h1 class="reveal">datenschutz</h1>
+  <a class="btn reveal" href="index.html" style="margin-bottom:22px">Zur Landing-Page</a>
+  <p class="status reveal"><b>DIES IST EIN STUDIENPROJEKT</b> IM RAHMEN DES MIE 2026 AN DER WHU - OTTO BEISHEIM SCHOOL OF MANAGEMENT. Stand: 30. Oktober 2026.</p>
+</header>
+<main>
+
+<h2>1. Verantwortlicher</h2>
+<p>Verantwortlich für die Verarbeitung personenbezogener Daten auf dieser Website ist:</p>
+<p>Pees, Inett  <br>Co-Founderin  <br>Hellenstr. 48  <br>56179 Vallendar  <br>Deutschland  <br>inett.pees@whu.edu</p>
+<p>Demiri, Sanije  <br>Co-Founderin  <br>Kirchstr. 53  <br>56598 Rheinbrohl   <br>Deutschland  <br>sanije.demiri@whu.edu</p>
+<h2>2. Allgemeine Hinweise zur Datenverarbeitung</h2>
+<p>Der Schutz deiner personenbezogenen Daten ist uns wichtig.</p>
+<p>Wir verarbeiten personenbezogene Daten ausschließlich im Rahmen der geltenden Datenschutzvorschriften, insbesondere der Datenschutz-Grundverordnung (DSGVO).</p>
+<p>Personenbezogene Daten sind alle Informationen, mit denen du persönlich identifiziert werden kannst.</p>
+<p>Diese Datenschutzerklärung informiert dich darüber, welche personenbezogenen Daten bei der Nutzung unserer Website verarbeitet werden, zu welchen Zwecken dies geschieht und welche Rechte dir zustehen.</p>
+<h2>3. Hosting über Netlify</h2>
+<p>Unsere Website wird über den Hosting-Dienstleister Netlify bereitgestellt.</p>
+<p>Anbieter:</p>
+<p>Netlify, Inc.  <br>USA</p>
+<p>Website: <a href="https://www.netlify.com/" style="color:inherit;border-bottom:2px solid var(--orange)">https://www.netlify.com/</a></p>
+<p>Beim Aufruf unserer Website werden technisch erforderliche Informationen verarbeitet, um die Website bereitzustellen und ihre Sicherheit und Stabilität zu gewährleisten.</p>
+<p>Dabei können insbesondere folgende personenbezogene Daten verarbeitet werden:</p>
+<ul><li>IP-Adresse</li><li>Datum und Uhrzeit des Zugriffs</li><li>Aufgerufene Seite bzw. Datei</li><li>Browsertyp und Browserversion</li><li>Verwendetes Betriebssystem</li><li>Referrer-URL</li><li>HTTP-Statuscode</li><li>Übertragene Datenmenge</li></ul>
+<p>Die Verarbeitung erfolgt zum Zweck der technischen Bereitstellung, Stabilität und Sicherheit unserer Website.</p>
+<p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt im sicheren und störungsfreien Betrieb unserer Website.</p>
+<p>Netlify verarbeitet personenbezogene Daten im Rahmen seiner Hosting-Leistungen. Soweit Netlify dabei als Auftragsverarbeiter tätig wird, gelten die entsprechenden Regelungen zur Auftragsverarbeitung gemäß Art. 28 DSGVO.</p>
+<p>Weitere Informationen zur Datenverarbeitung durch Netlify findest du unter:</p>
+<p><a href="https://www.netlify.com/privacy/" style="color:inherit;border-bottom:2px solid var(--orange)">https://www.netlify.com/privacy/</a></p>
+<p>Die Vereinbarung zur Auftragsverarbeitung (Data Processing Agreement) ist abrufbar unter:</p>
+<p><a href="https://www.netlify.com/pdf/netlify-dpa.pdf" style="color:inherit;border-bottom:2px solid var(--orange)">https://www.netlify.com/pdf/netlify-dpa.pdf</a></p>
+<p>Eine Übermittlung personenbezogener Daten in die USA oder andere Drittstaaten kann nicht ausgeschlossen werden. Für solche Übermittlungen sieht Netlify unter anderem geeignete Garantien wie die EU-Standardvertragsklauseln vor. Die konkreten Übermittlungsgrundlagen richten sich nach der jeweils anwendbaren Vereinbarung und den tatsächlichen Verarbeitungsvorgängen.</p>
+<p>Die Speicherdauer der technischen Zugriffsdaten richtet sich nach den Speicher- und Protokollierungseinstellungen von Netlify sowie den jeweiligen technischen und betrieblichen Erfordernissen.</p>
+<h2>4. Kontaktaufnahme per E-Mail</h2>
+<p>Auf unserer Website befindet sich eine Möglichkeit, uns per E-Mail zu kontaktieren.</p>
+<p>Wenn du uns eine E-Mail sendest, verarbeiten wir die von dir übermittelten personenbezogenen Daten.</p>
+<p>Hierzu können insbesondere gehören:</p>
+<ul><li>Deine E-Mail-Adresse</li><li>Dein Name, sofern du ihn angibst</li><li>Der Inhalt deiner Nachricht</li><li>Weitere Informationen, die du freiwillig mitteilst</li></ul>
+<p>Die Verarbeitung erfolgt zur Bearbeitung und Beantwortung deiner Anfrage.</p>
+<p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, sofern deine Anfrage mit einem Vertrag oder vorvertraglichen Maßnahmen zusammenhängt.</p>
+<p>In anderen Fällen erfolgt die Verarbeitung auf Grundlage unseres berechtigten Interesses gemäß Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der sachgerechten Bearbeitung eingehender Anfragen.</p>
+<p>Die Daten werden gelöscht, sobald deine Anfrage abschließend bearbeitet wurde und keine gesetzlichen Aufbewahrungspflichten oder sonstigen berechtigten Gründe für eine weitere Speicherung bestehen.</p>
+<h2>5. E-Mail-Verarbeitung über Microsoft 365</h2>
+<p>Für den Empfang und die Verwaltung geschäftlicher E-Mails verwenden wir Microsoft Outlook bzw. Microsoft 365.</p>
+<p>Anbieter: Microsoft</p>
+<p>Wenn du uns eine E-Mail sendest, werden die übermittelten Daten über den verwendeten E-Mail-Dienst verarbeitet. Dazu gehören insbesondere deine E-Mail-Adresse, der Inhalt deiner Nachricht sowie gegebenenfalls enthaltene Anhänge und weitere Kommunikationsdaten.</p>
+<p>Die Verarbeitung erfolgt zur Bereitstellung des E-Mail-Dienstes und zur Bearbeitung deiner Anfrage.</p>
+<p>Microsoft verarbeitet Daten im Rahmen der Bereitstellung von Microsoft 365 entsprechend den geltenden Vertrags- und Datenschutzbedingungen.</p>
+<p>Weitere Informationen zur Datenverarbeitung durch Microsoft findest du hier:</p>
+<p><a href="https://privacy.microsoft.com/de-de/privacystatement" style="color:inherit;border-bottom:2px solid var(--orange)">https://privacy.microsoft.com/de-de/privacystatement</a></p>
+<p>Die Datenschutzbestimmungen für Microsoft-Onlinedienste, einschließlich der Regelungen zur Auftragsverarbeitung, findest du hier:</p>
+<p><a href="https://www.microsoft.com/licensing/docs/view/Microsoft-Products-and-Services-Data-Protection-Addendum-DPA" style="color:inherit;border-bottom:2px solid var(--orange)">https://www.microsoft.com/licensing/docs/view/Microsoft-Products-and-Services-Data-Protection-Addendum-DPA</a></p>
+<p>Die Speicherdauer der E-Mails richtet sich nach dem Zweck der Kommunikation, den jeweiligen gesetzlichen Aufbewahrungspflichten und unseren internen Löschverfahren.</p>
+<h2>6. Cookies und Tracking</h2>
+<p>Unsere Website verwendet nach unserem derzeitigen technischen Stand keine Analyse- oder Marketing-Tracking-Dienste.</p>
+<p>Es werden keine Analyseprofile erstellt und keine Marketing-Tracking-Technologien eingesetzt.</p>
+<p>Sofern unsere Website keine technisch nicht notwendigen Cookies oder vergleichbaren Technologien verwendet, erfolgt auch keine Speicherung solcher Technologien zu Analyse- oder Marketingzwecken.</p>
+<p>Technisch notwendige Vorgänge, die für die Bereitstellung der Website erforderlich sind, bleiben hiervon unberührt.</p>
+<h2>7. Externe Dienste und eingebundene Inhalte</h2>
+<p>Nach unserem derzeitigen technischen Stand werden auf dieser Website keine zusätzlichen externen Dienste, Social-Media-Plugins, externen Schriftarten oder Analysewerkzeuge eingebunden.</p>
+<p>Das Hosting über Netlify und die E-Mail-Kommunikation über Microsoft 365 sind hiervon ausgenommen und werden in den jeweiligen Abschnitten dieser Datenschutzerklärung beschrieben.</p>
+<h2>8. Weitergabe personenbezogener Daten</h2>
+<p>Eine Weitergabe personenbezogener Daten an Dritte erfolgt nur, wenn dies gesetzlich erlaubt ist oder eine entsprechende Rechtsgrundlage besteht.</p>
+<p>Im Rahmen des technischen Betriebs und der Kommunikation können insbesondere folgende Dienstleister personenbezogene Daten verarbeiten:</p>
+<ul><li>Netlify, Inc. für das Hosting der Website</li><li>Microsoft für die Bereitstellung des E-Mail-Dienstes</li></ul>
+<p>Soweit diese Dienstleister personenbezogene Daten in unserem Auftrag verarbeiten, werden die erforderlichen datenschutzrechtlichen Vereinbarungen gemäß Art. 28 DSGVO berücksichtigt.</p>
+<h2>9. Deine Rechte</h2>
+<p>Du hast im Rahmen der gesetzlichen Voraussetzungen folgende Rechte:</p>
+<ul><li>Recht auf Auskunft über deine personenbezogenen Daten gemäß Art. 15 DSGVO</li><li>Recht auf Berichtigung unrichtiger Daten gemäß Art. 16 DSGVO</li><li>Recht auf Löschung deiner Daten gemäß Art. 17 DSGVO</li><li>Recht auf Einschränkung der Verarbeitung gemäß Art. 18 DSGVO</li><li>Recht auf Datenübertragbarkeit gemäß Art. 20 DSGVO</li><li>Recht auf Widerspruch gegen bestimmte Verarbeitungen gemäß Art. 21 DSGVO</li><li>Recht auf Widerruf einer erteilten Einwilligung mit Wirkung für die Zukunft gemäß Art. 7 Abs. 3 DSGVO</li></ul>
+<p>Zur Ausübung deiner Rechte kannst du dich jederzeit unter der oben angegebenen E-Mail-Adresse an uns wenden.</p>
+<h2>10. Beschwerderecht bei einer Datenschutzaufsichtsbehörde</h2>
+<p>Du hast das Recht, dich bei einer Datenschutzaufsichtsbehörde über die Verarbeitung deiner personenbezogenen Daten zu beschweren.</p>
+<p>Für unseren Unternehmenssitz in Rheinland-Pfalz ist grundsätzlich folgende Datenschutzaufsichtsbehörde zuständig:</p>
+<p>Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Rheinland-Pfalz</p>
+<p>Zuständige Aufsichtsbehörde im Netz: <a href="https://www.datenschutz.rlp.de/" style="color:inherit;border-bottom:2px solid var(--orange)">https://www.datenschutz.rlp.de/</a>. Postanschrift: Postfach 30 40, 55020 Mainz.</p>
+<h2>11. SSL- bzw. TLS-Verschlüsselung</h2>
+<p>Sofern unsere Website über eine verschlüsselte HTTPS-Verbindung aufgerufen wird, werden die übertragenen Daten durch eine SSL- bzw. TLS-Verschlüsselung geschützt.</p>
+<p>Eine verschlüsselte Verbindung erkennst du an der Verwendung von „https://“ in der Adresszeile deines Browsers.</p>
+<h2>12. Aktualität und Änderungen</h2>
+<p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, wenn dies aufgrund technischer, rechtlicher oder organisatorischer Änderungen erforderlich wird.</p>
+<p>Es gilt die jeweils auf dieser Website veröffentlichte Fassung.</p>
+
+</main>
+<footer style="align-items:flex-end">
+  <div>
+    <p class="fmark">mynds </p>
+    <p style="margin-top:14px"><a class="backroad" href="index.html#roadmap" style="color:#B9B7AD;font-size:15px">↑ Zurück zur Roadmap</a></p>
+    <p style="margin-top:14px">© 2026 MYNDS · Dies ist ein Prototyp, kein Startup in Gründung!<br>Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: <b>0800 111 0 111</b> / 116 117 / 112 · <a href="datenschutz.html">Datenschutz</a> · <a href="impressum.html">Impressum</a></p>
+  </div>
+  <div style="text-align:right">
+    <p style="color:#B9B7AD">Sofort Hilfe</p>
+    <p style="margin-top:6px">Telefonseelsorge <b>0800 111 0 111</b>, 24/7<br>Bereitschaftsdienst <b>116 117</b> · Notruf <b>112</b></p>
+  </div>
+</footer>
+<script>
+document.documentElement.classList.add('js');
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px 320px 0px',threshold:0});
+document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+</script>
+</body>
+</html>

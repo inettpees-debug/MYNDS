@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="mynds Marken-Folien: Wortmarke, Monogramm, Farben, Typografie, Stimme und Regeln. Für Präsentationen, Pfeiltasten zum Blättern.">
+<title>Marken-Folien — mynds</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<style>
+  /* mynds · Firmenslides als HTML-Deck · Pfeiltasten, Klick oder Wischen */
+  @font-face{font-family:'Outfit';src:url('fonts/outfit-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+  @font-face{font-family:'Albert Sans';src:url('fonts/albertsans-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
+  :root{
+    --paper:#FFFFFF; --ink:#000000; --soft:#55534B;
+    --creme:#FCF5AF; --orange:#F0A533; --deep:#E44F0A; --red:#BA011A; --blue:#0B4B8B;
+    --font-head:'Outfit',-apple-system,'Segoe UI',sans-serif;
+    --font-body:'Albert Sans',-apple-system,'Segoe UI',sans-serif;
+    --s-body:18px; --s-small:13px;
+    --margin:clamp(20px,4vw,64px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{background:var(--ink);color:var(--ink);font-family:var(--font-body);font-size:var(--s-body);line-height:1.5;overflow:hidden}
+  h1,h2,h3{font-family:var(--font-head)}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+  ::selection{background:var(--orange);color:var(--ink)}
+  .deck{position:relative;height:100svh}
+  .slide{position:absolute;inset:0;background:var(--paper);padding:calc(var(--margin) + 30px) var(--margin) calc(var(--margin) + 8px);display:none;flex-direction:column;overflow:hidden}
+  .slide.active{display:flex}
+  .slide.dark{background:var(--ink);color:var(--paper)}
+  .slide.creme{background:var(--creme)}
+  .slide.blue{background:var(--blue);color:var(--paper)}
+  .slide h2{font-size:clamp(34px,4.6vw,64px);font-weight:700;letter-spacing:-.02em;line-height:1.02;margin:20px 0 24px;text-wrap:balance}
+  .slide p{max-width:56ch;color:var(--soft)}
+  .dark .slide p,.slide.dark p,.slide.blue p{color:rgba(255,255,255,.75)}
+  .slide p b{font-weight:600;color:inherit}
+  .slide.dark p b,.slide.blue p b{color:var(--paper)}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:var(--s-small);color:var(--soft)}
+  .dark .foot,.blue .foot{color:rgba(255,255,255,.55)}
+  .wordmark{font-family:var(--font-head);font-weight:700;line-height:.86;letter-spacing:-.03em}
+  .swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:8px}
+  .sw{height:16vh;display:flex;align-items:flex-end;padding:10px;font-size:var(--s-small)}
+  .sw span{font-variant-numeric:tabular-nums}
+  .nav{position:fixed;bottom:calc(var(--margin) * .4);left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:5}
+  .nav button{width:12px;height:12px;border-radius:50%;border:none;background:rgba(0,0,0,.25);cursor:pointer;transition:background .2s,transform .2s}
+  .nav button.on{background:var(--orange);transform:scale(1.25)}
+  .dark .nav button,.blue .nav button{background:rgba(255,255,255,.3)}
+  .nav button:focus-visible{outline:3px solid var(--orange)}
+  .deckbtn{width:46px;height:46px;border-radius:50%;border:none;background:var(--orange);color:var(--ink);font-family:var(--font-head);font-weight:700;font-size:22px;cursor:pointer;transition:background .2s,transform .15s}
+  .deckbtn:hover{background:var(--ink);color:var(--paper);transform:scale(1.06)}
+  .deckbtn:active{transform:translateY(1px)}
+  .specimen-big{font-size:clamp(70px,13vw,190px)}
+  .slogan-q{font-family:var(--font-head);font-weight:700;font-size:clamp(26px,3.6vw,52px);letter-spacing:-.01em;line-height:1.1;max-width:24ch}
+  .slogan-a{font-family:var(--font-head);font-weight:700;font-size:clamp(40px,7vw,110px);color:var(--orange);letter-spacing:-.02em}
+  .rules{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:8px}
+  .rules div{max-width:36ch}
+  .rules h3{font-size:var(--s-body);font-weight:600;margin-bottom:12px}
+  .rules p,.rules li{font-size:16px;color:var(--soft);list-style:none}
+  .rules li{padding:4px 0 4px 22px;position:relative}
+  .rules .ja li::before{content:none}
+  .rules .nein li::before{content:none}
+  .contact-lines p{font-size:clamp(18px,2vw,26px);color:inherit;margin-bottom:10px}
+  .contact-lines a{border-bottom:3px solid var(--orange);text-decoration:none}
+  .js .slide.active .rise{opacity:0;transform:translateY(26px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
+  .js .slide.active .rise:nth-child(2){animation-delay:.12s}
+  .js .slide.active .rise:nth-child(3){animation-delay:.24s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .cyc{display:inline-block;animation:cyc 9s infinite}
+  .cyc2{animation-delay:1.8s}.cyc3{animation-delay:3.6s}.cyc4{animation-delay:5.4s}.cyc5{animation-delay:7.2s}
+  @keyframes cyc{0%,28%{color:inherit}8%,20%{color:var(--orange)}}
+  @media (prefers-reduced-motion:reduce){.js .slide.active .rise{animation:none;opacity:1;transform:none}.cyc{animation:none}}
+  @media (max-width:760px){
+    .swatches{grid-template-columns:repeat(3,1fr)}
+    .sw{height:9vh}
+    .rules{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <section class="slide active" aria-label="Folie 1: Titel" style="align-items:center;text-align:center;justify-content:center">
+    <img src="favicon.png" alt="mynds Monogramm" width="512" height="512" style="width:120px;height:120px;border-radius:26px;margin-bottom:3vh" class="rise">
+    <h1 class="wordmark rise" style="font-size:clamp(90px,16vw,280px)"><span class="cyc cyc1">m</span><span class="cyc cyc2">y</span><span class="cyc cyc3">n</span><span class="cyc cyc4">d</span><span class="cyc cyc5">s</span></h1>
+    <p class="rise" style="margin:2.5vh 0 0;max-width:44ch">Begleitung für die Therapie-Wartezeit. Diese Folien zeigen, wie die Marke aussieht und klingt. Stand: Oktober 2026.</p>
+    <button type="button" class="btn rise" id="start" style="margin-top:3vh;background:var(--orange);color:var(--ink);border:none;cursor:pointer;font-family:var(--font-head);font-weight:600;font-size:var(--s-body);padding:16px 34px">Folien starten →</button>
+    <div class="rise" style="margin-top:4.5vh;display:flex;gap:18px;flex-wrap:wrap;justify-content:center">
+      <img src="assets/brand/mynds-schwarz-auf-weiss.png" alt="Wortmarke schwarz auf weiß" width="1200" height="480" style="height:96px;width:auto">
+      <img src="assets/brand/mynds-creme-auf-blau.png" alt="Wortmarke creme auf blau" width="1200" height="480" style="height:96px;width:auto;border-radius:14px">
+      <img src="assets/brand/m-creme-auf-schwarz.png" alt="Monogramm creme auf schwarz" width="512" height="512" style="height:128px;width:auto;border-radius:24px">
+      <img src="assets/brand/m-schwarz-auf-creme.png" alt="Monogramm schwarz auf creme" width="512" height="512" style="height:128px;width:auto;border-radius:24px">
+    </div>
+    <div class="foot" style="align-self:stretch"><span>mynds Marken-Folien</span><span>1 / 9</span></div>
+  </section>
+
+  <section class="slide" aria-label="Folie 2: Wortmarke">
+    <h2 class="rise">Die Wortmarke: kleingeschrieben, immer.</h2>
+    <img class="rise" src="assets/brand/mynds-schwarz-auf-weiss.png" alt="Wortmarke mynds, schwarz auf weiß" width="1200" height="480" style="width:min(760px,84%);height:auto;margin:1vh 0 2vh">
+    <p class="rise">Outfit Bold, ohne Container, ohne Punkt, ohne Versalien. Auf Weiß und Creme in Schwarz, auf Schwarz und Blau in Creme. Nie in Orange oder Rot. <a href="brand.html" style="border-bottom:3px solid var(--orange);text-decoration:none">Dateien auf der Brand-Seite</a>.</p>
+    <div class="foot"><span>mynds Marken-Folien</span><span>2 / 9</span></div>
+  </section>
+
+  <section class="slide blue" aria-label="Folie 3: Monogramm">
+    <h2 class="rise">Das Monogramm: ein rundes m.</h2>
+    <img class="rise" src="assets/brand/m-creme-auf-blau.png" alt="Monogramm m, creme auf blau" width="512" height="512" style="width:min(300px,44%);height:auto;margin:1vh 0 2vh;border-radius:40px">
+    <p class="rise">Für Favicon, App-Icon und enge Plätze. Creme auf Blau ist die Standard-Stimmung: ruhig, erwachsen, kein Medizin-Look.</p>
+    <div class="foot"><span>mynds Marken-Folien</span><span>3 / 9</span></div>
+  </section>
+
+  <section class="slide" aria-label="Folie 4: Farben">
+    <h2 class="rise">Die Farben: nur diese sechs.</h2>
+    <div class="swatches rise">
+      <div class="sw" style="background:#FCF5AF;color:#000"><span>Creme #FCF5AF</span></div>
+      <div class="sw" style="background:#F0A533;color:#000"><span>Orange #F0A533</span></div>
+      <div class="sw" style="background:#E44F0A;color:#fff"><span>Tieforange #E44F0A</span></div>
+      <div class="sw" style="background:#BA011A;color:#fff"><span>Rot #BA011A</span></div>
+      <div class="sw" style="background:#0B4B8B;color:#FCF5AF"><span>Blau #0B4B8B</span></div>
+      <div class="sw" style="background:#000;color:#FCF5AF"><span>Schwarz #000000</span></div>
+    </div>
+    <p class="rise" style="margin-top:24px">Creme trägt den hellen Grund, Schwarz den dunklen, Orange die Aktion, Blau die Nähe. Rot ist der Frage-Impuls und destruktive Aktionen — <b>nie</b> Nutzerzustände, nie die Krisenkarte.</p>
+    <div class="foot"><span>mynds Marken-Folien</span><span>4 / 9</span></div>
+  </section>
+
+  <section class="slide" aria-label="Folie 5: Typografie">
+    <h2 class="rise">Die Typografie: zwei Schriften, self-hosted.</h2>
+    <p class="specimen-big rise" style="font-family:var(--font-head);font-weight:700">Outfit</p>
+    <p class="specimen-big rise" style="font-family:var(--font-body);font-weight:400;font-size:clamp(40px,7vw,110px)">Albert Sans</p>
+    <p class="rise">Outfit für Logo, Überschriften und Zahlen. Albert Sans für Fließtext und Oberfläche. Beide als variable Fonts eingebettet — <b>keine Anfrage an Google</b> (DSGVO).</p>
+    <div class="foot"><span>mynds Marken-Folien</span><span>5 / 9</span></div>
+  </section>
+
+  <section class="slide creme" aria-label="Folie 6: Stimme">
+        <p class="slogan-q rise" style="margin-top:auto">„Was geht dir gerade durch den Kopf?"</p>
+    <p class="slogan-a rise" style="margin:20px 0 auto">Nähe.</p>
+    <p class="rise" style="margin-top:auto;margin-bottom:10px">Warm, ruhig, ehrlich, auf Augenhöhe. Du-Anrede, keine Dringlichkeit, keine Belohnungslogik, kein Gamification, kein Medizin-Look, kein Alarm.</p>
+    <div class="foot"><span>mynds Marken-Folien</span><span>6 / 9</span></div>
+  </section>
+
+  <section class="slide" aria-label="Folie 7: Worte">
+    <h2 class="rise">Die Worte: was wir sagen, was nie.</h2>
+    <div class="rules rise">
+      <div class="ja">
+        <h3>Erlaubt</h3>
+        <ul><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>begleiten</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>strukturieren</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>sammeln</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>einordnen</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>vorbereiten</li></ul>
+      </div>
+      <div class="nein">
+        <h3>Nie</h3>
+        <ul><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>behandeln</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>diagnostizieren</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>überwachen</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>heilen</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>therapieren</li></ul>
+      </div>
+    </div>
+    <p class="rise" style="margin-top:24px">Keine Heilungs- oder Diagnose-Versprechen in irgendeiner Optik. Die Krisen-Nummern bleiben sichtbar, wo Betroffene sie suchen — <b>Pflicht, keine Design-Option</b>. Die Krisenkarte bleibt blau.</p>
+    <div class="foot"><span>mynds Marken-Folien</span><span>7 / 9</span></div>
+  </section>
+
+  <section class="slide dark" aria-label="Folie 8: Anwendung">
+    <h2 class="rise">Die Anwendung: die Marke im Netz.</h2>
+    <img class="rise" src="assets/brand/mynds-creme-auf-schwarz.png" alt="Wortmarke mynds, creme auf schwarz" width="1200" height="480" style="width:min(700px,82%);height:auto;margin:1vh 0 2vh">
+    <p class="rise">Die Landing-Page lebt vom Wortzeichen als Monument: weißes Papier, schwarze Schrift, Orange nur auf der Aktion. Die App erscheint in ihrem echten Dark Mode — Blau, Creme, Outfit.</p>
+    <p class="rise"><a href="index.html" style="border-bottom:3px solid var(--orange);text-decoration:none">Landing-Page ansehen</a></p>
+    <div class="foot"><span>mynds Marken-Folien</span><span>8 / 9</span></div>
+  </section>
+
+  <section class="slide" aria-label="Folie 9: Kontakt">
+        <div class="contact-lines" style="margin-top:auto">
+      <p class="rise"><b>Sanije Demiri &amp; Inett Pees</b></p>
+      <p class="rise"><a href="mailto:sanije.demiri@whu.edu">sanije.demiri@whu.edu</a> · <a href="mailto:inett.pees@whu.edu">inett.pees@whu.edu</a></p>
+      <p class="rise" style="color:var(--soft)">Studienprojekt im Rahmen des MiE 2026 an der WHU — Otto Beisheim School of Management.</p>
+    </div>
+    <div class="foot"><span>mynds Marken-Folien</span><span>9 / 9</span></div>
+  </section>
+
+  <nav class="nav" id="dots" aria-label="Folien-Navigation"></nav>
+  <div style="position:fixed;bottom:calc(var(--margin) * .4);right:calc(var(--margin) * .4);display:flex;gap:10px;z-index:5">
+    <button type="button" class="deckbtn" id="prev" aria-label="Vorherige Folie">‹</button>
+    <button type="button" class="deckbtn" id="next" aria-label="Nächste Folie">›</button>
+  </div>
+</div>
+
+<script>
+document.documentElement.classList.add('js');
+var slides=[].slice.call(document.querySelectorAll('.slide')),cur=0;
+var dots=document.getElementById('dots');
+slides.forEach(function(s,i){
+  var b=document.createElement('button');
+  b.type='button';b.setAttribute('aria-label','Folie '+(i+1));
+  b.addEventListener('click',function(){go(i);});
+  dots.appendChild(b);
+});
+function go(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach(function(s,j){s.classList.toggle('active',j===cur);s.setAttribute('aria-hidden',j===cur?'false':'true');});
+  [].forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===cur);});
+}
+go(0);
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){go(cur+1);e.preventDefault();}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){go(cur-1);e.preventDefault();}
+  if(e.key==='Home'){go(0);}
+  if(e.key==='End'){go(slides.length-1);}
+});
+document.getElementById('start').addEventListener('click',function(){go(1);});
+document.getElementById('prev').addEventListener('click',function(){go(cur-1);});
+document.getElementById('next').addEventListener('click',function(){go(cur+1);});
+</script>
+</body>
+</html>

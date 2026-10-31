@@ -56,9 +56,24 @@
   .post p{color:var(--soft);margin-bottom:18px;max-width:66ch}
   .post p b{color:var(--ink);font-weight:600}
   .post p:first-of-type::first-letter{font-family:var(--font-head);font-weight:700;font-size:3.1em;float:left;line-height:.82;margin:4px 10px 0 0;color:var(--ink)}
-  .krise{padding:0 var(--margin) 9vh}.krise .ui{max-width:980px;margin:0 auto}
+
+  /* ————— Häufige Fragen ————— */
+  .faqsec{padding:4vh var(--margin) 10vh}
+  .faqsec h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;margin-bottom:40px;text-wrap:balance}
+  .faqsec .qa{display:grid;grid-template-columns:6fr 5fr;gap:5vw;margin-bottom:52px;align-items:baseline}
+  .faqsec .qa:last-of-type{margin-bottom:0}
+  .faqsec h3{font-family:var(--font-head);font-size:var(--s-question);font-weight:600;line-height:1.15;letter-spacing:-.01em}
+  .faqsec .qhead{color:var(--soft);display:none}
+  .faqsec .a{color:var(--soft);max-width:40ch}
+  .faqsec .a b{color:var(--ink);font-weight:600}
+  .faqsec .ui{border-radius:20px;margin-top:14px}
+  @media (max-width:880px){
+    .faqsec .qa{grid-template-columns:1fr;gap:12px;margin-bottom:44px}
+    .faqsec .a{max-width:none}
+  }
+  .krise{padding:0 var(--margin) 9vh}.krise .ui{max-width:980px;margin:0 auto;border-radius:20px}
   .ui{background:var(--app-bg);color:var(--app-ink);font-family:var(--font-body)}
-  .ui .bar{background:var(--app-card);border:1px solid var(--app-line2);border-radius:20px;padding:28px 30px}
+  .ui .bar{background:var(--app-card);border:1px solid var(--app-line2) /*taste-skill-ignore: echte App-Kartenlinie im data-ui-Fragment*/;border-radius:20px;padding:28px 30px}
   .ui.frag .bar{min-height:210px;display:flex;flex-direction:column;justify-content:center}
   .ui .val{color:var(--app-ink)}
   .ui .meta{font-size:var(--s-small);color:var(--app-dim);margin-top:8px}
@@ -126,6 +141,49 @@
   </div>
   <p class="reveal">Und weil Gesundheitsdaten die sensibelsten Daten sind, die es gibt, bleibt im Prototyp <b>alles auf deinem Gerät</b>. Kein Server, keine Cloud. Dein Profil, deine Kontrolle.</p></div></article>
 
+<!-- Häufige Fragen (aus der Landing-Page hierher gezogen) -->
+<section class="faqsec" id="fragen">
+  <h2 class="reveal">Häufige Fragen</h2>
+<div class="qa reveal">
+    <p class="qhead">Ehrliche Antworten</p>
+    <p class="a"></p>
+  </div>
+  <div class="qa reveal">
+    <h3>Ist mynds eine Therapie?</h3>
+    <p class="a"><b>Nein.</b> mynds behandelt nicht, diagnostiziert nicht und ersetzt weder Psychotherapie noch ärztliche Versorgung. mynds begleitet, strukturiert und sammelt, für die Zeit davor.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Was passiert mit meinen Angaben?</h3>
+    <p class="a">Sie bleiben <b>auf deinem Gerät</b>. Kein Server, keine Cloud, kein Tracking. Freigaben erfolgen nur aktiv durch dich.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Bekomme ich eine Diagnose?</h3>
+    <p class="a"><b>Nein.</b> Der Symptom-Check zählt nur deine Ja-Antworten. Keine Punkte, keine Ampeln, keine automatische Auswertung.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Was kann der Prototyp schon?</h3>
+    <p class="a">Den kompletten Einstieg: Einwilligungen, Anliegen, Ziele, Startbild und dein Profil. Sprachnotizen, der Bericht für Praxen und Muster über Zeit entstehen in <b>Release 2 und 3</b>.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Was kostet mynds?</h3>
+    <p class="a">Den Prototyp kannst du <b>kostenlos</b> ansehen. Über Preise für spätere Versionen ist noch nicht entschieden.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Wer macht mynds?</h3>
+    <p class="a">Das sind wir: Sanije und Inett. Ein Gründerinnen-Team im Master in Entrepreneurship der WHU - Otto Beisheim School of Management.</p>
+  </div>
+  <div class="qa reveal">
+    <h3>Und wenn es mir gerade sehr schlecht geht?</h3>
+    <p class="a">Dann sprich sofort mit jemandem. Diese Nummern stehen auch in der App, eine Karte weiter:</p>
+    <div class="ui" data-ui aria-label="Sicherheitsbereich der App mit Hilfe-Nummern">
+      <div class="bar" style="background:var(--app-blue);border-color:var(--app-line2)">
+        <p class="val" style="font-family:var(--font-head);font-weight:600">Hilfe ist jederzeit erreichbar</p>
+        <p class="meta" style="color:var(--app-ink);margin-top:8px">Telefonseelsorge <b style="font-weight:600">0800 111 0 111</b>, kostenlos, 24/7<br>Ärztlicher Bereitschaftsdienst <b style="font-weight:600">116 117</b> · Notruf <b style="font-weight:600">112</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="krise">
   <div class="ui" data-ui aria-label="Sicherheitsbereich der App mit Hilfe-Nummern">
     <div class="bar" style="min-height:230px;display:flex;flex-direction:column;justify-content:center;gap:18px">
@@ -140,10 +198,14 @@
   </div>
 </div>
 
-<footer>
+<footer style="align-items:flex-end">
   <div>
     <p class="fmark">mynds</p>
-    <p style="margin-top:14px">© 2026 MYNDS · Prototyp · <a href="index.html">Zur Landing-Page</a><br>Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: <b>0800 111 0 111</b> / 116 117 / 112</p>
+    <p style="margin-top:14px">© 2026 MYNDS · Prototyp · <a href="index.html">Zur Landing-Page</a><br>Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: <b>0800 111 0 111</b> / 116 117 / 112 · <a href="datenschutz.html">Datenschutz</a> · <a href="impressum.html">Impressum</a></p>
+  </div>
+  <div style="text-align:right">
+    <p style="color:#B9B7AD">Sofort Hilfe</p>
+    <p style="margin-top:6px">Telefonseelsorge <b>0800 111 0 111</b>, 24/7<br>Bereitschaftsdienst <b>116 117</b> · Notruf <b>112</b></p>
   </div>
 </footer>
 

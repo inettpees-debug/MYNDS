@@ -9,7 +9,13 @@ Reines HTML/CSS — kein Build-Step, keine Abhängigkeiten.
 ## Struktur
 
 ```
-landing/          index.html (Landing-Page), blog.html (Blog), brand.html (Marken-Seite)
+landing/          index.html (Landing-Page)
+                  blog.html (Blog + häufige Fragen), brand.html (Marken-Seite)
+                  slides.html (Marken-Folien, Pfeiltasten)
+                  datenschutz.html, impressum.html (Rechtstexte, wortwörtlich aus
+                    "Compliance landing page/", dort liegen auch die PDFs)
+                  Roadmap-Detailseiten: selbstauskunft/ziele/startbild/sprachnotizen/
+                    praxis-bericht/physische-komponente/muster.html
                   favicon.png (m-Monogramm), fonts/ (Outfit, Albert Sans)
                   assets/ (Platz für hero.mp4), assets/brand/ (Logo-Varianten, SVG + PNG)
 netlify.toml      Deploy-Konfiguration (Publish-Dir landing/, kein Build-Step)
