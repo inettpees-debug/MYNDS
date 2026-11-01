@@ -70,18 +70,18 @@
   /* Typo-Folie: Schriftmuster */
   .spec{display:flex;flex-direction:column;gap:2px}
   .spec .name{font-family:var(--font-head);font-weight:700;font-size:clamp(44px,7vw,110px);letter-spacing:-.025em;line-height:1}
-  .spec .run{font-size:clamp(15px,1.5vw,22px);color:var(--soft);letter-spacing:.01em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .spec .run{font-size:clamp(17px,2.1vw,30px);color:var(--soft);letter-spacing:.015em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
   .spec.sans .name{font-family:var(--font-body);font-weight:400}
   /* Worte-Folie */
   .wordcols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,88px)}
   .wordcols h2{font-size:var(--s-body);font-weight:600;color:var(--soft);margin-bottom:18px}
   .wordcols ul{list-style:none}
-  .wordcols li{font-family:var(--font-head);font-weight:700;font-size:clamp(30px,4.2vw,64px);line-height:1.12;letter-spacing:-.02em;padding-left:clamp(30px,3.4vw,52px);position:relative}
+  .wordcols li{font-family:var(--font-head);font-weight:700;font-size:clamp(32px,4.8vw,74px);line-height:1.1;letter-spacing:-.022em;padding-left:clamp(32px,3.6vw,56px);position:relative}
   .wordcols .ja li{color:var(--blue)}
   .wordcols .nein li{color:var(--red)}
   .wordcols svg{position:absolute;left:0;top:.34em}
   /* Anwendung: Browser-Rahmen mit Mini-Landing-Page */
-  .browser{width:min(1060px,92%);margin:0 auto;border-radius:18px;overflow:hidden;background:var(--app-bg);color:var(--app-ink)}
+  .browser{width:min(1220px,97%);margin:0 auto;border-radius:18px;overflow:hidden;background:var(--app-bg);color:var(--app-ink)}
   .browser .chrome{display:flex;gap:7px;padding:12px 16px;background:#111}
   .browser .chrome i{width:11px;height:11px;border-radius:50%;background:#333;display:block}
   .browser .chrome i:first-child{background:var(--orange)}
@@ -93,6 +93,10 @@
   .mini .ui{border-radius:14px;background:var(--app-card);border:1px solid #17395F /*taste-skill-ignore: echte App-Kartenlinie*/;padding:16px 18px;max-width:520px;margin:0 auto;width:100%}
   .mini .ui .lbl{font-size:12px;color:var(--app-dim);display:block}
   .mini .ui .row{display:flex;justify-content:space-between;font-size:14px}
+  .mini .mgrid{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:center;max-width:760px;margin:0 auto;width:100%}
+  .mini .mzahlen{display:flex;gap:22px;justify-content:center;align-items:baseline;flex-wrap:wrap}
+  .mini .mz{font-family:var(--font-head);font-weight:700;font-size:clamp(34px,4.6vw,58px);line-height:1;letter-spacing:-.03em}
+  .mini .mz span{display:block;font-family:var(--font-body);font-weight:400;font-size:11px;color:var(--app-dim);letter-spacing:0;margin-top:6px}
   .mini .track{position:relative;height:7px;background:#1B3E66;border-radius:4px;margin-top:9px;overflow:hidden}
   .mini .fill{position:absolute;inset:0;width:var(--w);background:var(--deep);border-radius:4px}
   /* Steuerung */
@@ -135,7 +139,7 @@
     <span class="corner c-bl counter" id="counter">1 / 9</span>
     <span class="corner c-br">mynds Marken-Folien</span>
     <div class="stage" style="align-items:center;text-align:center">
-      <h1 class="wordmark fit rise" style="font-size:clamp(120px,16vw,300px)"><span class="lm cyc cyc1" tabindex="0">m</span><span class="lm cyc cyc2" tabindex="0">y</span><span class="lm cyc cyc3" tabindex="0">n</span><span class="lm cyc cyc4" tabindex="0">d</span><span class="lm cyc cyc5" tabindex="0">s</span></h1>
+      <h1 class="wordmark fit rise" style="font-size:clamp(120px,16vw,340px)"><span class="lm cyc cyc1" tabindex="0">m</span><span class="lm cyc cyc2" tabindex="0">y</span><span class="lm cyc cyc3" tabindex="0">n</span><span class="lm cyc cyc4" tabindex="0">d</span><span class="lm cyc cyc5" tabindex="0">s</span></h1>
       <p class="rise" style="margin-top:3.2vh;max-width:42ch;color:var(--soft)">Begleitung für die Therapie-Wartezeit. Diese Folien zeigen, wie die Marke aussieht und klingt. Wie im Hero der Seite: fahr über die Buchstaben.</p>
       <button type="button" class="btn rise" id="start" style="margin-top:3vh">Folien starten →</button>
     </div>
@@ -146,9 +150,10 @@
     <nav class="corner c-tr" aria-label="Folienkontext">Wortmarke</nav>
     <span class="corner c-bl counter">2 / 9</span>
     <span class="corner c-br"><a class="link" href="brand.html">Dateien auf der Brand-Seite</a></span>
+    <span class="corner c-bl" style="bottom:calc(var(--margin) + 92px);max-width:52ch">Outfit Bold, kleingeschrieben, ohne Container und Punkt. Auf Weiß und Creme in Schwarz, auf Schwarz und Blau in Creme. Nie in Orange oder Rot.</span>
     <div class="stage">
-      <p class="wordmark fit2 rise" style="font-size:clamp(70px,12.5vw,220px)">mynds</p>
-      <div class="rise" style="display:flex;gap:clamp(14px,2.4vw,34px);flex-wrap:wrap;margin-top:4.5vh;align-items:flex-end">
+      <p class="wordmark fit2 rise" style="font-size:clamp(70px,13.5vw,240px)">mynds</p>
+      <div class="rise" style="display:flex;gap:clamp(14px,2.4vw,34px);flex-wrap:wrap;margin-top:5vh;align-items:flex-end">
         <figure style="text-align:center">
           <img src="assets/brand/mynds-schwarz-auf-weiss.png" alt="Wortmarke schwarz auf weiß" width="1200" height="480" style="height:clamp(48px,7vh,72px);width:auto">
           <figcaption style="font-size:var(--s-small);color:var(--soft);margin-top:10px">Schwarz auf Weiß</figcaption>
@@ -166,7 +171,6 @@
           <figcaption style="font-size:var(--s-small);color:var(--soft);margin-top:10px">Monogramm</figcaption>
         </figure>
       </div>
-      <p class="rise" style="margin-top:4vh;max-width:58ch;color:var(--soft)">Outfit Bold, kleingeschrieben, ohne Container und Punkt. Auf Weiß und Creme in Schwarz, auf Schwarz und Blau in Creme. Nie in Orange oder Rot.</p>
     </div>
   </section>
 
@@ -175,9 +179,13 @@
     <nav class="corner c-tr" aria-label="Folienkontext">Monogramm</nav>
     <span class="corner c-bl counter">3 / 9</span>
     <span class="corner c-br">ruhig · erwachsen · kein Medizin-Look</span>
-    <div class="stage" style="align-items:center">
-      <p class="wordmark rise" style="font-size:clamp(200px,42vh,460px);color:var(--creme)">m</p>
-      <p class="rise" style="margin-top:2vh;max-width:44ch;color:rgba(252,245,175,.85)">Das runde kleingeschriebene m für Favicon, App-Icon und enge Plätze. Standard-Stimmung: Creme auf Blau.</p>
+    <div class="stage" style="flex-direction:row;align-items:center;gap:6vw">
+      <p class="wordmark rise" style="font-size:clamp(220px,52vh,560px);color:var(--creme);flex:none">m</p>
+      <div class="rise" style="max-width:34ch">
+        <p style="font-family:var(--font-head);font-weight:600;font-size:clamp(20px,2.2vw,32px);color:var(--creme);line-height:1.2">Das runde kleingeschriebene m.</p>
+        <p style="margin-top:14px;color:rgba(252,245,175,.8)">Für Favicon, App-Icon und enge Plätze. Standard-Stimmung: Creme auf Blau — ruhig, erwachsen, kein Medizin-Look.</p>
+        <img src="favicon.png" alt="mynds Favicon" width="512" height="512" style="width:76px;height:76px;border-radius:18px;margin-top:22px">
+      </div>
     </div>
   </section>
 
@@ -205,11 +213,11 @@
     <div class="stage">
       <div class="spec rise">
         <p class="name">Outfit</p>
-        <p class="run">AaBbGgKkQqRr 0123456789 · für Logo, Überschriften und Zahlen</p>
+        <p class="run">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789 · Logo, Überschriften, Zahlen</p>
       </div>
       <div class="spec sans rise" style="margin-top:5vh">
         <p class="name">Albert Sans</p>
-        <p class="run">AaBbGgKkQqRr 0123456789 · für Fließtext und Oberfläche</p>
+        <p class="run">AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789 · Fließtext, Oberfläche</p>
       </div>
       <p class="rise" style="margin-top:4.5vh;max-width:56ch;color:var(--soft)">Zwei Schriften, beide als variable Fonts eingebettet. Keine Anfrage an Google, keine externen Dateien: die Seite lädt alles von selbst.</p>
     </div>
@@ -221,8 +229,8 @@
     <span class="corner c-bl counter">6 / 9</span>
     <span class="corner c-br">warm · ruhig · ehrlich · auf Augenhöhe</span>
     <div class="stage">
-      <p class="rise" style="font-family:var(--font-head);font-weight:700;font-size:clamp(30px,4.2vw,64px);line-height:1.08;letter-spacing:-.015em;color:var(--red);max-width:22ch">„Was geht dir gerade durch den Kopf?"</p>
-      <p class="wordmark rise" style="font-size:clamp(88px,16vw,300px);color:var(--orange);margin-top:3.5vh">Nähe.</p>
+      <p class="rise" style="font-family:var(--font-head);font-weight:700;font-size:clamp(32px,4.6vw,72px);line-height:1.06;letter-spacing:-.015em;color:var(--red);max-width:24ch;margin-left:auto;margin-right:0">„Was geht dir gerade durch den Kopf?"</p>
+      <p class="wordmark rise" style="font-size:clamp(100px,19vw,360px);color:var(--orange);margin-top:4vh">Nähe.</p>
       <p class="rise" style="margin-top:4vh;max-width:52ch;color:var(--soft)">Du-Anrede, keine Dringlichkeit, keine Belohnungslogik, kein Gamification. Und niemals: behandeln, diagnostizieren, überwachen, heilen, therapieren.</p>
     </div>
   </section>
@@ -273,12 +281,19 @@
             <span class="mbtn">Den Prototyp ansehen</span>
             <span class="mstat">Ø 20 Wochen Wartezeit · Krise? 0800 111 0 111</span>
           </div>
-          <div class="ui">
-            <div class="row"><span class="lbl">Dein Startbild — heute</span><span style="font-size:14px">Stimmung 4/10</span></div>
-            <div class="track"><div class="fill" style="--w:40%"></div></div>
-            <div class="track"><div class="fill" style="--w:40%"></div></div>
-            <div class="track"><div class="fill" style="--w:70%"></div></div>
-            <p style="font-size:12px;color:var(--app-dim);margin-top:9px">keine Auswertung, keine Diagnose</p>
+          <div class="mgrid">
+            <div class="ui">
+              <div class="row"><span class="lbl">Dein Startbild — heute</span><span style="font-size:14px">Stimmung 4/10</span></div>
+              <div class="track"><div class="fill" style="--w:40%"></div></div>
+              <div class="track"><div class="fill" style="--w:40%"></div></div>
+              <div class="track"><div class="fill" style="--w:70%"></div></div>
+              <p style="font-size:12px;color:var(--app-dim);margin-top:9px">keine Auswertung, keine Diagnose</p>
+            </div>
+            <div class="mzahlen">
+              <p class="mz" style="color:#FCF5AF">20<span>Wochen Ø</span></p>
+              <p class="mz" style="color:#F0A533">97%<span>ohne Begleitung</span></p>
+              <p class="mz" style="color:#E44F0A">9<span>Monate Median</span></p>
+            </div>
           </div>
         </div>
       </div>
@@ -295,8 +310,8 @@
         <p style="font-family:var(--font-head);font-weight:600;font-size:clamp(22px,2.4vw,34px);color:var(--app-ink)">Sanije Demiri &amp; Inett Pees</p>
         <p style="margin-top:10px;color:var(--app-dim)"><a class="link" href="mailto:sanije.demiri@whu.edu">sanije.demiri@whu.edu</a> &nbsp;·&nbsp; <a class="link" href="mailto:inett.pees@whu.edu">inett.pees@whu.edu</a></p>
       </div>
-      <p class="wordmark fit2 rise" style="font-size:clamp(120px,20vw,380px);color:var(--creme)">mynds</p>
-      <p class="rise" style="margin-top:3vh;font-size:var(--s-small);color:#8F8D83;max-width:72ch">Studienprojekt im Rahmen des MiE 2026 an der WHU — Otto Beisheim School of Management. Dies ist ein Prototyp, kein Startup in Gründung! Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</p>
+      <p class="wordmark fit2 rise" style="font-size:clamp(120px,21vw,420px);color:var(--creme);margin-bottom:-1.5vh">mynds</p>
+      <p class="rise" style="margin-top:2vh;font-size:var(--s-small);color:#8F8D83;max-width:72ch">Studienprojekt im Rahmen des MiE 2026 an der WHU — Otto Beisheim School of Management. Dies ist ein Prototyp, kein Startup in Gründung! Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</p>
     </div>
   </section>
 
@@ -341,7 +356,7 @@ function fitEl(el){
   if(!w)return;
   var p=el.parentElement.clientWidth;
   if(!p)return;
-  el.style.fontSize=Math.max(56,Math.min(100*p/w,400)).toFixed(1)+'px';
+  el.style.fontSize=Math.max(56,Math.min(100*p/w*.94,520)).toFixed(1)+'px';
 }
 function fitAll(){document.querySelectorAll('.fit,.fit2').forEach(fitEl);}
 window.addEventListener('resize',fitAll);
