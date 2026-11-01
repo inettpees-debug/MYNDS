@@ -3,20 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="mynds Marken-Folien: Wortmarke, Monogramm, Farben, Typografie, Stimme und Regeln. Für Präsentationen, Pfeiltasten zum Blättern.">
+<meta name="description" content="mynds Marken-Folien: Wortmarke, Monogramm, Farben, Typografie, Stimme und Regeln. Pfeiltasten zum Blättern.">
 <title>Marken-Folien — mynds</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
-  /* mynds · Firmenslides als HTML-Deck · Pfeiltasten, Klick oder Wischen */
+  /* mynds · Marken-Folien · gleiche Handschrift wie die Landing-Page:
+     Monument-Typografie, Ecken statt Kicker, Vollflächen, echte Artefakte. */
   @font-face{font-family:'Outfit';src:url('fonts/outfit-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
   @font-face{font-family:'Albert Sans';src:url('fonts/albertsans-var.woff2') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}
   :root{
     --paper:#FFFFFF; --ink:#000000; --soft:#55534B;
     --creme:#FCF5AF; --orange:#F0A533; --deep:#E44F0A; --red:#BA011A; --blue:#0B4B8B;
+    --app-bg:#000000; --app-card:#0A1F3D; --app-ink:#FCF5AF; --app-dim:#CDC9A8;
     --font-head:'Outfit',-apple-system,'Segoe UI',sans-serif;
     --font-body:'Albert Sans',-apple-system,'Segoe UI',sans-serif;
     --s-body:18px; --s-small:13px;
-    --margin:clamp(20px,4vw,64px);
+    --margin:clamp(20px,3.4vw,56px);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%}
@@ -26,54 +28,99 @@
   :focus-visible{outline:3px solid var(--orange);outline-offset:3px}
   ::selection{background:var(--orange);color:var(--ink)}
   .deck{position:relative;height:100svh}
-  .slide{position:absolute;inset:0;background:var(--paper);padding:calc(var(--margin) + 30px) var(--margin) calc(var(--margin) + 8px);display:none;flex-direction:column;overflow:hidden}
+  .slide{position:absolute;inset:0;background:var(--paper);padding:var(--margin);display:none;flex-direction:column;overflow:hidden}
   .slide.active{display:flex}
-  .slide.dark{background:var(--ink);color:var(--paper)}
-  .slide.creme{background:var(--creme)}
   .slide.blue{background:var(--blue);color:var(--paper)}
-  .slide h2{font-size:clamp(34px,4.6vw,64px);font-weight:700;letter-spacing:-.02em;line-height:1.02;margin:20px 0 24px;text-wrap:balance}
-  .slide p{max-width:56ch;color:var(--soft)}
-  .dark .slide p,.slide.dark p,.slide.blue p{color:rgba(255,255,255,.75)}
-  .slide p b{font-weight:600;color:inherit}
-  .slide.dark p b,.slide.blue p b{color:var(--paper)}
-  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:16px;font-size:var(--s-small);color:var(--soft)}
-  .dark .foot,.blue .foot{color:rgba(255,255,255,.55)}
-  .wordmark{font-family:var(--font-head);font-weight:700;line-height:.86;letter-spacing:-.03em}
-  .swatches{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:8px}
-  .sw{height:16vh;display:flex;align-items:flex-end;padding:10px;font-size:var(--s-small)}
-  .sw span{font-variant-numeric:tabular-nums}
-  .nav{position:fixed;bottom:calc(var(--margin) * .4);left:50%;transform:translateX(-50%);display:flex;gap:10px;z-index:5}
-  .nav button{width:12px;height:12px;border-radius:50%;border:none;background:rgba(0,0,0,.25);cursor:pointer;transition:background .2s,transform .2s}
-  .nav button.on{background:var(--orange);transform:scale(1.25)}
-  .dark .nav button,.blue .nav button{background:rgba(255,255,255,.3)}
+  .slide.creme{background:var(--creme)}
+  .slide.dark{background:var(--app-bg);color:var(--paper)}
+  /* Ecken tragen alles; die Mitte bleibt dem Artefakt */
+  .corner{position:absolute;font-size:var(--s-small);color:var(--soft);z-index:2}
+  .blue .corner,.dark .corner{color:rgba(252,245,175,.6)}
+  .c-tr{top:var(--margin);right:var(--margin);text-align:right}
+  .c-tl{top:var(--margin);left:var(--margin)}
+  .c-bl{bottom:var(--margin);left:var(--margin)}
+  .c-br{bottom:var(--margin);right:var(--margin);text-align:right}
+  .counter{font-variant-numeric:tabular-nums;letter-spacing:.08em}
+  .stage{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
+  .wordmark{font-family:var(--font-head);font-weight:700;line-height:.86;letter-spacing:-.028em;white-space:nowrap}
+  .lead{max-width:46ch;color:var(--soft)}
+  .blue .lead,.dark .lead{color:rgba(252,245,175,.8)}
+  /* Buchstaben wie im Hero der Seite */
+  .lm{transition:color .18s ease,background-color .18s ease;border-radius:.07em;cursor:default}
+  .lm-m:hover,.lm-m:focus-visible{color:var(--orange)}
+  .lm-y:hover,.lm-y:focus-visible{color:var(--blue)}
+  .lm-n:hover,.lm-n:focus-visible{color:var(--red)}
+  .lm-d:hover,.lm-d:focus-visible{color:var(--deep)}
+  .lm-s:hover,.lm-s:focus-visible{background:var(--creme);color:var(--ink)}
+  .cyc{display:inline-block;animation:cyc 11s infinite}
+  .cyc2{animation-delay:2.2s}.cyc3{animation-delay:4.4s}.cyc4{animation-delay:6.6s}.cyc5{animation-delay:8.8s}
+  @keyframes cyc{0%,30%{color:inherit}9%,21%{color:var(--orange)}}
+  .btn{display:inline-block;background:var(--orange);color:var(--ink);font-family:var(--font-head);font-weight:600;font-size:var(--s-body);text-decoration:none;border:none;cursor:pointer;padding:16px 34px;transition:background .25s ease,transform .15s ease}
+  .btn:hover{background:var(--ink);color:var(--paper)}
+  .btn:active{transform:translateY(1px)}
+  .link{color:inherit;text-decoration:none;border-bottom:3px solid var(--orange);padding-bottom:2px}
+  .link:hover{color:var(--orange)}
+  /* Farben-Folie: sechs hohe Säulen */
+  .stage.colorstage{margin:calc(var(--margin) * -1);margin-top:0;padding-bottom:var(--margin)}
+  .cols{flex:1;display:flex}
+  .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:26px 18px;gap:4px}
+  .col b{font-family:var(--font-head);font-weight:700;font-size:clamp(22px,2.6vw,40px);letter-spacing:-.02em;line-height:1}
+  .col .hex{font-variant-numeric:tabular-nums;font-size:var(--s-small);opacity:.8}
+  .col .role{font-size:var(--s-small);opacity:.75;max-width:16ch}
+  /* Typo-Folie: Schriftmuster */
+  .spec{display:flex;flex-direction:column;gap:2px}
+  .spec .name{font-family:var(--font-head);font-weight:700;font-size:clamp(44px,7vw,110px);letter-spacing:-.025em;line-height:1}
+  .spec .run{font-size:clamp(15px,1.5vw,22px);color:var(--soft);letter-spacing:.01em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .spec.sans .name{font-family:var(--font-body);font-weight:400}
+  /* Worte-Folie */
+  .wordcols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,88px)}
+  .wordcols h2{font-size:var(--s-body);font-weight:600;color:var(--soft);margin-bottom:18px}
+  .wordcols ul{list-style:none}
+  .wordcols li{font-family:var(--font-head);font-weight:700;font-size:clamp(30px,4.2vw,64px);line-height:1.12;letter-spacing:-.02em;padding-left:clamp(30px,3.4vw,52px);position:relative}
+  .wordcols .ja li{color:var(--blue)}
+  .wordcols .nein li{color:var(--red)}
+  .wordcols svg{position:absolute;left:0;top:.34em}
+  /* Anwendung: Browser-Rahmen mit Mini-Landing-Page */
+  .browser{width:min(1060px,92%);margin:0 auto;border-radius:18px;overflow:hidden;background:var(--app-bg);color:var(--app-ink)}
+  .browser .chrome{display:flex;gap:7px;padding:12px 16px;background:#111}
+  .browser .chrome i{width:11px;height:11px;border-radius:50%;background:#333;display:block}
+  .browser .chrome i:first-child{background:var(--orange)}
+  .mini{display:flex;flex-direction:column;gap:14px;padding:26px 30px 30px}
+  .mini .mword{font-family:var(--font-head);font-weight:700;font-size:clamp(40px,6.4vw,96px);line-height:.9;letter-spacing:-.028em;color:var(--app-ink);text-align:center;white-space:nowrap}
+  .mini .mrow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center}
+  .mini .mbtn{background:var(--orange);color:#000;font-family:var(--font-head);font-weight:600;font-size:14px;padding:10px 22px}
+  .mini .mstat{font-size:14px;color:var(--app-dim)}
+  .mini .ui{border-radius:14px;background:var(--app-card);border:1px solid #17395F /*taste-skill-ignore: echte App-Kartenlinie*/;padding:16px 18px;max-width:520px;margin:0 auto;width:100%}
+  .mini .ui .lbl{font-size:12px;color:var(--app-dim);display:block}
+  .mini .ui .row{display:flex;justify-content:space-between;font-size:14px}
+  .mini .track{position:relative;height:7px;background:#1B3E66;border-radius:4px;margin-top:9px;overflow:hidden}
+  .mini .fill{position:absolute;inset:0;width:var(--w);background:var(--deep);border-radius:4px}
+  /* Steuerung */
+  .nav{position:fixed;bottom:calc(var(--margin) * .55);left:50%;transform:translateX(-50%);display:flex;gap:11px;z-index:5}
+  .nav button{width:11px;height:11px;border-radius:50%;border:none;background:rgba(0,0,0,.22);cursor:pointer;transition:background .2s,transform .2s;padding:0}
+  .nav button.on{background:var(--orange);transform:scale(1.3)}
   .nav button:focus-visible{outline:3px solid var(--orange)}
+  .deckbtns{position:fixed;bottom:calc(var(--margin) * .42);right:var(--margin);display:flex;gap:10px;z-index:5}
   .deckbtn{width:46px;height:46px;border-radius:50%;border:none;background:var(--orange);color:var(--ink);font-family:var(--font-head);font-weight:700;font-size:22px;cursor:pointer;transition:background .2s,transform .15s}
-  .deckbtn:hover{background:var(--ink);color:var(--paper);transform:scale(1.06)}
+  .deckbtn:hover{background:#000;color:#FCF5AF;transform:scale(1.06)}
   .deckbtn:active{transform:translateY(1px)}
-  .specimen-big{font-size:clamp(70px,13vw,190px)}
-  .slogan-q{font-family:var(--font-head);font-weight:700;font-size:clamp(26px,3.6vw,52px);letter-spacing:-.01em;line-height:1.1;max-width:24ch}
-  .slogan-a{font-family:var(--font-head);font-weight:700;font-size:clamp(40px,7vw,110px);color:var(--orange);letter-spacing:-.02em}
-  .rules{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:8px}
-  .rules div{max-width:36ch}
-  .rules h3{font-size:var(--s-body);font-weight:600;margin-bottom:12px}
-  .rules p,.rules li{font-size:16px;color:var(--soft);list-style:none}
-  .rules li{padding:4px 0 4px 22px;position:relative}
-  .rules .ja li::before{content:none}
-  .rules .nein li::before{content:none}
-  .contact-lines p{font-size:clamp(18px,2vw,26px);color:inherit;margin-bottom:10px}
-  .contact-lines a{border-bottom:3px solid var(--orange);text-decoration:none}
+  .hint{position:fixed;bottom:calc(var(--margin) * .62);left:var(--margin);font-size:var(--s-small);color:var(--soft);z-index:5}
+  /* Eintritt jeder Folie */
   .js .slide.active .rise{opacity:0;transform:translateY(26px);animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards}
-  .js .slide.active .rise:nth-child(2){animation-delay:.12s}
-  .js .slide.active .rise:nth-child(3){animation-delay:.24s}
+  .js .slide.active .rise:nth-child(2){animation-delay:.1s}
+  .js .slide.active .rise:nth-child(3){animation-delay:.2s}
+  .js .slide.active .rise:nth-child(4){animation-delay:.3s}
   @keyframes rise{to{opacity:1;transform:none}}
-  .cyc{display:inline-block;animation:cyc 9s infinite}
-  .cyc2{animation-delay:1.8s}.cyc3{animation-delay:3.6s}.cyc4{animation-delay:5.4s}.cyc5{animation-delay:7.2s}
-  @keyframes cyc{0%,28%{color:inherit}8%,20%{color:var(--orange)}}
-  @media (prefers-reduced-motion:reduce){.js .slide.active .rise{animation:none;opacity:1;transform:none}.cyc{animation:none}}
+  @media (prefers-reduced-motion:reduce){
+    .js .slide.active .rise{animation:none;opacity:1;transform:none}
+    .cyc{animation:none}
+  }
   @media (max-width:760px){
-    .swatches{grid-template-columns:repeat(3,1fr)}
-    .sw{height:9vh}
-    .rules{grid-template-columns:1fr}
+    .wordcols{grid-template-columns:1fr;gap:26px}
+    .cols{flex-wrap:wrap}
+    .col{flex:1 1 33%;min-height:16vh}
+    .mini .mword{font-size:15vw}
+    .corner.c-br,.corner.c-tr{font-size:13px}
   }
 </style>
 </head>
@@ -81,98 +128,181 @@
 
 <div class="deck" id="deck">
 
-  <section class="slide active" aria-label="Folie 1: Titel" style="align-items:center;text-align:center;justify-content:center">
-    <img src="favicon.png" alt="mynds Monogramm" width="512" height="512" style="width:120px;height:120px;border-radius:26px;margin-bottom:3vh" class="rise">
-    <h1 class="wordmark rise" style="font-size:clamp(90px,16vw,280px)"><span class="cyc cyc1">m</span><span class="cyc cyc2">y</span><span class="cyc cyc3">n</span><span class="cyc cyc4">d</span><span class="cyc cyc5">s</span></h1>
-    <p class="rise" style="margin:2.5vh 0 0;max-width:44ch">Begleitung für die Therapie-Wartezeit. Diese Folien zeigen, wie die Marke aussieht und klingt. Stand: Oktober 2026.</p>
-    <button type="button" class="btn rise" id="start" style="margin-top:3vh;background:var(--orange);color:var(--ink);border:none;cursor:pointer;font-family:var(--font-head);font-weight:600;font-size:var(--s-body);padding:16px 34px">Folien starten →</button>
-    <div class="rise" style="margin-top:4.5vh;display:flex;gap:18px;flex-wrap:wrap;justify-content:center">
-      <img src="assets/brand/mynds-schwarz-auf-weiss.png" alt="Wortmarke schwarz auf weiß" width="1200" height="480" style="height:96px;width:auto">
-      <img src="assets/brand/mynds-creme-auf-blau.png" alt="Wortmarke creme auf blau" width="1200" height="480" style="height:96px;width:auto;border-radius:14px">
-      <img src="assets/brand/m-creme-auf-schwarz.png" alt="Monogramm creme auf schwarz" width="512" height="512" style="height:128px;width:auto;border-radius:24px">
-      <img src="assets/brand/m-schwarz-auf-creme.png" alt="Monogramm schwarz auf creme" width="512" height="512" style="height:128px;width:auto;border-radius:24px">
+  <!-- 1 · Titel: das Monument, wie auf der Seite -->
+  <section class="slide active" aria-label="Folie 1: Titel">
+    <span class="corner c-tl"><img src="favicon.png" alt="" width="40" height="40" style="width:40px;height:40px;border-radius:10px;display:block"></span>
+    <nav class="corner c-tr" aria-label="Folienkontext">Marke · Stand November 2026</nav>
+    <span class="corner c-bl counter" id="counter">1 / 9</span>
+    <span class="corner c-br">mynds Marken-Folien</span>
+    <div class="stage" style="align-items:center;text-align:center">
+      <h1 class="wordmark fit rise" style="font-size:clamp(120px,16vw,300px)"><span class="lm cyc cyc1" tabindex="0">m</span><span class="lm cyc cyc2" tabindex="0">y</span><span class="lm cyc cyc3" tabindex="0">n</span><span class="lm cyc cyc4" tabindex="0">d</span><span class="lm cyc cyc5" tabindex="0">s</span></h1>
+      <p class="rise" style="margin-top:3.2vh;max-width:42ch;color:var(--soft)">Begleitung für die Therapie-Wartezeit. Diese Folien zeigen, wie die Marke aussieht und klingt. Wie im Hero der Seite: fahr über die Buchstaben.</p>
+      <button type="button" class="btn rise" id="start" style="margin-top:3vh">Folien starten →</button>
     </div>
-    <div class="foot" style="align-self:stretch"><span>mynds Marken-Folien</span><span>1 / 9</span></div>
   </section>
 
+  <!-- 2 · Wortmarke: das Artefakt groß, Varianten als Probe -->
   <section class="slide" aria-label="Folie 2: Wortmarke">
-    <h2 class="rise">Die Wortmarke: kleingeschrieben, immer.</h2>
-    <img class="rise" src="assets/brand/mynds-schwarz-auf-weiss.png" alt="Wortmarke mynds, schwarz auf weiß" width="1200" height="480" style="width:min(760px,84%);height:auto;margin:1vh 0 2vh">
-    <p class="rise">Outfit Bold, ohne Container, ohne Punkt, ohne Versalien. Auf Weiß und Creme in Schwarz, auf Schwarz und Blau in Creme. Nie in Orange oder Rot. <a href="brand.html" style="border-bottom:3px solid var(--orange);text-decoration:none">Dateien auf der Brand-Seite</a>.</p>
-    <div class="foot"><span>mynds Marken-Folien</span><span>2 / 9</span></div>
+    <nav class="corner c-tr" aria-label="Folienkontext">Wortmarke</nav>
+    <span class="corner c-bl counter">2 / 9</span>
+    <span class="corner c-br"><a class="link" href="brand.html">Dateien auf der Brand-Seite</a></span>
+    <div class="stage">
+      <p class="wordmark fit2 rise" style="font-size:clamp(70px,12.5vw,220px)">mynds</p>
+      <div class="rise" style="display:flex;gap:clamp(14px,2.4vw,34px);flex-wrap:wrap;margin-top:4.5vh;align-items:flex-end">
+        <figure style="text-align:center">
+          <img src="assets/brand/mynds-schwarz-auf-weiss.png" alt="Wortmarke schwarz auf weiß" width="1200" height="480" style="height:clamp(48px,7vh,72px);width:auto">
+          <figcaption style="font-size:var(--s-small);color:var(--soft);margin-top:10px">Schwarz auf Weiß</figcaption>
+        </figure>
+        <figure style="text-align:center">
+          <img src="assets/brand/mynds-creme-auf-blau.png" alt="Wortmarke creme auf blau" width="1200" height="480" style="height:clamp(48px,7vh,72px);width:auto;border-radius:9px">
+          <figcaption style="font-size:var(--s-small);color:var(--soft);margin-top:10px">Creme auf Blau</figcaption>
+        </figure>
+        <figure style="text-align:center">
+          <img src="assets/brand/m-creme-auf-schwarz.png" alt="Monogramm creme auf schwarz" width="512" height="512" style="height:clamp(48px,7vh,72px);width:auto;border-radius:12px">
+          <figcaption style="font-size:var(--s-small);color:var(--soft);margin-top:10px">Monogramm</figcaption>
+        </figure>
+        <figure style="text-align:center">
+          <img src="assets/brand/m-schwarz-auf-creme.png" alt="Monogramm schwarz auf creme" width="512" height="512" style="height:clamp(48px,7vh,72px);width:auto;border-radius:12px">
+          <figcaption style="font-size:var(--s-small);color:var(--soft);margin-top:10px">Monogramm</figcaption>
+        </figure>
+      </div>
+      <p class="rise" style="margin-top:4vh;max-width:58ch;color:var(--soft)">Outfit Bold, kleingeschrieben, ohne Container und Punkt. Auf Weiß und Creme in Schwarz, auf Schwarz und Blau in Creme. Nie in Orange oder Rot.</p>
+    </div>
   </section>
 
+  <!-- 3 · Monogramm: blaue Fläche, das große m -->
   <section class="slide blue" aria-label="Folie 3: Monogramm">
-    <h2 class="rise">Das Monogramm: ein rundes m.</h2>
-    <img class="rise" src="assets/brand/m-creme-auf-blau.png" alt="Monogramm m, creme auf blau" width="512" height="512" style="width:min(300px,44%);height:auto;margin:1vh 0 2vh;border-radius:40px">
-    <p class="rise">Für Favicon, App-Icon und enge Plätze. Creme auf Blau ist die Standard-Stimmung: ruhig, erwachsen, kein Medizin-Look.</p>
-    <div class="foot"><span>mynds Marken-Folien</span><span>3 / 9</span></div>
+    <nav class="corner c-tr" aria-label="Folienkontext">Monogramm</nav>
+    <span class="corner c-bl counter">3 / 9</span>
+    <span class="corner c-br">ruhig · erwachsen · kein Medizin-Look</span>
+    <div class="stage" style="align-items:center">
+      <p class="wordmark rise" style="font-size:clamp(200px,42vh,460px);color:var(--creme)">m</p>
+      <p class="rise" style="margin-top:2vh;max-width:44ch;color:rgba(252,245,175,.85)">Das runde kleingeschriebene m für Favicon, App-Icon und enge Plätze. Standard-Stimmung: Creme auf Blau.</p>
+    </div>
   </section>
 
+  <!-- 4 · Farben: sechs hohe Säulen -->
   <section class="slide" aria-label="Folie 4: Farben">
-    <h2 class="rise">Die Farben: nur diese sechs.</h2>
-    <div class="swatches rise">
-      <div class="sw" style="background:#FCF5AF;color:#000"><span>Creme #FCF5AF</span></div>
-      <div class="sw" style="background:#F0A533;color:#000"><span>Orange #F0A533</span></div>
-      <div class="sw" style="background:#E44F0A;color:#fff"><span>Tieforange #E44F0A</span></div>
-      <div class="sw" style="background:#BA011A;color:#fff"><span>Rot #BA011A</span></div>
-      <div class="sw" style="background:#0B4B8B;color:#FCF5AF"><span>Blau #0B4B8B</span></div>
-      <div class="sw" style="background:#000;color:#FCF5AF"><span>Schwarz #000000</span></div>
+    <span class="corner c-tr" style="z-index:3">Farben · nur diese sechs</span>
+    <span class="corner c-bl counter" style="z-index:3;color:var(--paper)">4 / 9</span>
+    <div class="stage colorstage">
+      <div class="cols rise">
+        <div class="col" style="background:#FCF5AF;color:#000"><b>Creme</b><span class="hex">#FCF5AF</span><span class="role">heller Grund</span></div>
+        <div class="col" style="background:#F0A533;color:#000"><b>Orange</b><span class="hex">#F0A533</span><span class="role">primäre Aktionen</span></div>
+        <div class="col" style="background:#E44F0A;color:#fff"><b>Tieforange</b><span class="hex">#E44F0A</span><span class="role">KI-Kennzeichnung</span></div>
+        <div class="col" style="background:#BA011A;color:#fff"><b>Rot</b><span class="hex">#BA011A</span><span class="role">Frage-Impuls, nie Nutzerzustände</span></div>
+        <div class="col" style="background:#0B4B8B;color:#FCF5AF"><b>Blau</b><span class="hex">#0B4B8B</span><span class="role">Antwort und Nähe, Krisenkarte</span></div>
+        <div class="col" style="background:#000;color:#FCF5AF"><b>Schwarz</b><span class="hex">#000000</span><span class="role">dunkler Grund</span></div>
+      </div>
     </div>
-    <p class="rise" style="margin-top:24px">Creme trägt den hellen Grund, Schwarz den dunklen, Orange die Aktion, Blau die Nähe. Rot ist der Frage-Impuls und destruktive Aktionen — <b>nie</b> Nutzerzustände, nie die Krisenkarte.</p>
-    <div class="foot"><span>mynds Marken-Folien</span><span>4 / 9</span></div>
   </section>
 
+  <!-- 5 · Typografie: Schriftmuster -->
   <section class="slide" aria-label="Folie 5: Typografie">
-    <h2 class="rise">Die Typografie: zwei Schriften, self-hosted.</h2>
-    <p class="specimen-big rise" style="font-family:var(--font-head);font-weight:700">Outfit</p>
-    <p class="specimen-big rise" style="font-family:var(--font-body);font-weight:400;font-size:clamp(40px,7vw,110px)">Albert Sans</p>
-    <p class="rise">Outfit für Logo, Überschriften und Zahlen. Albert Sans für Fließtext und Oberfläche. Beide als variable Fonts eingebettet — <b>keine Anfrage an Google</b> (DSGVO).</p>
-    <div class="foot"><span>mynds Marken-Folien</span><span>5 / 9</span></div>
+    <nav class="corner c-tr" aria-label="Folienkontext">Typografie · self-hosted (DSGVO)</nav>
+    <span class="corner c-bl counter">5 / 9</span>
+    <span class="corner c-br">100–900 · variable Fonts</span>
+    <div class="stage">
+      <div class="spec rise">
+        <p class="name">Outfit</p>
+        <p class="run">AaBbGgKkQqRr 0123456789 · für Logo, Überschriften und Zahlen</p>
+      </div>
+      <div class="spec sans rise" style="margin-top:5vh">
+        <p class="name">Albert Sans</p>
+        <p class="run">AaBbGgKkQqRr 0123456789 · für Fließtext und Oberfläche</p>
+      </div>
+      <p class="rise" style="margin-top:4.5vh;max-width:56ch;color:var(--soft)">Zwei Schriften, beide als variable Fonts eingebettet. Keine Anfrage an Google, keine externen Dateien: die Seite lädt alles von selbst.</p>
+    </div>
   </section>
 
+  <!-- 6 · Stimme: der Slogan-Moment auf Creme -->
   <section class="slide creme" aria-label="Folie 6: Stimme">
-        <p class="slogan-q rise" style="margin-top:auto">„Was geht dir gerade durch den Kopf?"</p>
-    <p class="slogan-a rise" style="margin:20px 0 auto">Nähe.</p>
-    <p class="rise" style="margin-top:auto;margin-bottom:10px">Warm, ruhig, ehrlich, auf Augenhöhe. Du-Anrede, keine Dringlichkeit, keine Belohnungslogik, kein Gamification, kein Medizin-Look, kein Alarm.</p>
-    <div class="foot"><span>mynds Marken-Folien</span><span>6 / 9</span></div>
+    <nav class="corner c-tr" aria-label="Folienkontext">Stimme</nav>
+    <span class="corner c-bl counter">6 / 9</span>
+    <span class="corner c-br">warm · ruhig · ehrlich · auf Augenhöhe</span>
+    <div class="stage">
+      <p class="rise" style="font-family:var(--font-head);font-weight:700;font-size:clamp(30px,4.2vw,64px);line-height:1.08;letter-spacing:-.015em;color:var(--red);max-width:22ch">„Was geht dir gerade durch den Kopf?"</p>
+      <p class="wordmark rise" style="font-size:clamp(88px,16vw,300px);color:var(--orange);margin-top:3.5vh">Nähe.</p>
+      <p class="rise" style="margin-top:4vh;max-width:52ch;color:var(--soft)">Du-Anrede, keine Dringlichkeit, keine Belohnungslogik, kein Gamification. Und niemals: behandeln, diagnostizieren, überwachen, heilen, therapieren.</p>
+    </div>
   </section>
 
+  <!-- 7 · Worte: zwei große Spalten -->
   <section class="slide" aria-label="Folie 7: Worte">
-    <h2 class="rise">Die Worte: was wir sagen, was nie.</h2>
-    <div class="rules rise">
-      <div class="ja">
-        <h3>Erlaubt</h3>
-        <ul><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>begleiten</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>strukturieren</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>sammeln</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>einordnen</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>vorbereiten</li></ul>
+    <nav class="corner c-tr" aria-label="Folienkontext">Worte</nav>
+    <span class="corner c-bl counter">7 / 9</span>
+    <span class="corner c-br">Claims-Wortliste §2.2</span>
+    <div class="stage">
+      <div class="wordcols rise">
+        <div class="ja">
+          <h2>Wir sagen</h2>
+          <ul>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>begleiten</li>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>strukturieren</li>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>sammeln</li>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>einordnen</li>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8.5l3.5 3.5L14 3.5" fill="none" stroke="#0B4B8B" stroke-width="2.6" stroke-linecap="round"/></svg>vorbereiten</li>
+          </ul>
+        </div>
+        <div class="nein">
+          <h2>Nie</h2>
+          <ul>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>behandeln</li>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>diagnostizieren</li>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>überwachen</li>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>heilen</li>
+            <li><svg width="22" height="22" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>therapieren</li>
+          </ul>
+        </div>
       </div>
-      <div class="nein">
-        <h3>Nie</h3>
-        <ul><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>behandeln</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>diagnostizieren</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>überwachen</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>heilen</li><li><svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true" style="position:absolute;left:0;top:7px"><path d="M3 3l10 10M13 3L3 13" fill="none" stroke="#BA011A" stroke-width="2.6" stroke-linecap="round"/></svg>therapieren</li></ul>
+      <p class="rise" style="margin-top:4vh;max-width:56ch;color:var(--soft)">Keine Heilungs- oder Diagnose-Versprechen in irgendeiner Optik. Die Krisen-Nummern bleiben sichtbar — Pflicht, keine Design-Option. Die Krisenkarte bleibt blau.</p>
+    </div>
+  </section>
+
+  <!-- 8 · Anwendung: die Seite selbst, im Browser-Rahmen -->
+  <section class="slide" aria-label="Folie 8: Anwendung">
+    <nav class="corner c-tr" aria-label="Folienkontext">Anwendung</nav>
+    <span class="corner c-bl counter">8 / 9</span>
+    <span class="corner c-br"><a class="link" href="index.html">Landing-Page öffnen</a></span>
+    <div class="stage">
+      <div class="browser rise">
+        <div class="chrome" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="mini">
+          <p class="mword">mynds</p>
+          <div class="mrow">
+            <span class="mbtn">Den Prototyp ansehen</span>
+            <span class="mstat">Ø 20 Wochen Wartezeit · Krise? 0800 111 0 111</span>
+          </div>
+          <div class="ui">
+            <div class="row"><span class="lbl">Dein Startbild — heute</span><span style="font-size:14px">Stimmung 4/10</span></div>
+            <div class="track"><div class="fill" style="--w:40%"></div></div>
+            <div class="track"><div class="fill" style="--w:40%"></div></div>
+            <div class="track"><div class="fill" style="--w:70%"></div></div>
+            <p style="font-size:12px;color:var(--app-dim);margin-top:9px">keine Auswertung, keine Diagnose</p>
+          </div>
+        </div>
       </div>
+      <p class="rise" style="margin:3.4vh auto 0;max-width:54ch;color:var(--soft);text-align:center">Die Seite lebt vom Wortzeichen als Monument: weißes Papier, schwarze Schrift, Orange nur auf der Aktion. Die App erscheint in ihrem echten Dark Mode.</p>
     </div>
-    <p class="rise" style="margin-top:24px">Keine Heilungs- oder Diagnose-Versprechen in irgendeiner Optik. Die Krisen-Nummern bleiben sichtbar, wo Betroffene sie suchen — <b>Pflicht, keine Design-Option</b>. Die Krisenkarte bleibt blau.</p>
-    <div class="foot"><span>mynds Marken-Folien</span><span>7 / 9</span></div>
   </section>
 
-  <section class="slide dark" aria-label="Folie 8: Anwendung">
-    <h2 class="rise">Die Anwendung: die Marke im Netz.</h2>
-    <img class="rise" src="assets/brand/mynds-creme-auf-schwarz.png" alt="Wortmarke mynds, creme auf schwarz" width="1200" height="480" style="width:min(700px,82%);height:auto;margin:1vh 0 2vh">
-    <p class="rise">Die Landing-Page lebt vom Wortzeichen als Monument: weißes Papier, schwarze Schrift, Orange nur auf der Aktion. Die App erscheint in ihrem echten Dark Mode — Blau, Creme, Outfit.</p>
-    <p class="rise"><a href="index.html" style="border-bottom:3px solid var(--orange);text-decoration:none">Landing-Page ansehen</a></p>
-    <div class="foot"><span>mynds Marken-Folien</span><span>8 / 9</span></div>
-  </section>
-
-  <section class="slide" aria-label="Folie 9: Kontakt">
-        <div class="contact-lines" style="margin-top:auto">
-      <p class="rise"><b>Sanije Demiri &amp; Inett Pees</b></p>
-      <p class="rise"><a href="mailto:sanije.demiri@whu.edu">sanije.demiri@whu.edu</a> · <a href="mailto:inett.pees@whu.edu">inett.pees@whu.edu</a></p>
-      <p class="rise" style="color:var(--soft)">Studienprojekt im Rahmen des MiE 2026 an der WHU — Otto Beisheim School of Management.</p>
+  <!-- 9 · Schluss: invertiert, wie der Fuß der Seite -->
+  <section class="slide dark" aria-label="Folie 9: Kontakt">
+    <nav class="corner c-tr" aria-label="Folienkontext"><a class="link" href="index.html" style="color:#FCF5AF">← mynds</a></nav>
+    <span class="corner c-bl counter" style="color:rgba(252,245,175,.6)">9 / 9</span>
+    <div class="stage">
+      <div class="rise" style="margin-bottom:5vh">
+        <p style="font-family:var(--font-head);font-weight:600;font-size:clamp(22px,2.4vw,34px);color:var(--app-ink)">Sanije Demiri &amp; Inett Pees</p>
+        <p style="margin-top:10px;color:var(--app-dim)"><a class="link" href="mailto:sanije.demiri@whu.edu">sanije.demiri@whu.edu</a> &nbsp;·&nbsp; <a class="link" href="mailto:inett.pees@whu.edu">inett.pees@whu.edu</a></p>
+      </div>
+      <p class="wordmark fit2 rise" style="font-size:clamp(120px,20vw,380px);color:var(--creme)">mynds</p>
+      <p class="rise" style="margin-top:3vh;font-size:var(--s-small);color:#8F8D83;max-width:72ch">Studienprojekt im Rahmen des MiE 2026 an der WHU — Otto Beisheim School of Management. Dies ist ein Prototyp, kein Startup in Gründung! Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112</p>
     </div>
-    <div class="foot"><span>mynds Marken-Folien</span><span>9 / 9</span></div>
   </section>
 
+  <p class="hint" aria-hidden="true">Pfeiltasten ← → oder Klick</p>
   <nav class="nav" id="dots" aria-label="Folien-Navigation"></nav>
-  <div style="position:fixed;bottom:calc(var(--margin) * .4);right:calc(var(--margin) * .4);display:flex;gap:10px;z-index:5">
+  <div class="deckbtns">
     <button type="button" class="deckbtn" id="prev" aria-label="Vorherige Folie">‹</button>
     <button type="button" class="deckbtn" id="next" aria-label="Nächste Folie">›</button>
   </div>
@@ -181,7 +311,7 @@
 <script>
 document.documentElement.classList.add('js');
 var slides=[].slice.call(document.querySelectorAll('.slide')),cur=0;
-var dots=document.getElementById('dots');
+var dots=document.getElementById('dots'),counter=document.getElementById('counter');
 slides.forEach(function(s,i){
   var b=document.createElement('button');
   b.type='button';b.setAttribute('aria-label','Folie '+(i+1));
@@ -192,6 +322,7 @@ function go(i){
   cur=Math.max(0,Math.min(slides.length-1,i));
   slides.forEach(function(s,j){s.classList.toggle('active',j===cur);s.setAttribute('aria-hidden',j===cur?'false':'true');});
   [].forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===cur);});
+  counter.textContent=(cur+1)+' / '+slides.length;
 }
 go(0);
 document.addEventListener('keydown',function(e){
@@ -200,9 +331,23 @@ document.addEventListener('keydown',function(e){
   if(e.key==='Home'){go(0);}
   if(e.key==='End'){go(slides.length-1);}
 });
-document.getElementById('start').addEventListener('click',function(){go(1);});
 document.getElementById('prev').addEventListener('click',function(){go(cur-1);});
 document.getElementById('next').addEventListener('click',function(){go(cur+1);});
+document.getElementById('start').addEventListener('click',function(){go(1);});
+// Wortzeichen exakt einpassen: bei bekannter Größe messen, einmal skalieren
+function fitEl(el){
+  el.style.fontSize='100px';
+  var w=el.scrollWidth;
+  if(!w)return;
+  var p=el.parentElement.clientWidth;
+  if(!p)return;
+  el.style.fontSize=Math.max(56,Math.min(100*p/w,400)).toFixed(1)+'px';
+}
+function fitAll(){document.querySelectorAll('.fit,.fit2').forEach(fitEl);}
+window.addEventListener('resize',fitAll);
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(fitAll);}
+fitAll();
+setTimeout(fitAll,600);
 </script>
 </body>
 </html>
