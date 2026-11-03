@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="mynds begleitet junge Erwachsene durch die Therapie-Wartezeit: strukturieren, sammeln, einordnen. Prototyp, Daten bleiben auf dem Gerät.">
+<meta name="description" content="mynds macht aus der Therapie-Wartezeit ein geführtes Stimmjournal: Patient:innen reflektieren in eigenen Worten, die Praxis erhält vor Sitzung eins eine geprüfte, strukturierte Geschichte. Prototyp R1 live.">
 <title>mynds — Begleitung durch die Therapie-Wartezeit</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <style>
@@ -164,6 +164,14 @@
   .qa .a b{color:var(--ink);font-weight:600}
   .qa .a .ui{margin-top:14px}
 
+  /* ————— Für Praxen: das Modell in drei Schritten ————— */
+  .praxen{padding:11vh var(--margin) 8vh}
+  .praxen h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;margin-bottom:40px}
+  .praxen .qa{margin-bottom:44px}
+  .praxen .modell{font-size:var(--s-body);color:var(--soft);max-width:62ch}
+  .praxen .modell b{color:var(--ink);font-weight:600}
+  .qa .step{color:var(--orange);font-variant-numeric:tabular-nums;margin-right:.35em}
+
   /* ————— Auszug aus unserem Blog ————— */
   .blogauszug{padding:9vh var(--margin)}
   .blogauszug h2{font-size:var(--s-question);font-weight:600;letter-spacing:-.01em;margin-bottom:40px}
@@ -191,7 +199,7 @@
   .faden-status{max-width:68ch;font-size:clamp(18px,1.6vw,24px);color:rgba(252,245,175,.9);margin-top:9vh;min-height:3.2em}
   .faden-status b{color:var(--paper);font-weight:600}
   /* Live-Modus: die Stationen liegen auf dem Faden */
-  .faden.live{position:relative;height:calc(7 * 24vh);min-height:1300px;margin:0}
+  .faden.live{position:relative;height:calc(6 * 24vh);min-height:1150px;margin:0}
   .faden.live li{position:absolute;margin:0;transform:translate(-50%,-50%);transition:left .2s ease,top .2s ease;z-index:2}
   .faden.live button{flex-direction:column;align-items:center;gap:2px;white-space:nowrap}
   .faden.live .fw{font-size:clamp(34px,4.4vw,72px);white-space:normal;max-width:36vw;min-width:260px;text-align:center;line-height:.98}
@@ -282,6 +290,7 @@
     .stage .ui{aspect-ratio:auto;height:auto;padding:20px}
     .stage{margin-bottom:48px}
     .einstieg{padding:8vh var(--margin)}
+    .praxen{padding:8vh var(--margin)}
     .fragen{padding:8vh var(--margin)}
     .stage{margin-bottom:56px}
     .fragen{padding:13vh var(--margin)}
@@ -301,16 +310,17 @@
     <nav class="corner corner-tr" aria-label="Seitennavigation">
       <a href="#zahlen">Zahlen</a>
       <a href="#einstieg">Einstieg</a>
+      <a href="#praxen">Für Praxen</a>
       <a href="blog.html">Blog</a>
       <a href="brand.html">Brand</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
     <h1 aria-label="mynds"><span class="lm lm-m" tabindex="0">m</span><span class="lm lm-y" tabindex="0">y</span><span class="lm lm-n" tabindex="0">n</span><span class="lm lm-d" tabindex="0">d</span><span class="lm lm-s" tabindex="0">s</span></h1>
     <div class="under">
-      <p class="what"><b>mynds</b> begleitet junge Erwachsene durch die Therapie-Wartezeit: strukturieren, sammeln, einordnen.</p>
+      <p class="what"><b>mynds</b> macht aus der Wartezeit ein geführtes Stimmjournal: in eigenen Worten reflektieren — und selbst entscheiden, was die Praxis vor der ersten Sitzung erhält.</p>
       <a class="btn" href="#einstieg">Den Prototyp ansehen</a>
     </div>
-    <p class="corner corner-bl">Prototyp · Studienprojekt Sprint2Berlin, MiE @ WHU 2026</p>
+    <p class="corner corner-bl">Prototyp R1 live · MVP »Stimme → Praxis-Zusammenfassung« Ziel Q1 2027 · WHU 2026</p>
     <p class="corner corner-br">Falls Du wirklich Hilfe brauchst:<br><b>Telefonseelsorge 0800 111 0 111</b>, 24/7</p>
     <p class="crisis-mobile" style="display:none">Dringend? <b>0800 111 0 111</b>, 24/7</p>
   </div>
@@ -329,7 +339,7 @@
         <p class="seq-title">Vier Einwilligungen, eine für eine.</p>
         <div class="bar"><div class="toggle on"><span class="val">Notizen auf diesem Gerät <span class="req">erforderlich</span></span><span class="knob"></span></div>
         <div class="toggle"><span class="val">Symptom-Check führen</span><span class="knob"></span></div>
-        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release Mynds 2.0</span></span><span class="knob"></span></div></div>
+        <div class="toggle"><span class="val">Sprachnotizen <span class="req">MVP · Q1 2027</span></span><span class="knob"></span></div></div>
       </div>
       <div class="seq-screen ui" data-ui aria-label="Anliegen in eigenen Worten">
         <p class="wordmark">mynds</p>
@@ -362,7 +372,7 @@
   <h2>Die Wartezeit, in Zahlen</h2>
   <div class="teller" id="teller" aria-label="Zahlen zur Wartezeit. Überfahre oder tippe eine Zahl für ihren Kontext.">
     <button type="button" class="t c-bl z1" data-k="20 Wochen Wartezeit" data-d="Zwischen Erstkontakt und Therapiebeginn liegen im Schnitt 142 Tage." data-q="BPtK-Warteraumstudie"><b>20</b><span>Wochen</span></button>
-    <button type="button" class="t c-ti z2" data-k="97 Prozent ohne Begleitung" data-d="der Befragten fühlten sich während der Wartezeit sich selbst überlassen." data-q="eigene Umfrage, n=33, Oktober 2026"><b>97%</b><span>ohne Unterstützung</span></button>
+    <button type="button" class="t c-ti z2" data-k="97 Prozent ohne Begleitung" data-d="der Befragten fühlten sich während der Wartezeit sich selbst überlassen." data-q="eigene Umfrage, n=39, Oktober 2026"><b>97%</b><span>ohne Unterstützung</span></button>
     <button type="button" class="t c-sw z1" data-k="9 Monate benannte Wartezeit" data-d="Median der Praxen, die ihre Wartezeit überhaupt nennen: 3, 9, 9 und 12 Monate." data-q="eigener Scan von 220 Praxen, September 2026"><b>9</b><span>Monate</span></button>
     <button type="button" class="t c-bl z2" data-k="1,94 Millionen Anfragen" data-d="Anfragen bei der Terminservicestelle 2025, Tendenz steigend." data-q="KBV 2025"><b>1,94</b><span>Mio. Anfragen</span></button>
     <button type="button" class="t c-ti z1" data-k="46 Prozent fristgerecht" data-d="der TSS-Anfragen wurden innerhalb der Frist vermittelt. Der Rest wartet weiter." data-q="KBV 2025"><b>46%</b><span>fristgerecht</span></button>
@@ -370,10 +380,10 @@
     <button type="button" class="t c-bl z1" data-k="12 Monate im ländlichen Extremfall" data-d="So lange kann die Wartezeit ländlich dauern." data-q="BPtK / vdek"><b>12</b><span>Monate max.</span></button>
     <button type="button" class="t c-ti z2" data-k="3 Millionen Patient:innen" data-d="suchen pro Jahr eine ambulante Psychotherapie. 36.197 GKV-Therapeut:innen halten dagegen, meist in Einzelpraxen." data-q="GKV-Versorgungsreport"><b>3</b><span>Mio. pro Jahr</span></button>
     <button type="button" class="t c-sw z1" data-k="12 Tage bis zum Erstkontakt" data-d="Die Gegenevidenz, ehrlich dazu: Rund die Hälfte bekommt den Erstkontakt schnell. Die Wartezeit auf die Therapie beginnt danach." data-q="vdek"><b>12</b><span>Tage, immerhin</span></button>
-    <button type="button" class="t c-bl z2" data-k="0 Server" data-d="halten deine Angaben, wenn du mynds nutzt. Alles bleibt auf deinem Gerät." data-q="mynds Prototyp"><b>0</b><span>Server</span></button>
+    <button type="button" class="t c-bl z2" data-k="0 Euro für Patient:innen" data-d="mynds ist für Patient:innen kostenlos, eingeladen über die Praxis. Die Praxis zahlt die Lizenz; Preise werden derzeit getestet." data-q="mynds Preismodell"><b>0€</b><span>für Patient:innen</span></button>
   </div>
   <p class="tstatus reveal" id="teller-status" aria-live="polite">Überfahre eine Zahl mit der Maus, dem Finger oder der Tab-Taste: <b>20 Wochen Wartezeit</b> — Zwischen Erstkontakt und Therapiebeginn liegen im Schnitt 142 Tage. (BPtK-Warteraumstudie)</p>
-  <p class="quellen reveal">Quellen: BPtK-Warteraumstudie · KBV 2025 · vdek · GKV-Versorgungsreport · Bundestag-Review · eigene Umfrage (n=33, Oktober 2026) · eigener Praxen-Scan (220 Praxen, September 2026) · mynds Prototyp</p>
+  <p class="quellen reveal">Quellen: BPtK-Warteraumstudie · KBV 2025 · vdek · GKV-Versorgungsreport · Bundestag-Review · eigene Umfrage (n=39, Oktober 2026) · eigener Praxen-Scan (220 Praxen, September 2026) · mynds Preismodell</p>
 </section>
 
 <!-- Der Einstieg: Lesespalte, Beleg nach jedem Absatz -->
@@ -385,7 +395,7 @@
       <div class="ui" data-ui aria-label="Einwilligungen in der App: eine erforderlich, drei optional">
         <div class="toggle on"><span class="val">Notizen auf diesem Gerät speichern <span class="req">erforderlich</span></span><span class="knob" aria-hidden="true"></span></div>
         <div class="toggle"><span class="val">Symptom-Check führen</span><span class="knob" aria-hidden="true"></span></div>
-        <div class="toggle"><span class="val">Sprachnotizen <span class="req">Release Mynds 2.0</span></span><span class="knob" aria-hidden="true"></span></div>
+        <div class="toggle"><span class="val">Sprachnotizen <span class="req">MVP · Q1 2027</span></span><span class="knob" aria-hidden="true"></span></div>
       </div>
     </div>
     <div class="stage">
@@ -434,6 +444,24 @@
   </div>
 </section>
 
+<!-- Für Praxen: das Modell in drei Schritten -->
+<section class="praxen" id="praxen">
+  <h2 class="reveal">Für Praxen: die Geschichte vor Sitzung eins</h2>
+  <div class="qa">
+    <h3 class="reveal"><span class="step" aria-hidden="true">1</span>Die Praxis lädt ein</h3>
+    <p class="a reveal">Ein sicherer Link oder QR-Code bei der Aufnahme auf die Warteliste. Für die Patient:in kostenlos — die Praxis lizenziert mynds.</p>
+  </div>
+  <div class="qa">
+    <h3 class="reveal"><span class="step" aria-hidden="true">2</span>Die Patient:in reflektiert</h3>
+    <p class="a reveal">Ein bis drei kurze geführte Sprach- oder Texteinträge pro Woche, von zu Hause. Alles bleibt privat, bis die Patient:in selbst entscheidet zu teilen.</p>
+  </div>
+  <div class="qa">
+    <h3 class="reveal"><span class="step" aria-hidden="true">3</span>Die Praxis erhält eine einseitige Geschichte</h3>
+    <p class="a reveal">Mit Einwilligung: eine patienten-geprüfte, strukturierte Zusammenfassung — als sichere Ansicht oder druckbares PDF, vor der ersten Sitzung.</p>
+  </div>
+  <p class="modell reveal">Für Patient:innen kostenlos, per Einladung der Praxis. Praxen zahlen eine Lizenz — <b>Preise werden derzeit in Interviews mit Therapeut:innen getestet.</b> <a class="plink" href="mailto:inett.pees@whu.edu?subject=Pilotpraxis mynds">Pilotpraxis werden</a></p>
+</section>
+
 <!-- Auszug aus unserem Blog -->
 <section class="blogauszug" id="blog">
   <h2 class="reveal">Auszug aus unserem Blog</h2>
@@ -456,15 +484,14 @@
 <section class="roadmap" id="roadmap">
   <h2 class="reveal">Roadmap</h2>
   <ol class="faden" id="faden">
-    <li class="reveal" data-status="heute · im Prototyp" data-desc="Geführte Selbstauskunft auf Basis etablierter Anamnese-Bögen."><a href="selbstauskunft.html" aria-label="selbstauskunft, heute im Prototyp, Details öffnen"><span class="fw">selbstauskunft</span><span class="fs"><b>heute</b> · im Prototyp</span></a></li>
-    <li class="reveal" data-status="heute · im Prototyp" data-desc="Bis zu drei Ziele, in deinen eigenen Worten."><a href="ziele.html" aria-label="ziele, heute im Prototyp, Details öffnen"><span class="fw">ziele</span><span class="fs"><b>heute</b> · im Prototyp</span></a></li>
-    <li class="reveal" data-status="heute · im Prototyp" data-desc="Neun Werte, die du selbst setzt und jederzeit korrigierst."><a href="startbild.html" aria-label="startbild, heute im Prototyp, Details öffnen"><span class="fw">startbild</span><span class="fs"><b>heute</b> · im Prototyp</span></a></li>
-    <li class="reveal" data-status="Release 2 · in Entwicklung" data-desc="Gedanken sprechen statt tippen."><a href="sprachnotizen.html" aria-label="sprachnotizen, Release 2, in Entwicklung, Details öffnen"><span class="fw">sprachnotizen</span><span class="fs">Release 2 · <b>in Entwicklung</b></span></a></li>
-    <li class="reveal" data-status="Release 2 · in Entwicklung" data-desc="Dein Profil, aufbereitet für die Praxis deiner Wahl."><a href="praxis-bericht.html" aria-label="praxis-bericht, Release 2, in Entwicklung, Details öffnen"><span class="fw">praxis-bericht</span><span class="fs">Release 2 · <b>in Entwicklung</b></span></a></li>
-    <li class="reveal" data-status="Release 2 · in Entwicklung" data-desc="Das Analoge an mynds: was du daneben auch in der Hand haben kannst."><a href="physische-komponente.html" aria-label="physische Komponente, Release 2, in Entwicklung, Details öffnen"><span class="fw">physische Komponente</span><span class="fs">Release 2 · <b>in Entwicklung</b></span></a></li>
-    <li class="reveal" data-status="Release 3 · in Entwicklung" data-desc="Zusammenhänge über Zeit, als Beobachtung, nicht als Urteil."><a href="muster.html" aria-label="muster, Release 3, in Entwicklung, Details öffnen"><span class="fw">muster</span><span class="fs">Release 3 · <b>in Entwicklung</b></span></a></li>
+    <li class="reveal" data-status="Q4 2026 · läuft" data-desc="Therapeut:innen- und Käufer:innen-Interviews, Preistest, Datenschutz- und Regulatorik-Vorklärung (DPIA, MDR)."><a href="#praxen" aria-label="validieren, Q4 2026, läuft, Details öffnen"><span class="fw">validieren</span><span class="fs"><b>Q4 2026</b> · läuft</span></a></li>
+    <li class="reveal" data-status="Q1 2027 · MVP" data-desc="Stimme → Praxis-Zusammenfassung. DPIA und EU-Hosting, dann Test mit 10–15 Patient:innen und 5 Therapeut:innen."><a href="sprachnotizen.html" aria-label="mvp, Stimme zu Zusammenfassung, Q1 2027, Details öffnen"><span class="fw">stimme → zusammenfassung</span><span class="fs"><b>Q1 2027</b> · MVP</span></a></li>
+    <li class="reveal" data-status="Q2 2027 · Piloten" data-desc="3–5 Pilotpraxen mit rund 30–50 Patient:innen. Nutzung, Berichts-Nutzung und Zahlungsbereitschaft werden gemessen."><a href="praxis-bericht.html" aria-label="piloten, Q2 2027, Details öffnen"><span class="fw">piloten</span><span class="fs"><b>Q2 2027</b> · 3–5 Praxen</span></a></li>
+    <li class="reveal" data-status="Q3 2027 · bezahlte Piloten" data-desc="Piloten werden zu bezahlten Verträgen. Onboarding und Preise werden standardisiert."><a href="#praxen" aria-label="bezahlte Piloten, Q3 2027, Details öffnen"><span class="fw">bezahlte piloten</span><span class="fs"><b>Q3 2027</b> · Piloten werden Verträge</span></a></li>
+    <li class="reveal" data-status="Q4 2027 · Gate 1" data-desc="Ziel: mindestens drei zahlende Praxen — der Seed-Case, gebaut auf Nutzungs- und Zahldaten."><a href="#kontakt" aria-label="gate 1, Q4 2027, Details öffnen"><span class="fw">gate 1</span><span class="fs"><b>Q4 2027</b> · mindestens 3 zahlende Praxen</span></a></li>
+    <li class="reveal" data-status="2028+ · DE → NL → DACH" data-desc="Deutschland zuerst: 300 zahlende Praxen bis 2030 (Ziel). Danach die Niederlande, dann DACH."><a href="#kontakt" aria-label="Wachstum DE NL DACH, ab 2028, Details öffnen"><span class="fw">de → nl → dach</span><span class="fs"><b>2028+</b> · 300 Praxen bis 2030 (Ziel)</span></a></li>
   </ol>
-  <p class="faden-status reveal" id="faden-status" aria-live="polite">Fahr mit der Maus über den Faden: <b>selbstauskunft</b> — Geführte Selbstauskunft auf Basis etablierter Anamnese-Bögen.</p>
+  <p class="faden-status reveal" id="faden-status" aria-live="polite">Fahr mit der Maus über den Faden: <b>validieren</b> — Therapeut:innen- und Käufer:innen-Interviews, Preistest, Datenschutz- und Regulatorik-Vorklärung (DPIA, MDR).</p>
 </section>
 
 <!-- Kontakt in Schauhöhe -->
@@ -473,6 +500,7 @@
   <a class="crow reveal" href="brand.html"><span>mynds</span><span class="note-r">die Marke</span></a>
   <a class="crow reveal" href="https://www.whu.edu" target="_blank" rel="noopener"><span>S2B an der WHU</span><span class="note-r">whu.edu ↗</span></a>
   <a class="crow reveal" href="selbstauskunft.html"><span>Prototyp 2026</span><span class="note-r">was heute läuft</span></a>
+  <a class="crow reveal" href="mailto:inett.pees@whu.edu?subject=Pilotpraxis mynds"><span>Praxis werden</span><span class="note-r">Pilotinfo ab Q2 2027</span></a>
   <div class="crow reveal"><span>Demo ansehen</span><a class="arrow-btn" href="#einstieg" aria-label="Zum Einstieg: Demo ansehen"><span>↑</span></a></div>
   <p class="note reveal">Sanije Demiri &amp; Inett Pees</p>
   <p class="note reveal"><a class="plink" href="mailto:sanije.demiri@whu.edu">sanije.demiri@whu.edu</a> &amp; <a class="plink" href="mailto:inett.pees@whu.edu">inett.pees@whu.edu</a></p>
@@ -489,6 +517,7 @@
       <h4>Navigation</h4>
       <a href="#zahlen">Zahlen</a>
       <a href="#einstieg">Einstieg</a>
+      <a href="#praxen">Für Praxen</a>
       <a href="#roadmap">Roadmap</a>
       <a href="blog.html">Blog</a>
       <a href="brand.html">Brand</a>
@@ -500,7 +529,7 @@
     </div>
     <div>
       <h4>Stand</h4>
-      <p>Keine Therapie, keine Diagnose. Daten bleiben auf deinem Gerät.</p>
+      <p>Keine Therapie, keine Diagnose. Teilen nur mit deiner Einwilligung — jederzeit widerrufbar.</p>
     </div>
   </div>
   <div class="fmark" aria-hidden="true">
@@ -509,7 +538,7 @@
     </svg>
   </div>
   <div>
-    <p class="legal">© 2026 MYNDS · Dies ist ein Prototyp, kein Startup in Gründung! · Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112 · <a href="datenschutz.html" style="color:inherit">Datenschutz</a> · <a href="impressum.html" style="color:inherit">Impressum</a></p>
+    <p class="legal">© 2026 MYNDS · Dies ist ein Prototyp — MVP und erste Pilotpraxen angestrebt für 2027 · Nicht für Diagnose, Behandlung oder akute Krisen · Hilfe: 0800 111 0 111 / 116 117 / 112 · <a href="datenschutz.html" style="color:inherit">Datenschutz</a> · <a href="impressum.html" style="color:inherit">Impressum</a></p>
   </div>
 </footer>
 
